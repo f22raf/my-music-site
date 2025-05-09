@@ -5,43 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Музыка группы О'кей</title>
     <style>
-        audio::-webkit-media-controls-play-button,
-audio::-webkit-media-controls-pause-button,
-audio::-webkit-media-controls-seek-bar::-webkit-slider-thumb,
-audio::-webkit-media-controls-current-time-display,
-audio::-webkit-media-controls-time-remaining-display,
-audio::-webkit-media-controls-mute-button,
-audio::-webkit-media-controls-volume-slider::-webkit-slider-thumb {
-  color: white;
-  background-color: white;
-}
+      body {
+        font-family: sans-serif;
+        color: #fff;
+        min-height: 100vh;
+        margin: 0;
+        overflow-y: auto; /* Добавим прокрутку, если контента будет много */
+      }
 
-audio::-webkit-media-controls-seek-bar,
-audio::-webkit-media-controls-volume-slider {
-  background-color: #ccc;
-}
-  audio::-webkit-media-controls-panel {
-    background-image: url("https://github.com/f22raf/my-music-site/raw/main/1746751475851.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
+      .background-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
 
-  body {
-    font-family: sans-serif;
-    color: #fff;
-    min-height: 100vh;
-    margin: 0;
-    overflow: hidden;
-  }
+      .container {
+        padding: 20px;
+        position: relative; /* Чтобы контент был поверх фона */
+      }
 
-  .background-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      audio {
+        background-color: rgba(255, 255, 255, 0.8);
+        display: block;
+        width: 100%;
+        margin-bottom: 15px;
+        border-radius: 5px;
+      }
     </style>
 </head>
 <body>
@@ -49,18 +47,12 @@ audio::-webkit-media-controls-volume-slider {
     <div class="container">
         <h2>Наши треки</h2>
 
-        <div class="custom-audio-player">
-  <audio src="https://github.com/f22raf/my-music-site/raw/main/%D0%98%D0%B7%D1%83%D0%BC%D1%80%D1%83%D0%B4%D0%BD%D1%8B%D0%B9%20%D0%93%D0%BE%D1%80%D0%BE%D0%B4%20(%D0%93%D0%BE%D0%BB%D0%B4%D0%B5%D0%BD%20%D0%9C%D1%8C%D1%8E%D0%B7%D0%B8%D0%BA%20%D0%A0%D0%B5%D0%BA%D0%BE%D1%80%D0%B4%D1%81).mp3"></audio>
-  <div class="controls">
-    <button class="play-button">Play</button>
-    <button class="pause-button">Pause</button>
-    <div class="progress-bar-container">
-      <input type="range" class="progress-bar" value="0" min="0" max="100">
-    </div>
-    <div class="time">
-      <span class="current-time">0:00</span> / <span class="duration">0:00</span>
-    </div>
-  </div>
+        <div>
+          <h3>Трек 1: Изумрудный Город</h3>
+          <audio controls>
+            <source src="https://github.com/f22raf/my-music-site/raw/main/%D0%98%D0%B7%D1%83%D0%BC%D1%80%D1%83%D0%B4%D0%BD%D1%8B%D0%B9%20%D0%93%D0%BE%D1%80%D0%BE%D0%B4%20(%D0%93%D0%BE%D0%BB%D0%B4%D0%B5%D0%BD%20%D0%9C%D1%8C%D1%8E%D0%B7%D0%B8%D0%BA%20%D0%A0%D0%B5%D0%BA%D0%BE%D1%80%D0%B4%D1%81).mp3" type="audio/mpeg">
+            Ваш браузер не поддерживает аудиоплеер.
+          </audio>
         </div>
 
         <div>
