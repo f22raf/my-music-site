@@ -5,87 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Группа О'кей</title>
     <style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Более современный шрифт */
-        margin: 0;
-        padding: 0;
-        color: #eee;
-        text-align: center;
-        background-image: url('https://github.com/f22raf/my-music-site/raw/main/1746449062889.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-    .container {
-        max-width: 600px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: rgba(255, 255, 255, 0.1); /* Немного прозрачный белый */
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Добавим тень */
-    }
-    img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 4px;
-        margin-bottom: 20px;
-    }
-    .logo {
-        max-width: 200px;
-        height: auto;
-        margin: 10px auto;
-    }
-    .greeting {
-        font-size: 1.7em; /* Увеличим размер приветствия */
-        font-weight: bold;
-        margin-bottom: 20px;
-        color: #f0ad4e; /* Золотистый цвет для приветствия */
-    }
-    .telegram-link {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #2AABEE;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        transition: background-color 0.3s ease; /* Плавный эффект при наведении */
-    }
-    .telegram-link:hover {
-        background-color: #1e8bc3; /* Более темный цвет при наведении */
-    }
-    .bottom-text {
-        font-size: 0.9em;
-        color: #ddd; /* Немного светлее */
-        margin-top: 30px;
-    }
-    a {
-        color: #5bc0de; /* Бирюзовый цвет для ссылок */
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-    a:hover {
-        color: #31b0d5; /* Более темный цвет при наведении */
-    }
         body {
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            color: #eee; /* Белый цвет текста для лучшей читаемости на темном фоне */
+            color: #eee;
             text-align: center;
             background-image: url('https://github.com/f22raf/my-music-site/raw/main/1746449062889.jpg');
-             /* Ссылка на фон */
-            background-size: cover; /* Масштабирует изображение, чтобы покрыть весь фон */
-            background-repeat: no-repeat; /* Запрещает повторение фона */
-            background-attachment: fixed; /* Фиксирует фон при прокрутке */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
         .container {
             max-width: 600px;
             margin: 20px auto;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.3); /* Белый фон с прозрачностью для лучшей читаемости */
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         img {
             max-width: 100%;
@@ -93,48 +30,60 @@
             border-radius: 4px;
             margin-bottom: 20px;
         }
-        .logo { /* Стиль для логотипа */
-            max-width: 200px; /* Ограничиваем максимальную ширину логотипа */
+        .logo {
+            max-width: 200px;
             height: auto;
-            margin: 10px auto; /* Центрируем логотип по горизонтали */
+            margin: 10px auto;
         }
         .greeting {
-            font-size: 1.5em;
+            font-size: 1.7em;
             font-weight: bold;
             margin-bottom: 20px;
+            color: #f0ad4e;
         }
-        .telegram-link {
+        .social-link {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #2AABEE;
+            margin: 10px;
             color: white;
             text-decoration: none;
             border-radius: 5px;
-            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .youtube-link {
+            background-color: #c4302b;
+        }
+        .vk-link {
+            background-color: #3b5998; /* Более темный синий для ВКонтакте */
+        }
+        .telegram-link {
+            background-color: #2AABEE;
+        }
+        .social-link:hover {
+            background-color: #333;
         }
         .bottom-text {
             font-size: 0.9em;
-            color: #eee; /* Белый цвет текста на темном фоне */
+            color: #ddd;
             margin-top: 30px;
+        }
+        a {
+            color: #5bc0de;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #31b0d5;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://github.com/f22raf/my-music-site/raw/main/Screenshot_20250501_002338.jpg" alt="Логотип студии звукозаписи" class="logo">
-        <img src="https://github.com/f22raf/my-music-site/raw/main/IMG_20250505_164347_739.jpg" alt="Группа О'кей на репетиции">
-        <div class="greeting">
-            Вы искали настоящего рока? Вы его нашли! Представляем вам группу О'кей!
-            
-            <a href="music.html">Слушать нашу музыку</a>
-        </div>
-        <a href="https://t.me/+kjrCj3bWk7hiYmUy" class="telegram-link">
-          
-            Присоединяйтесь к нашей Telegram-группе!
-        </a>
-        <div class="bottom-text">
-            О'кей - мы здесь, чтобы сжечь!
-        </div>
+        <h1 class="greeting">Добро пожаловать на сайт группы О'кей!</h1>
+        <a href="https://youtu.be/8sITa2elk6A?si=aNOavWjX5BTsGIlM" class="social-link youtube-link">YouTube</a>
+        <a href="https://m.vk.com/its_o_kay" class="social-link vk-link">ВКонтакте</a>
+        <a href="https://t.me/+kjrCj3bWk7hiYmUy" class="social-link telegram-link">Фан-база (Telegram)</a>
+        <!-- Добавьте остальной контент здесь -->
     </div>
 </body>
 </html>
