@@ -3,118 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OK • Группа</title>
+    <title>Окей • Группа</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Exo+2:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
 
         body {
             margin: 0;
             padding: 0;
             color: #fff;
             text-align: center;
-            background: #000;
-            font-family: 'Exo 2', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* Анимированный глитч-фон */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(255,0,0,0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(0,0,255,0.1) 0%, transparent 20%);
-            z-index: -2;
-        }
-
-        .glitch-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5em;
-            margin: 30px 0 20px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #ff004f;
-            text-shadow: 
-                2px 0 #00f7ff,
-                -2px 0 #ff2a00;
-            animation: glitch 2s infinite;
-        }
-
-        @keyframes glitch {
-            0% { text-shadow: 2px 0 #00f7ff, -2px 0 #ff2a00; }
-            25% { text-shadow: -2px 0 #00f7ff, 2px 0 #ff2a00; }
-            50% { text-shadow: 1px 0 #ff2a00, -1px 0 #00f7ff; }
-            75% { text-shadow: -1px 0 #ff2a00, 1px 0 #00f7ff; }
-            100% { text-shadow: 2px 0 #00f7ff, -2px 0 #ff2a00; }
+            font-family: 'Nosifer', cursive;
+            background-image: url('https://github.com/f22raf/my-music-site/raw/main/1746449062889.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 0 #000, 2px 2px 0 #333;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 720px;
             margin: 20px auto;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid #ff004f;
-            border-radius: 0;
-            box-shadow: 0 0 20px rgba(255, 0, 79, 0.5);
-            backdrop-filter: blur(5px);
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.65);
+            border: 3px solid #ff0000;
+            backdrop-filter: blur(1px);
+        }
+
+        .group-name {
+            font-size: 2.4em;
+            font-weight: 900;
+            color: #ff004f;
+            margin: 10px 0 10px;
+            text-shadow: 2px 2px 0 #000, 4px 4px 0 #ff2200;
+        }
+
+        h2 {
+            color: #ffcc00;
+            margin: 22px 0 14px;
+            font-size: 1.9em;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: #ffcc00;
+            margin: 20px 0 12px;
+            font-size: 1.6em;
+        }
+
+        ul {
+            text-align: left;
+            padding-left: 30px;
+            margin: 12px 0 22px;
+            line-height: 1.5;
         }
 
         .social-link {
             display: inline-block;
-            padding: 12px 24px;
-            margin: 12px;
+            padding: 10px 20px;
+            margin: 10px;
             color: white;
             text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid currentColor;
-            border-radius: 0;
-            transition: all 0.3s ease;
-            font-size: 1.1em;
-            width: 200px;
+            border: 2px solid;
+            font-size: 1.3em;
+            min-width: 140px;
+            transition: transform 0.1s;
         }
-
-        .youtube-link { color: #ff0000; }
-        .vk-link { color: #4c75a8; }
-        .telegram-link { color: #0088cc; }
 
         .social-link:hover {
-            background: currentColor;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateX(3px) translateY(3px);
+            box-shadow: 3px 3px 0 #000;
         }
 
-        .tagline {
-            color: #aaa;
-            font-style: italic;
-            margin-top: 30px;
-            font-size: 1.1em;
-        }
+        .link1 { border-color: #ff0000; }
+        .link2 { border-color: #4c75a8; }
+        .link3 { border-color: #0088cc; }
 
-        /* Мобильная адаптация */
-        @media (max-width: 600px) {
-            .glitch-title { font-size: 2.5em; }
-            .social-link { width: 160px; padding: 10px; font-size: 1em; }
-        }
+        .footer { margin-top: 25px; color: #ccc; font-style: italic; }
     </style>
 </head>
 <body>
-    <h1 class="glitch-title">OK</h1>
     <div class="container">
-        <p class="tagline">Группа из подвала. Звук — из будущего.</p>
-        
-        <a href="https://youtu.be/8sITa2elk6A?si=aNOavWjX5BTsGIlM" class="social-link youtube-link">YouTube</a>
-        <a href="https://m.vk.com/its_o_kay" class="social-link vk-link">ВКонтакте</a>
-        <a href="https://t.me/+kjrCj3bWk7hiYmUy" class="social-link telegram-link">Фан-база</a>
+        <div class="group-name">Окей</div>
+        <img src="1755282188910.jpg" alt="Логотип OK" style="max-width:250px; margin: 10px auto 20px; display: block; border: 2px solid #ff004f; border-radius: 4px;">
+        <p>Вас приветствует группа!</p>
+        <p><strong>Дата основания:</strong> 26.08.2022</p>
 
-        <p class="tagline" style="margin-top: 40px; font-size: 0.9em;">
-            Джексонс Бар • Квартирники • Гаражный звук
+        <!-- Свежие фото -->
+        <div style="margin-bottom: 30px;">
+            <img src="IMG_20250927_070220_306.jpg" alt="OK Band" style="max-width:100%; margin:10px 0; border-radius: 4px; display: block;">
+            <img src="IMG_20250927_070215_936.jpg" alt="OK Band" style="max-width:100%; margin:10px 0; border-radius: 4px; display: block;">
+            <img src="IMG_20250927_070220_297.jpg" alt="OK Band" style="max-width:100%; margin:10px 0; border-radius: 4px; display: block;">
+            <img src="IMG_20250927_070216_519.jpg" alt="OK Band" style="max-width:100%; margin:10px 0; border-radius: 4px; display: block;">
+        </div>
+
+        <h2>Состав</h2>
+        <ul>
+            <li>1) Ковбой Раф Евро</li>
+            <li>2) Птеро</li>
+            <li>3) Томас</li>
+            <li>4) Хельга</li>
+        </ul>
+
+        <h2>Экс-участники</h2>
+        <ul>
+            <li>5) Лёха Панк</li>
+            <li>6) Ротгар</li>
+            <li>7) Белый Джинн</li>
+        </ul>
+
+        <h2>Дискография</h2>
+        <ul>
+            <li>1) Кантри Панк Рок</li>
+            <li>2) Про Кота</li>
+            <li>3) Попутчик</li>
+            <li>4) Параллельный Мир</li>
+            <li>5) Трубная Плантация</li>
+            <li>6) Молитва</li>
+            <li>7) Ковбойская</li>
+            <li>8) Рейнджер Страж</li>
+            <li>9) Изумрудный Город</li>
+            <li>10) Душа Ковбоя</li>
+            <li>11) Уберегай Меня (Шаман!)</li>
+            <li>12) Любовь к Искусству</li>
+            <li>13) Корпус Смерти Крига</li>
+            <li>14) Хиповская Жизнь</li>
+            <li>15) Хорошее Похмелье</li>
+            <li>16) Усталый Рокер</li>
+            <li>17) Простой Человек</li>
+            <li>18) Былые Времена</li>
+            <li>19) Степная Трава</li>
+            <li>20) Юрский Движ</li>
+            <li>21) Шум Района</li>
+        </ul>
+
+        <h2>Выступления</h2>
+        <ul>
+            <li>1) Дебютный квартирник (Свобода) — 30.09.2022</li>
+            <li>2) Саботажный квартирник (Свобода) — 22.10.2022</li>
+            <li>3) Хеллоуинский квартирник (Свобода) — 29.10.2022</li>
+            <li>4) Гитарник (Крафтовая кофейня) — 16.12.2022</li>
+            <li>5) Сесс.восс.квартирник (Свобода) — 07.10.2023</li>
+            <li>6) Ковёр Ивент (Джексонс бар) — 06.09.2025</li>
+        </ul>
+
+        <!-- Лейбл -->
+        <h2>💿 Golden Music Records</h2>
+        <p>Официальный лейбл группы OK • Челябинск</p>
+        <img src="Screenshot_20250501_002338.jpg" alt="Golden Music Records" style="max-width:220px; margin:15px auto; display: block; border: 2px solid #ff004f; border-radius: 4px;">
+
+        <!-- СПЕЦАКЦИЯ -->
+        <h2>🔥 СПЕЦАКЦИЯ!</h2>
+        <p style="font-size: 1.3em;">
+          Приди на следующее выступление OK и получи <strong>Плакат / Спецкарточку</strong>!!!<br>
+          — За фан-базу<br>
+          — За активность
         </p>
+
+        <h3>Плакаты</h3>
+        <img src="1758774744594.jpg" alt="Плакат 1" style="max-width:100%; margin:15px 0; border: 2px solid #ff004f; border-radius: 4px; display: block;">
+        <img src="IMG_20250924_044956_384.jpg" alt="Плакат 2" style="max-width:100%; margin:15px 0; border: 2px solid #ff004f; border-radius: 4px; display: block;">
+
+        <h3>Спецкарточка (значок)</h3>
+        <img src="1758782710052.jpg" alt="Спецкарточка OK" style="max-width:100%; margin:15px 0; border: 2px solid #ff004f; border-radius: 4px; display: block;">
+
+        <p class="footer">Челябинск</p>
+
+        <div style="margin-top: 30px;">
+            <a href="https://youtu.be/8sITa2elk6A?si=aNOavWjX5BTsGIlM" class="social-link link1">КР€</a>
+            <a href="https://m.vk.com/its_o_kay" class="social-link link2">its o'kay</a>
+            <a href="https://t.me/+kjrCj3bWk7hiYmUy" class="social-link link3">Фан База</a>
+        </div>
     </div>
 </body>
 </html>
