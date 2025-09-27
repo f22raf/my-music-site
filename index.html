@@ -3,87 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Группа О'кей</title>
+    <title>OK • Группа</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Exo+2:wght@400;700&display=swap');
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            color: #eee;
+            color: #fff;
             text-align: center;
-            background-image: url('https://github.com/f22raf/my-music-site/raw/main/1746449062889.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            background: #000;
+            font-family: 'Exo 2', sans-serif;
+            overflow-x: hidden;
         }
+
+        /* Анимированный глитч-фон */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255,0,0,0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0,0,255,0.1) 0%, transparent 20%);
+            z-index: -2;
+        }
+
+        .glitch-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5em;
+            margin: 30px 0 20px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #ff004f;
+            text-shadow: 
+                2px 0 #00f7ff,
+                -2px 0 #ff2a00;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 #00f7ff, -2px 0 #ff2a00; }
+            25% { text-shadow: -2px 0 #00f7ff, 2px 0 #ff2a00; }
+            50% { text-shadow: 1px 0 #ff2a00, -1px 0 #00f7ff; }
+            75% { text-shadow: -1px 0 #ff2a00, 1px 0 #00f7ff; }
+            100% { text-shadow: 2px 0 #00f7ff, -2px 0 #ff2a00; }
+        }
+
         .container {
             max-width: 600px;
             margin: 20px auto;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #ff004f;
+            border-radius: 0;
+            box-shadow: 0 0 20px rgba(255, 0, 79, 0.5);
+            backdrop-filter: blur(5px);
         }
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-        .logo {
-            max-width: 200px;
-            height: auto;
-            margin: 10px auto;
-        }
-        .greeting {
-            font-size: 1.7em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #f0ad4e;
-        }
+
         .social-link {
             display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
+            padding: 12px 24px;
+            margin: 12px;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid currentColor;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+            width: 200px;
         }
-        .youtube-link {
-            background-color: #c4302b;
-        }
-        .vk-link {
-            background-color: #3b5998; /* Более темный синий для ВКонтакте */
-        }
-        .telegram-link {
-            background-color: #2AABEE;
-        }
+
+        .youtube-link { color: #ff0000; }
+        .vk-link { color: #4c75a8; }
+        .telegram-link { color: #0088cc; }
+
         .social-link:hover {
-            background-color: #333;
+            background: currentColor;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        .bottom-text {
-            font-size: 0.9em;
-            color: #ddd;
+
+        .tagline {
+            color: #aaa;
+            font-style: italic;
             margin-top: 30px;
+            font-size: 1.1em;
         }
-        a {
-            color: #5bc0de;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        a:hover {
-            color: #31b0d5;
+
+        /* Мобильная адаптация */
+        @media (max-width: 600px) {
+            .glitch-title { font-size: 2.5em; }
+            .social-link { width: 160px; padding: 10px; font-size: 1em; }
         }
     </style>
 </head>
 <body>
+    <h1 class="glitch-title">OK</h1>
     <div class="container">
-        <h1 class="greeting">Добро пожаловать на сайт группы О'кей!</h1>
+        <p class="tagline">Группа из подвала. Звук — из будущего.</p>
+        
         <a href="https://youtu.be/8sITa2elk6A?si=aNOavWjX5BTsGIlM" class="social-link youtube-link">YouTube</a>
         <a href="https://m.vk.com/its_o_kay" class="social-link vk-link">ВКонтакте</a>
-        <a href="https://t.me/+kjrCj3bWk7hiYmUy" class="social-link telegram-link">Фан-база (Telegram)</a>
-        <!-- Добавьте остальной контент здесь -->
+        <a href="https://t.me/+kjrCj3bWk7hiYmUy" class="social-link telegram-link">Фан-база</a>
+
+        <p class="tagline" style="margin-top: 40px; font-size: 0.9em;">
+            Джексонс Бар • Квартирники • Гаражный звук
+        </p>
     </div>
 </body>
 </html>
