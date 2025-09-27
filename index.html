@@ -56,8 +56,76 @@
         ul {
             text-align: left;
             padding-left: 30px;
-            margin: 12px 0 22px;
+            margin: 12px 0 15px;
             line-height: 1.5;
+        }
+
+        /* Рамка для текущих участников */
+        .rock-frame {
+            position: relative;
+            display: inline-block;
+            margin: 15px 0;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .rock-frame img {
+            width: 100%;
+            display: block;
+            border: 8px solid #8B0000;
+            border-radius: 0;
+            box-shadow: 0 6px 0 #000, 0 10px 15px rgba(0,0,0,0.7);
+        }
+
+        .rock-frame::after {
+            content: "ОКЕЙ • ЧЕЛЯБИНСК";
+            position: absolute;
+            bottom: -28px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background: #000;
+            color: #ffcc00;
+            font-family: 'Nosifer', cursive;
+            font-size: 0.9em;
+            padding: 4px 0;
+            letter-spacing: 1px;
+            border: 2px solid #ff004f;
+            box-sizing: border-box;
+        }
+
+        /* Рамка для экс-участников */
+        .ex-member-frame {
+            position: relative;
+            display: inline-block;
+            margin: 12px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .ex-member-frame img {
+            width: 100%;
+            display: block;
+            border: 4px solid #444;
+            border-radius: 0;
+            box-shadow: 0 3px 0 #000, 0 5px 8px rgba(0,0,0,0.5);
+        }
+
+        .ex-member-frame::after {
+            content: "БЫЛ В ОКЕЙ";
+            position: absolute;
+            bottom: -24px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background: #111;
+            color: #aaa;
+            font-family: 'Nosifer', cursive;
+            font-size: 0.85em;
+            padding: 3px 0;
+            letter-spacing: 1px;
+            border: 1px solid #555;
+            box-sizing: border-box;
         }
 
         .social-link {
@@ -87,32 +155,46 @@
 <body>
     <div class="container">
         <div class="group-name">Окей</div>
-        <img src="1755282188910.jpg" alt="Логотип OK" style="max-width:250px; margin: 10px auto 20px; display: block; border: 2px solid #ff004f; border-radius: 4px;">
+        <img src="1755282188910.jpg" alt="Логотип Окей" style="max-width:250px; margin: 10px auto 20px; display: block; border: 2px solid #ff004f; border-radius: 4px;">
         <p>Вас приветствует группа!</p>
         <p><strong>Дата основания:</strong> 26.08.2022</p>
 
-        <!-- Свежие фото -->
-        <div style="margin-bottom: 30px;">
-            <img src="IMG_20250927_070220_306.jpg" alt="OK Band" style="max-width:100%; margin:10px 0; border-radius: 4px; display: block;">
-            <img src="IMG_20250927_070215_936.jpg" alt="OK Band" style="max-width:100%; margin:10px 0; border-radius: 4px; display: block;">
-            <img src="IMG_20250927_070220_297.jpg" alt="OK Band" style="max-width:100%; margin:10px 0; border-radius: 4px; display: block;">
-            <img src="IMG_20250927_070216_519.jpg" alt="OK Band" style="max-width:100%; margin:10px 0; border-radius: 4px; display: block;">
+        <h2>Состав</h2>
+        <ul><li>1) Ковбой Раф Евро</li></ul>
+        <div class="rock-frame">
+            <img src="IMG_20250927_070220_306.jpg" alt="Ковбой Раф Евро">
         </div>
 
-        <h2>Состав</h2>
-        <ul>
-            <li>1) Ковбой Раф Евро</li>
-            <li>2) Птеро</li>
-            <li>3) Томас</li>
-            <li>4) Хельга</li>
-        </ul>
+        <ul><li>2) Птеро</li></ul>
+        <div class="rock-frame">
+            <img src="IMG_20250927_070215_936.jpg" alt="Птеро">
+        </div>
+
+        <ul><li>3) Томас</li></ul>
+        <div class="rock-frame">
+            <img src="IMG_20250927_070220_297.jpg" alt="Томас">
+        </div>
+
+        <ul><li>4) Хельга</li></ul>
+        <div class="rock-frame">
+            <img src="IMG_20250927_070216_519.jpg" alt="Хельга">
+        </div>
 
         <h2>Экс-участники</h2>
-        <ul>
-            <li>5) Лёха Панк</li>
-            <li>6) Ротгар</li>
-            <li>7) Белый Джинн</li>
-        </ul>
+        <ul><li>5) Лёха Панк</li></ul>
+        <div class="ex-member-frame">
+            <img src="IMG_20250927_073619_673.jpg" alt="Лёха Панк">
+        </div>
+
+        <ul><li>6) Ротгар</li></ul>
+        <div class="ex-member-frame">
+            <img src="IMG_20250927_073107_439.jpg" alt="Ротгар">
+        </div>
+
+        <ul><li>7) Белый Джинн</li></ul>
+        <div class="ex-member-frame">
+            <img src="IMG_20250927_072655_508.jpg" alt="Белый Джинн">
+        </div>
 
         <h2>Дискография</h2>
         <ul>
@@ -149,15 +231,13 @@
             <li>6) Ковёр Ивент (Джексонс бар) — 06.09.2025</li>
         </ul>
 
-        <!-- Лейбл -->
         <h2>💿 Golden Music Records</h2>
-        <p>Официальный лейбл группы OK • Челябинск</p>
+        <p>Официальный лейбл группы Окей • Челябинск</p>
         <img src="Screenshot_20250501_002338.jpg" alt="Golden Music Records" style="max-width:220px; margin:15px auto; display: block; border: 2px solid #ff004f; border-radius: 4px;">
 
-        <!-- СПЕЦАКЦИЯ -->
         <h2>🔥 СПЕЦАКЦИЯ!</h2>
         <p style="font-size: 1.3em;">
-          Приди на следующее выступление OK и получи <strong>Плакат / Спецкарточку</strong>!!!<br>
+          Приди на следующее выступление Окей и получи <strong>Плакат / Спецкарточку</strong>!!!<br>
           — За фан-базу<br>
           — За активность
         </p>
@@ -167,7 +247,7 @@
         <img src="IMG_20250924_044956_384.jpg" alt="Плакат 2" style="max-width:100%; margin:15px 0; border: 2px solid #ff004f; border-radius: 4px; display: block;">
 
         <h3>Спецкарточка (значок)</h3>
-        <img src="1758782710052.jpg" alt="Спецкарточка OK" style="max-width:100%; margin:15px 0; border: 2px solid #ff004f; border-radius: 4px; display: block;">
+        <img src="1758782710052.jpg" alt="Спецкарточка Окей" style="max-width:100%; margin:15px 0; border: 2px solid #ff004f; border-radius: 4px; display: block;">
 
         <p class="footer">Челябинск</p>
 
