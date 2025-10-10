@@ -13,7 +13,7 @@
             color: #fff;
             text-align: center;
             font-family: 'Nosifer', cursive;
-            background-image: url('https://github.com/f22raf/my-music-site/raw/main/1746449062889.jpg');
+            background-image: url(' https://github.com/f22raf/my-music-site/raw/main/1746449062889.jpg ');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -253,9 +253,24 @@
 
         <div style="margin-top: 30px;">
             <a href="https://youtu.be/8sITa2elk6A?si=aNOavWjX5BTsGIlM" class="social-link link1">КР€</a>
-            <a href="https://m.vk.com/its_o_kay" class="social-link link2">its o'kay</a>
-            <a href="https://t.me/+kjrCj3bWk7hiYmUy" class="social-link link3">Фан База</a>
+            <a href=" https://m.vk.com/its_o_kay " class="social-link link2">its o'kay</a>
+            <a href="https://t.me/+kjrCj3bWk7hiYmUy " class="social-link link3">Фан База</a>
         </div>
     </div>
+
+    <!-- Счётчик посещений для группы ОКЕЙ -->
+    <div id="visit-counter" style="position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 6px 10px; border-radius: 5px; font-size: 14px; z-index: 9999; font-family: 'Nosifer', cursive; letter-spacing: 1px;">
+        👁️ Посетителей: <span id="counter-value">...</span>
+    </div>
+    <script>
+        fetch('https://api.countapi.xyz/hit/okei-band-2025/visits')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('counter-value').textContent = data.value;
+            })
+            .catch(() => {
+                document.getElementById('counter-value').textContent = '?';
+            });
+    </script>
 </body>
 </html>
