@@ -1,92 +1,14 @@
-<div class="music-player">
-  <h2>Golden Music Records • Супер Панк</h2>
-  <audio id="main-audio" controls style="width: 100%; margin: 15px 0; border-radius: 6px; background: #000;">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Тест</title>
+</head>
+<body style="background:#000; color:#fff; padding:20px;">
+  <h2>Тестовый трек</h2>
+  <audio controls src="Jurassic_Movement.mp3" style="width:100%;">
     Ваш браузер не поддерживает аудио.
   </audio>
-  <div class="track-list">
-    <button onclick="playTrack('Jurassic_Movement.mp3', 'Юрский Движ')">▶ Юрский Движ</button>
-    <button onclick="playTrack('Death_Korps_of_Krieg.mp3', 'Корпус Смерти Крига')">▶ Корпус Смерти Крига</button>
-    <button onclick="playTrack('Emerald_City.mp3', 'Изумрудный Город')">▶ Изумрудный Город</button>
-    <button onclick="playTrack('Ranger_Guardian.mp3', 'Рейнджер Страж')">▶ Рейнджер Страж</button>
-  </div>
-</div>
-
-<script>
-  function playTrack(src, title) {
-    const audio = document.getElementById('main-audio');
-    audio.src = src;
-    audio.play().catch(e => console.log("Воспроизведение заблокировано:", e));
-    document.querySelector('.music-player h2').textContent = 'Сейчас играет: ' + title;
-  }
-</script>
-
-<style>
-  .music-player {
-    background: rgba(0, 0, 0, 0.75);
-    border: 3px solid #ff004f;
-    padding: 25px;
-    margin: 30px auto;
-    max-width: 600px;
-    border-radius: 12px;
-    font-family: 'Nosifer', cursive;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(255, 0, 79, 0.5);
-  }
-
-  .music-player h2 {
-    color: #ffcc00;
-    margin-top: 0;
-    font-size: 1.6em;
-    text-shadow: 2px 2px 0 #000;
-  }
-
-  .track-list button {
-    display: block;
-    width: 100%;
-    padding: 12px 10px;
-    margin: 10px 0;
-    background: #111;
-    color: #ffcc00;
-    border: 2px solid #ff004f;
-    font-family: 'Nosifer', cursive;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border-radius: 6px;
-    text-shadow: 1px 1px 0 #000;
-  }
-
-  .track-list button:hover {
-    background: #222;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-  }
-
-  .track-list button:active {
-    transform: translateY(0);
-  }
-</style>
-<a href="index.html" class="btn-home">🏠 На главную</a>
-
-<style>
-.btn-home {
-  display: inline-block;
-  padding: 12px 24px;
-  background: #000;
-  color: #ffcc00;
-  text-decoration: none;
-  font-family: 'Nosifer', cursive;
-  font-size: 1.2em;
-  border: 2px solid #ff004f;
-  border-radius: 8px;
-  margin: 10px;
-  text-shadow: 2px 2px 0 #000;
-  transition: all 0.2s ease;
-}
-
-.btn-home:hover {
-  background: #222;
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
-}
-</style>
+  <p>Если слайдер не двигается и нет звука — файл битый или несовместим.</p>
+</body>
+</html>
