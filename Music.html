@@ -1,14 +1,49 @@
+<!-- music.html -->
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <title>Тест</title>
+  <meta charset="UTF-8">
+  <title>Музыка • Окей</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Nosifer', cursive;
+      padding: 20px;
+      text-align: center;
+    }
+    audio {
+      width: 90%;
+      max-width: 600px;
+      margin: 15px 0;
+      border-radius: 6px;
+    }
+  </style>
 </head>
-<body style="background:#000; color:#fff; padding:20px;">
-  <h2>Тестовый трек</h2>
-  <audio controls src="Jurassic.mp3" style="width:100%;">
+<body>
+  <h1>Golden Music Records</h1>
+
+  <h2>Юрский Движ</h2>
+  <audio controls>
+    <source src="Jurassic.mp3" type="audio/mpeg">
     Ваш браузер не поддерживает аудио.
   </audio>
-  <p>Если слайдер не двигается и нет звука — файл битый или несовместим.</p>
+
+  <h2>Корпус Смерти Крига</h2>
+  <audio controls>
+    <source src="Korps.mp3" type="audio/mpeg">
+  </audio>
+
+  <h2>Изумрудный Город</h2>
+  <audio controls>
+    <source src="Emerald.mp3" type="audio/mpeg">
+  </audio>
+
+  <h2>Рейнджер Страж</h2>
+  <audio controls>
+    <source src="Ranger.mp3" type="audio/mpeg">
+  </audio>
+
+  <p><a href="index.html" style="color: #ffcc00; text-decoration: underline;">← На главную</a></p>
 </body>
 </html>
