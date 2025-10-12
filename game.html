@@ -6,93 +6,142 @@
   <title>Кто ты в Движе? | Окей</title>
   <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
   <style>
-  /* ... остальной CSS без изменений до .tape-player ... */
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Nosifer', cursive, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 0 15px;
+      line-height: 1.6;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #ffcc00;
+      margin: 20px 0;
+      text-shadow: 0 0 8px rgba(255,0,79,0.6);
+    }
+    h2 {
+      font-size: 2.4em;
+    }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    button, .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      background: #8B0000;
+      color: #ffcc00;
+      border: 2px solid #ff004f;
+      font-family: 'Nosifer', cursive;
+      font-size: 1.1em;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 0;
+    }
+    button:hover {
+      background: #a00;
+      transform: translateY(-2px);
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #ffcc00;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
+    p { margin: 0 0 16px; }
 
-  .tape-player {
-    background: #1a1a1a; /* Тёмно-серый корпус */
-    border: 2px solid #444;
-    border-radius: 6px;
-    padding: 18px 12px;
-    margin: 16px auto;
-    text-align: center;
-    cursor: pointer;
-    max-width: 280px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 5px rgba(0,0,0,0.5);
-  }
+    /* 📼 Диктофон — упрощённая, но крутая версия */
+    .tape-player {
+      background: #1a1a1a;
+      border: 2px solid #444;
+      border-radius: 6px;
+      padding: 18px 12px;
+      margin: 16px auto;
+      text-align: center;
+      cursor: pointer;
+      max-width: 280px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 5px rgba(0,0,0,0.5);
+    }
 
-  .tape-body {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 50px;
-    position: relative;
-  }
+    .tape-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 50px;
+      position: relative;
+    }
 
-  /* Реалистичные катушки с зубьями */
-  .reel {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: 
-      radial-gradient(circle at center, #333 30%, transparent 31%),
-      conic-gradient(
-        repeating-conic-gradient(
-          #555 0deg 8deg,
-          #222 8deg 16deg
-        )
-      );
-    position: relative;
-    z-index: 2;
-  }
+    .reel {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #333;
+      border: 2px solid #ffcc00;
+      position: relative;
+      z-index: 2;
+    }
 
-  /* Лента — серая, с бегущим световым эффектом */
-  .tape-ribbon {
-    position: absolute;
-    top: 50%;
-    left: 42px;
-    right: 42px;
-    height: 6px;
-    background: linear-gradient(to right, #444, #666, #444);
-    transform: translateY(-50%);
-    z-index: 1;
-    border-radius: 2px;
-  }
+    .reel::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 6px;
+      height: 6px;
+      background: #000;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-  /* Надпись — как наклейка на кассете */
-  .tape-label {
-    font-family: 'Nosifer', cursive, sans-serif;
-    font-size: 1.2em;
-    color: #ff004f; /* Ярко-розовый маркер */
-    text-shadow:
-      0 0 4px #ff004f,
-      0 0 8px #ff004f,
-      1px 1px 0 #000;
-    margin-top: 14px;
-    padding: 5px 10px;
-    background: #e0e0e0; /* Серая "бумажная" наклейка */
-    border: 1px solid #aaa;
-    border-radius: 3px;
-    display: inline-block;
-    letter-spacing: 1px;
-    transform: rotate(-0.8deg);
-    animation: flicker 1.5s infinite alternate;
-  }
+    .tape-ribbon {
+      position: absolute;
+      top: 50%;
+      left: 42px;
+      right: 42px;
+      height: 6px;
+      background: #555;
+      transform: translateY(-50%);
+      z-index: 1;
+      border-radius: 2px;
+    }
 
-  /* Эффект мерцания ленты */
-  .tape-player.playing .tape-ribbon {
-    animation: ribbonGlow 1.2s infinite alternate;
-  }
+    .tape-label {
+      font-family: 'Nosifer', cursive, sans-serif;
+      font-size: 1.2em;
+      color: #ff004f;
+      text-shadow:
+        0 0 4px #ff004f,
+        0 0 8px #ff004f,
+        1px 1px 0 #000;
+      margin-top: 14px;
+      padding: 5px 10px;
+      background: #e0e0e0;
+      border: 1px solid #aaa;
+      border-radius: 3px;
+      display: inline-block;
+      letter-spacing: 1px;
+      transform: rotate(-0.8deg);
+      animation: flicker 1.5s infinite alternate;
+    }
 
-  @keyframes ribbonGlow {
-    0% { background: linear-gradient(to right, #444, #666, #444); opacity: 0.9; }
-    100% { background: linear-gradient(to right, #555, #888, #555); opacity: 1; }
-  }
+    .tape-player.playing .tape-ribbon {
+      animation: ribbonGlow 1.2s infinite alternate;
+    }
 
-  @keyframes flicker {
-    0%, 100% { text-shadow: 0 0 4px #ff004f, 0 0 8px #ff004f, 1px 1px 0 #000; }
-    50% { text-shadow: 0 0 6px #ff004f, 0 0 12px #ff004f, 1px 1px 0 #000; }
-  }
-</style>
+    @keyframes ribbonGlow {
+      0% { background: #555; opacity: 0.9; }
+      100% { background: #777; opacity: 1; }
+    }
+
+    @keyframes flicker {
+      0%, 100% { text-shadow: 0 0 4px #ff004f, 0 0 8px #ff004f, 1px 1px 0 #000; }
+      50% { text-shadow: 0 0 6px #ff004f, 0 0 12px #ff004f, 1px 1px 0 #000; }
+    }
+  </style>
 </head>
 <body>
 
