@@ -3,47 +3,163 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Музыка • Окей</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
   <style>
     body {
-      background: #000;
+      background: #0a0a0a url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="%230f0f0f"/><path d="M0,0 L200,200 M200,0 L0,200" stroke="%231a1a1a" stroke-width="1"/></svg>');
       color: #fff;
       font-family: 'Nosifer', cursive;
       padding: 20px;
       text-align: center;
+      background-size: 300px;
+      background-blend-mode: overlay;
     }
-    audio {
-      width: 90%;
-      max-width: 600px;
+
+    h1 {
+      color: #ffcc00;
+      text-shadow: 0 0 10px rgba(255,204,0,0.6);
+      margin-bottom: 30px;
+      font-size: 2.4em;
+    }
+
+    .record {
+      display: inline-block;
+      margin: 20px 10px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .record:hover {
+      transform: scale(1.05) rotate(3deg);
+    }
+
+    .disc {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: #111;
+      border: 8px solid #333;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .disc img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      opacity: 0.92;
+    }
+
+    .label {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ffcc00;
+      font-size: 1.1em;
+      text-shadow: 0 0 5px rgba(0,0,0,0.8);
+      white-space: nowrap;
+    }
+
+    .player {
+      margin-top: 10px;
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+      transition: opacity 0.4s, height 0.4s;
+    }
+
+    .player.active {
+      opacity: 1;
+      height: auto;
       margin: 15px 0;
-      border-radius: 6px;
+    }
+
+    .player audio {
+      width: 90%;
+      max-width: 300px;
+      border-radius: 4px;
+      background: #222;
+      outline: none;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #ffcc00;
+      text-decoration: underline;
+      font-size: 1.2em;
     }
   </style>
 </head>
 <body>
+
   <h1>Golden Music Records</h1>
 
-  <h2>Юрский Движ</h2>
-  <audio controls>
-    <source src="Jurassic.mp3" type="audio/mpeg">
-    Ваш браузер не поддерживает аудио.
-  </audio>
+  <div class="record" onclick="togglePlayer('player1')">
+    <div class="disc">
+      <img src="IMG_20250924_044956_384.jpg" alt="Юрский Движ">
+    </div>
+    <div class="label">Юрский Движ</div>
+  </div>
 
-  <h2>Корпус Смерти Крига</h2>
-  <audio controls>
-    <source src="Korps.mp3" type="audio/mpeg">
-  </audio>
+  <div class="player" id="player1">
+    <audio controls>
+      <source src="Jurassic.mp3" type="audio/mpeg">
+    </audio>
+  </div>
 
-  <h2>Изумрудный Город</h2>
-  <audio controls>
-    <source src="Emerald.mp3" type="audio/mpeg">
-  </audio>
+  <div class="record" onclick="togglePlayer('player2')">
+    <div class="disc">
+      <img src="1758774744594.jpg" alt="Корпус Смерти Крига">
+    </div>
+    <div class="label">Корпус Смерти Крига</div>
+  </div>
 
-  <h2>Рейнджер Страж</h2>
-  <audio controls>
-    <source src="Ranger.mp3" type="audio/mpeg">
-  </audio>
+  <div class="player" id="player2">
+    <audio controls>
+      <source src="Korps.mp3" type="audio/mpeg">
+    </audio>
+  </div>
 
-  <p><a href="index.html" style="color: #ffcc00; text-decoration: underline;">← На главную</a></p>
+  <div class="record" onclick="togglePlayer('player3')">
+    <div class="disc">
+      <img src="InShot_20250603_044632328.jpg" alt="Изумрудный Город">
+    </div>
+    <div class="label">Изумрудный Город</div>
+  </div>
+
+  <div class="player" id="player3">
+    <audio controls>
+      <source src="Emerald.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <div class="record" onclick="togglePlayer('player4')">
+    <div class="disc">
+      <img src="1758782710052.jpg" alt="Рейнджер Страж">
+    </div>
+    <div class="label">Рейнджер Страж</div>
+  </div>
+
+  <div class="player" id="player4">
+    <audio controls>
+      <source src="Ranger.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <a href="index.html" class="back-link">← На главную</a>
+
+  <script>
+    function togglePlayer(id) {
+      const player = document.getElementById(id);
+      player.classList.toggle('active');
+    }
+  </script>
 </body>
 </html>
