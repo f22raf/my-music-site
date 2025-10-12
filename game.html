@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Кто ты в Движе? | Окей</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #000;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.8em;
+      margin-bottom: 30px;
+    }
+    .screen {
+      display: none;
+    }
+    .screen.active {
+      display: block;
+    }
+    button, .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+      text-align: center;
+    }
+    button:hover {
+      background: #333;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+      color: #007bff;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Кто ты в Движе?</h1>
+
+  <!-- Экран 1: Выбор факта -->
+  <div id="screen1" class="screen active">
+    <p>Выбери, какой из этих фактов про участника тебе ближе:</p>
+    
+    <button onclick="selectFact('Лёха Панк')">Подыгрываю бубном, чтобы заглушить электрогитару к хуям</button>
+    <button onclick="selectFact('Ковбой Раф Евро')">Играю квинтами, а нахуя что-то ещё!</button>
+    <button onclick="selectFact('Ротгар')">Отвечаю биографиями рок-групп на вопрос о пиве</button>
+    <button onclick="selectFact('Томас')">«Тут должна быть какая-нибудь фраза чёрного бандоса из гетто»</button>
+    <button onclick="selectFact('Птеро')">Я всегда кричу громче всех, даже в сексе!</button>
+    <button onclick="selectFact('Хельга')">Джинн Симмонс — мой родственник!</button>
+    <button onclick="selectFact('Белый Джинн')">У меня есть и электрогитара, и комбик, но они сейчас в ломбарде...</button>
+  </div>
+
+  <!-- Экран 2: Результат -->
+  <div id="screen2" class="screen">
+    <p id="result-text"></p>
+    <p><strong>Следующий квест:</strong> <span id="quest-text"></span></p>
+    <a href="game.html" class="btn">Сыграть ещё раз</a>
+    <a href="index.html" class="back-link">← Назад на сайт</a>
+  </div>
+
+  <script>
+    const quests = {
+      "Лёха Панк": "найди бубен и заглуши всех к хуям",
+      "Ковбой Раф Евро": "сыграй квинтами с пафосным видом",
+      "Ротгар": "расскажи бармену биографию ZZ Top вместо заказа",
+      "Томас": "скажи фразу чёрного бандоса — и уйди в тень",
+      "Птеро": "закричи так, чтобы проснулся Юрский Движ",
+      "Хельга": "ударь в барабан — пусть Криг услышит",
+      "Белый Джинн": "верни гитару из ломбарда… или не возвращай"
+    };
+
+    function selectFact(character) {
+      document.getElementById('result-text').textContent = `Поздравляю, ты — ${character}.`;
+      document.getElementById('quest-text').textContent = quests[character];
+
+      document.getElementById('screen1').classList.remove('active');
+      document.getElementById('screen2').classList.add('active');
+    }
+  </script>
+</body>
+</html>
