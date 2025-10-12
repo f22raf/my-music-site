@@ -40,8 +40,6 @@
       box-shadow: 0 0 15px rgba(0,0,0,0.7);
       position: relative;
       overflow: hidden;
-      transform: rotate(0deg);
-      transition: transform 0.3s;
     }
 
     .disc img {
@@ -67,14 +65,14 @@
       z-index: 3;
     }
 
-    /* Анимация раскрутки */
-    .disc.spinning {
-      animation: spinCD 8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+    /* Быстрое вращение как у CD */
+    .disc.playing {
+      animation: spinFast 1.8s linear infinite;
     }
 
-    @keyframes spinCD {
+    @keyframes spinFast {
       0% { transform: rotate(0deg); }
-      100% { transform: rotate(3600deg); } /* 10 полных оборотов */
+      100% { transform: rotate(360deg); }
     }
 
     .label {
@@ -93,7 +91,7 @@
       opacity: 0;
       height: 0;
       overflow: hidden;
-      transition: opacity 0.4s, height 0.4s;
+      transition: opacity 0.3s, height 0.3s;
     }
 
     .player.active {
@@ -164,42 +162,46 @@
       const disc = recordEl.querySelector('.disc');
       const player = document.getElementById(playerId);
 
-      // Остановить предыдущий
+      // Остановить предыдущий трек и диск
       if (currentAudio) {
         currentAudio.pause();
         currentAudio = null;
       }
       if (currentDisc) {
-        currentDisc.classList.remove('spinning');
+        currentDisc.classList.remove('playing');
       }
 
-      // Сбросить предыдущий плеер
+      // Очистить все плееры
       document.querySelectorAll('.player').forEach(p => {
         p.classList.remove('active');
         p.innerHTML = '';
       });
 
-      // Раскрутка диска (8 секунд)
-      disc.classList.add('spinning');
+      // Запустить вращение диска СРАЗУ
+      disc.classList.add('playing');
+      currentDisc = disc;
 
-      // Через 8 сек — включить звук
-      setTimeout(() => {
-        const audio = document.createElement('audio');
-        audio.controls = true;
-        audio.src = audioFile;
-        audio.volume = 0.9;
-        player.innerHTML = '';
-        player.appendChild(audio);
-        player.classList.add('active');
+      // Создать и включить аудио
+      const audio = document.createElement('audio');
+      audio.controls = true;
+      audio.src = audioFile;
+      audio.volume = 0.9;
+      player.appendChild(audio);
+      player.classList.add('active');
 
-        // Автовоспроизведение (если разрешено)
-        audio.play().catch(e => {
-          // Если заблокировано — просто показываем плеер
-        });
+      // Воспроизвести (если можно)
+      audio.play().catch(e => {
+        // Если блокировка — просто показываем плеер
+      });
 
-        currentAudio = audio;
-        currentDisc = disc;
-      }, 8000);
+      currentAudio = audio;
+
+      // Остановить диск, когда трек закончится
+      audio.onended = () => {
+        disc.classList.remove('playing');
+        currentDisc = null;
+        currentAudio = null;
+      };
     }
   </script>
 </body>
