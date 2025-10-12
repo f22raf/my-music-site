@@ -4,85 +4,55 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Кто ты в Движе? | Окей</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
   <style>
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: #fff;
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 0 20px;
-    line-height: 1.6;
-    background: linear-gradient(135deg, #1a0a0a 0%, #2c140f 50%, #3b2518 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
-    position: relative;
-  }
-
-  body::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="none" stroke="%234a3525" stroke-width="1" opacity="0.05"/></svg>');
-    pointer-events: none;
-  }
-
-  h1 {
-    text-align: center;
-    font-size: 1.8em;
-    margin-bottom: 30px;
-    text-shadow: 0 0 10px rgba(0,0,0,0.5);
-    color: #e0c4a0;
-  }
-
-  .screen {
-    display: none;
-  }
-  .screen.active {
-    display: block;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 24px;
-    border-radius: 12px;
-    backdrop-filter: blur(2px);
-    border: 1px solid #5a4230;
-  }
-
-  button, .btn {
-    display: block;
-    width: 100%;
-    padding: 14px;
-    margin: 12px 0;
-    background: #3a2515;
-    color: #e0c4a0;
-    border: 1px solid #5a4230;
-    border-radius: 8px;
-    font-size: 1em;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.2s;
-  }
-
-  button:hover {
-    background: #4a3525;
-    color: #fff;
-    transform: translateY(-2px);
-  }
-
-  .back-link {
-    display: block;
-    text-align: center;
-    margin-top: 30px;
-    color: #d4af37;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .back-link:hover {
-    text-decoration: underline;
-  }
-
-  p {
-    margin: 0 0 16px;
-  }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Nosifer', cursive, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 0 15px;
+      line-height: 1.6;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #ffcc00;
+      margin: 20px 0;
+      text-shadow: 0 0 8px rgba(255,0,79,0.6);
+    }
+    h2 {
+      font-size: 2.4em;
+    }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    button, .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      background: #8B0000;
+      color: #ffcc00;
+      border: 2px solid #ff004f;
+      font-family: 'Nosifer', cursive;
+      font-size: 1.1em;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 0;
+    }
+    button:hover {
+      background: #a00;
+      transform: translateY(-2px);
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #ffcc00;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
+    p { margin: 0 0 16px; }
   </style>
 </head>
 <body>
@@ -91,42 +61,160 @@
 
   <!-- Экран 1: Выбор факта -->
   <div id="screen1" class="screen active">
-    <p>Выбери, какой из этих фактов про участника тебе ближе:</p>
-    
-    <button onclick="selectFact('Лёха Панк')">Подыгрываю бубном, чтобы заглушить электрогитару к хуям</button>
-    <button onclick="selectFact('Ковбой Раф Евро')">Играю квинтами, а нахуя что-то ещё!</button>
-    <button onclick="selectFact('Ротгар')">Отвечаю биографиями рок-групп на вопрос о пиве</button>
-    <button onclick="selectFact('Томас')">«Тут должна быть какая-нибудь фраза чёрного бандоса из гетто»</button>
-    <button onclick="selectFact('Птеро')">Я всегда кричу громче всех, даже в сексе!</button>
-    <button onclick="selectFact('Хельга')">Джинн Симмонс — мой родственник!</button>
-    <button onclick="selectFact('Белый Джинн')">У меня есть и электрогитара, и комбик, но они сейчас в ломбарде...</button>
+    <p>Выбери, какой факт тебе ближе:</p>
+    <button onclick="showIntro('Лёха Панк')">Подыгрываю бубном, чтобы заглушить электрогитару к хуям</button>
+    <button onclick="showIntro('Ковбой Раф Евро')">Играю квинтами, а нахуя что-то ещё!</button>
+    <button onclick="showIntro('Ротгар')">Отвечаю биографиями рок-групп на вопрос о пиве</button>
+    <button onclick="showIntro('Томас')">«Тут должна быть какая-нибудь фраза чёрного бандоса из гетто»</button>
+    <button onclick="showIntro('Птеро')">Я всегда кричу громче всех, даже в сексе!</button>
+    <button onclick="showIntro('Хельга')">Джинн Симмонс — мой родственник!</button>
+    <button onclick="showIntro('Белый Джинн')">У меня есть и электрогитара, и комбик, но они сейчас в ломбарде...</button>
   </div>
 
-  <!-- Экран 2: Результат -->
-  <div id="screen2" class="screen">
-    <p id="result-text"></p>
-    <p><strong>Следующий квест:</strong> <span id="quest-text"></span></p>
-    <a href="game.html" class="btn">Сыграть ещё раз</a>
+  <!-- Экраны: "Ты — ИМЯ" -->
+  <div id="intro_leha" class="screen">
+    <h2>Ты — ЛЁХА ПАНК</h2>
+    <button onclick="showScreen('pank1')">Дальше</button>
+  </div>
+  <div id="intro_cowboy" class="screen">
+    <h2>Ты — КОВБОЙ РАФ ЕВРО</h2>
+    <button onclick="showScreen('cowboy1')">Дальше</button>
+  </div>
+  <div id="intro_rotgar" class="screen">
+    <h2>Ты — РОТГАР</h2>
+    <button onclick="showScreen('rotgar1')">Дальше</button>
+  </div>
+  <div id="intro_thomas" class="screen">
+    <h2>Ты — ТОМАС</h2>
+    <button onclick="showScreen('thomas1')">Дальше</button>
+  </div>
+  <div id="intro_ptero" class="screen">
+    <h2>Ты — ПТЕРО</h2>
+    <button onclick="showScreen('ptero1')">Дальше</button>
+  </div>
+  <div id="intro_helga" class="screen">
+    <h2>Ты — ХЕЛЬГА</h2>
+    <button onclick="showScreen('helga1')">Дальше</button>
+  </div>
+  <div id="intro_djinn" class="screen">
+    <h2>Ты — БЕЛЫЙ ДЖИНН</h2>
+    <button onclick="showScreen('djinn1')">Дальше</button>
+  </div>
+
+  <!-- Сюжеты -->
+  <div id="pank1" class="screen">
+    <p>Ты заглушил гитару бубном настолько сильно, что понял:<br>на самом деле это не бубен, а <strong>тамбурин</strong>.</p>
+    <button onclick="showScreen('pank2')">Признать себя тамбуринистом</button>
+  </div>
+  <div id="pank2" class="screen">
+    <p><strong>→ Игра окончена.</strong><br>Тебя ждёт сольный концерт на варгане…</p>
+    <button onclick="restart()">Начать заново</button>
+    <a href="index.html" class="back-link">← Назад на сайт</a>
+  </div>
+
+  <div id="cowboy1" class="screen">
+    <p>Ты играешь квинтами с пафосным видом.</p>
+    <button onclick="showScreen('cowboy2')">Продолжить играть квинтами дальше?</button>
+  </div>
+  <div id="cowboy2" class="screen">
+    <p>Ты продолжаешь играть квинтами.</p>
+    <button onclick="showScreen('cowboy3')">Продолжать играть квинтами?</button>
+  </div>
+  <div id="cowboy3" class="screen">
+    <p>Ты играешь квинтами и только квинтами.</p>
+    <button onclick="showScreen('cowboy4')">Купить вторую гитару?</button>
+  </div>
+  <div id="cowboy4" class="screen">
+    <p>Ты покупаешь вторую гитару! Играешь квинтами и на первой, и на второй гитаре!</p>
+    <button onclick="showScreen('cowboy5')">Купить третью гитару?</button>
+  </div>
+  <div id="cowboy5" class="screen">
+    <p><strong>→ Игра окончена.</strong><br>Небо не выдержало и упало.</p>
+    <button onclick="restart()">Начать заново</button>
+    <a href="index.html" class="back-link">← Назад на сайт</a>
+  </div>
+
+  <div id="rotgar1" class="screen">
+    <p>Ты вышел играть в бар. Решил удивить — вместо «Хиповской Жизни» сыграл бардовский шлягер про рябину.<br>Зал замер. Кто-то заплакал.</p>
+    <button onclick="showScreen('rotgar2')">Сыграть ещё одну бардовскую?</button>
+  </div>
+  <div id="rotgar2" class="screen">
+    <p><strong>→ Игра окончена.</strong><br>Ротгар ушёл в лес писать стихи.</p>
+    <button onclick="restart()">Начать заново</button>
+    <a href="index.html" class="back-link">← Назад на сайт</a>
+  </div>
+
+  <div id="thomas1" class="screen">
+    <p>Ты ругаешься снова на английском в чёрном районе.</p>
+    <button onclick="showScreen('thomas2')">Выругаться ещё?</button>
+  </div>
+  <div id="thomas2" class="screen">
+    <p>Тебе надоело ругаться…<br>Ты идёшь домой и запускаешь <strong>GTA</strong>.</p>
+    <p><strong>→ Игра окончена.</strong></p>
+    <button onclick="restart()">Начать заново</button>
+    <a href="index.html" class="back-link">← Назад на сайт</a>
+  </div>
+
+  <div id="ptero1" class="screen">
+    <p>Ты кричишь во время еды.</p>
+    <button onclick="showScreen('ptero2')">Продолжить кричать во время чистки зубов?</button>
+  </div>
+  <div id="ptero2" class="screen">
+    <p>Ты кричишь во время чистки зубов… и во сне.<br>Соседи стучат в стенку. Кто-то уже звонит в полицию.</p>
+    <button onclick="showScreen('ptero3')">Перестать кричать и начать медитировать, достичь просветления и одухотворения?</button>
+  </div>
+  <div id="ptero3" class="screen">
+    <p><strong>→ Игра окончена.</strong><br>Ковбой Раф Евро застрелил тебя за пригоршню долларов.</p>
+    <button onclick="restart()">Начать заново</button>
+    <a href="index.html" class="back-link">← Назад на сайт</a>
+  </div>
+
+  <div id="helga1" class="screen">
+    <p>Ты сражаешься на бас-гитарах, как на световых мечах, с <strong>Джинном Симмонсом</strong>!<br>Место действия — <strong>Облачный Город</strong>.</p>
+    <p>В кульминационный момент Джинн Симмонс <strong>отрубает тебе руку</strong> своей бас-гитарой и спрашивает:<br>«Ковбой Раф Евро не рассказал тебе, что случилось с твоим отцом?»</p>
+    <button onclick="showScreen('helga2')">Ответить: «Он сказал… что ты его убил…»</button>
+  </div>
+  <div id="helga2" class="screen">
+    <p>Джинн Симмонс смотрит тебе в глаза и говорит:<br><strong>«Нет. Я твой отец!!!»</strong></p>
+    <p><strong>→ Игра окончена.</strong><br>Без одной руки нельзя играть на басу.</p>
+    <button onclick="restart()">Начать заново</button>
+    <a href="index.html" class="back-link">← Назад на сайт</a>
+  </div>
+
+  <div id="djinn1" class="screen">
+    <p>Ты заходишь в ломбард, но охранник выгоняет тебя.<br>В отчаянии ты видишь <strong>антикварную лавку</strong>…</p>
+    <button onclick="showScreen('djinn2')">Подрезать лампу и загадать желание?</button>
+  </div>
+  <div id="djinn2" class="screen">
+    <p>Ты крадёшь лампу, трёшь её…<br>Однако это оказывается <strong>именно твоя лампа</strong> — и тебя <strong>засасывает обратно в неё</strong>.</p>
+    <p><strong>→ Игра окончена.</strong></p>
+    <button onclick="restart()">Начать заново</button>
     <a href="index.html" class="back-link">← Назад на сайт</a>
   </div>
 
   <script>
-    const quests = {
-      "Лёха Панк": "найди бубен и заглуши всех к хуям",
-      "Ковбой Раф Евро": "сыграй квинтами с пафосным видом",
-      "Ротгар": "расскажи бармену биографию ZZ Top вместо заказа",
-      "Томас": "скажи фразу чёрного бандоса — и уйди в тень",
-      "Птеро": "закричи так, чтобы проснулся Юрский Движ",
-      "Хельга": "ударь в барабан — пусть Криг услышит",
-      "Белый Джинн": "верни гитару из ломбарда… или не возвращай"
-    };
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
 
-    function selectFact(character) {
-      document.getElementById('result-text').textContent = `Поздравляю, ты — ${character}.`;
-      document.getElementById('quest-text').textContent = quests[character];
-
+    function showIntro(name) {
       document.getElementById('screen1').classList.remove('active');
-      document.getElementById('screen2').classList.add('active');
+      const map = {
+        'Лёха Панк': 'intro_leha',
+        'Ковбой Раф Евро': 'intro_cowboy',
+        'Ротгар': 'intro_rotgar',
+        'Томас': 'intro_thomas',
+        'Птеро': 'intro_ptero',
+        'Хельга': 'intro_helga',
+        'Белый Джинн': 'intro_djinn'
+      };
+      showScreen(map[name]);
+    }
+
+    function restart() {
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      document.getElementById('screen1').classList.add('active');
     }
   </script>
 </body>
