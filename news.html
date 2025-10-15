@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Что нового | Окей</title>
   <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
   <style>
     body {
-      background: #000;
+      background: url('1746449062889.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: #fff;
       font-family: 'Nosifer', cursive, sans-serif;
       max-width: 600px;
@@ -15,16 +16,43 @@
       padding: 0 15px;
       line-height: 1.6;
     }
-    h1 {
+    h1, h2, h3 {
       text-align: center;
       color: #ffcc00;
+      margin: 20px 0;
       text-shadow: 0 0 8px rgba(255,0,79,0.6);
+    }
+    h1 {
+      font-size: 2.4em;
+    }
+    h3 {
+      font-size: 1.6em;
     }
     .news-item {
       margin: 20px 0;
-      padding: 10px;
+      padding: 15px;
       border-left: 4px solid #ff004f;
-      background: #1a1a1a;
+      background: rgba(0,0,0,0.7);
+      border-radius: 6px;
+      backdrop-filter: blur(5px);
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      background: #8B0000;
+      color: #ffcc00;
+      border: 2px solid #ff004f;
+      font-family: 'Nosifer', cursive;
+      font-size: 1.1em;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 0;
+    }
+    .btn:hover {
+      background: #a00;
+      transform: translateY(-2px);
     }
     .back-link {
       display: block;
@@ -32,41 +60,43 @@
       margin-top: 30px;
       color: #ffcc00;
       text-decoration: none;
+      font-size: 1.2em;
     }
   </style>
 </head>
 <body>
+
   <h1>Что нового?</h1>
 
   <div class="news-item">
     <h3>🎁 Как получить БЕСПЛАТНО один из трёх плакатов "Окей":</h3>
-    <p>
-      1) Приди на наше выступление<br>
-      2) Вступи в телеграмм канал "Фан База группы Окей" <a href="https://t.me/+kjrCj3bWk7hiYmUy" target="_blank">https://t.me/+kjrCj3bWk7hiYmUy</a>
-    </p>
+    <p>1) Приди на наше выступление</p>
+    <p>2) Вступи в телеграмм канал "Фан База группы Окей"</p>
+    <a href="https://t.me/+kjrCj3bWk7hiYmUy" target="_blank" class="btn">→ Вступить в Телеграм</a>
   </div>
 
   <div class="news-item">
     <h3>🃏 Как БЕСПЛАТНО получить спецкарточку "Рейнджер Страж":</h3>
-    <p>
-      1) Приди на наше выступление<br>
-      2) Подхвати погромче наше "Okey Portal Open" в начале выступления! (Крикни <strong>Оооооооооооокееееееееей!!!!!</strong>)
-    </p>
+    <p>1) Приди на наше выступление</p>
+    <p>2) Подхвати погромче наше "Okey Portal Open" в начале выступления!</p>
+    <p><strong>Крикни: Оооооооооооокееееееееей!!!!!</strong></p>
   </div>
 
   <div class="news-item">
     <h3>📚 Как АБСОЛЮТНО БЕСПЛАТНО заполучить мини книгу "Окей: Хроники Супер Панка":</h3>
-    <p>
-      <strong>Вариант 1:</strong><br>
-      1) Вступи в ВК группу "Окей" <a href="https://m.vk.com/its_o_kay" target="_blank">https://m.vk.com/its_o_kay</a> , Телеграмм канал "Фан База группы Окей" <a href="https://t.me/+kjrCj3bWk7hiYmUy" target="_blank">https://t.me/+kjrCj3bWk7hiYmUy</a> , Ютуб канал "Ковбой Раф Евро" <a href="https://youtube.com/@raf_evro?si=OMJuXmpEyTr-qCiV" target="_blank">https://youtube.com/@raf_evro?si=OMJuXmpEyTr-qCiV</a> .<br>
-      2) Приди на выступление вместе с плакатом и спецкарточкой, полученными ранее на двух разных выступлениях.
-    </p>
-    <p>
-      <strong>Альтернативная версия:</strong><br>
-      1) Приди на четыре наших выступления, будучи участником Фан Базы <a href="https://t.me/+kjrCj3bWk7hiYmUy" target="_blank">https://t.me/+kjrCj3bWk7hiYmUy</a>.
-    </p>
+    <p><strong>Вариант 1:</strong></p>
+    <p>1) Вступи в ВК группу "Окей", Телеграмм канал "Фан База группы Окей", Ютуб канал "Ковбой Раф Евро"</p>
+    <a href="https://m.vk.com/its_o_kay" target="_blank" class="btn">→ ВК Группа "Окей"</a>
+    <a href="https://t.me/+kjrCj3bWk7hiYmUy" target="_blank" class="btn">→ Телеграм "Фан База"</a>
+    <a href="https://youtube.com/@raf_evro?si=OMJuXmpEyTr-qCiV" target="_blank" class="btn">→ Ютуб "Ковбой Раф Евро"</a>
+    <p>2) Приди на выступление вместе с плакатом и спецкарточкой, полученными ранее на двух разных выступлениях.</p>
+
+    <p><strong>Альтернативная версия:</strong></p>
+    <p>1) Приди на четыре наших выступления, будучи участником Фан Базы</p>
+    <a href="https://t.me/+kjrCj3bWk7hiYmUy" target="_blank" class="btn">→ Вступить в Фан Базу</a>
   </div>
 
   <a href="index.html" class="back-link">← Домой</a>
+
 </body>
 </html>
