@@ -54,96 +54,119 @@
     }
     p { margin: 0 0 16px; }
 
-    /* 📼 Диктофон — упрощённая, но крутая версия */
+    /* 📼 КАССЕТА — РИСОВАННАЯ В СТИЛЕ КОМИКСА */
     .tape-player {
-      background: #1a1a1a;
-      border: 2px solid #444;
-      border-radius: 6px;
-      padding: 18px 12px;
-      margin: 16px auto;
-      text-align: center;
-      cursor: pointer;
-      max-width: 280px;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 5px rgba(0,0,0,0.5);
-    }
-
-    .tape-body {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 50px;
       position: relative;
-    }
-
-    .reel {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #333;
-      border: 2px solid #ffcc00;
-      position: relative;
-      z-index: 2;
-    }
-
-    .reel::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 6px;
-      height: 6px;
-      background: #000;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .tape-ribbon {
-      position: absolute;
-      top: 50%;
-      left: 42px;
-      right: 42px;
-      height: 6px;
-      background: #555;
-      transform: translateY(-50%);
-      z-index: 1;
-      border-radius: 2px;
-    }
-
-    .tape-label {
-      font-family: 'Nosifer', cursive, sans-serif;
-      font-size: 1.2em;
-      color: #ff004f;
-      text-shadow:
-        0 0 4px #ff004f,
-        0 0 8px #ff004f,
-        1px 1px 0 #000;
-      margin-top: 14px;
-      padding: 5px 10px;
-      background: #e0e0e0;
-      border: 1px solid #aaa;
-      border-radius: 3px;
       display: inline-block;
+      margin: 16px auto;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      max-width: 280px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .tape-player:hover {
+      transform: scale(1.05) rotate(1deg);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+
+    .tape-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+    }
+
+    .secret-label {
+      position: absolute;
+      bottom: 12px;
+      left: 0;
+      right: 0;
+      background: rgba(255, 0, 79, 0.9);
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.3em;
+      padding: 8px 0;
+      text-align: center;
       letter-spacing: 1px;
-      transform: rotate(-0.8deg);
-      animation: flicker 1.5s infinite alternate;
+      text-shadow: 
+        0 0 3px rgba(0,0,0,0.5),
+        0 0 6px rgba(255,0,79,0.4);
+      border-radius: 6px;
+      z-index: 2;
+      font-family: 'Nosifer', cursive;
+      transform: translateY(0);
+      transition: all 0.2s ease;
     }
 
-    .tape-player.playing .tape-ribbon {
-      animation: ribbonGlow 1.2s infinite alternate;
+    .tape-player:hover .secret-label {
+      background: rgba(255, 0, 79, 1);
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(255,0,79,0.3);
     }
 
-    @keyframes ribbonGlow {
-      0% { background: #555; opacity: 0.9; }
-      100% { background: #777; opacity: 1; }
+    /* Эффект "запись началась" */
+    .tape-player.playing .secret-label {
+      animation: pulse 0.6s ease-in-out infinite alternate;
+      background: #ff004f;
+      text-shadow: 0 0 8px rgba(255,255,255,0.6);
     }
 
-    @keyframes flicker {
-      0%, 100% { text-shadow: 0 0 4px #ff004f, 0 0 8px #ff004f, 1px 1px 0 #000; }
-      50% { text-shadow: 0 0 6px #ff004f, 0 0 12px #ff004f, 1px 1px 0 #000; }
+    @keyframes pulse {
+      from { transform: translateY(-2px) scale(1); }
+      to { transform: translateY(-4px) scale(1.05); }
     }
   </style>
 </head>
 <body>
+
+  <!-- ТВОЯ КАССЕТА -->
+  <div class="tape-player" id="secret-tape">
+    <img src="InShot_20251015_220810502.jpg" alt="Рисованная аудиокассета" class="tape-image">
+    <div class="secret-label">РЕДКАЯ ЗАПИСЬ!!!</div>
+  </div>
+
+  <!-- Скрипт для шипения и эффектов -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tapePlayer = document.getElementById('secret-tape');
+      const label = tapePlayer.querySelector('.secret-label');
+
+      // Шипение при загрузке (если браузер разрешает)
+      const hissSound = new Audio();
+      hissSound.src = 'https://cdn.freesound.org/previews/339/339386_5573650-lq.mp3'; // шипение плёнки
+      hissSound.volume = 0.3;
+
+      // Пытаемся проиграть шипение — если заблокировано, игнорируем
+      hissSound.play().catch(e => {
+        console.log("Автовоспроизведение звука заблокировано — нужно взаимодействие пользователя.");
+      });
+
+      // При клике — эффект "запись началась"
+      tapePlayer.addEventListener('click', () => {
+        // Добавляем класс playing
+        tapePlayer.classList.add('playing');
+
+        // Звук начала записи (опционально)
+        const startSound = new Audio();
+        startSound.src = 'https://www.soundjay.com/misc/sounds/cassette-tape-play-01.mp3';
+        startSound.volume = 0.5;
+        startSound.play().catch(e => console.log("Звук не воспроизведён"));
+
+        // Через 3 секунды — убираем эффект
+        setTimeout(() => {
+          tapePlayer.classList.remove('playing');
+        }, 3000);
+
+        // Здесь можно добавить логику игры или перехода
+        // Например: alert("Запись запущена!");
+      });
+    });
+  </script>
+
+</body>
+</html>
 
   <h1>Кто ты в Движе?</h1>
 
