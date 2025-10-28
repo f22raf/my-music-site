@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Иерархия Ордена «Окей»</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #e0e0e0;
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 120px;
+      height: auto;
+      margin-bottom: 15px;
+      image-rendering: pixelated;
+    }
+    h1, h2 {
+      color: #00ffaa;
+      margin: 20px 0 10px;
+    }
+    .subtitle {
+      color: #aaa;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    /* Таблица */
+    .okay-hierarchy {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 14px;
+    }
+    .okay-hierarchy th,
+    .okay-hierarchy td {
+      border: 1px solid #00cc88;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .okay-hierarchy th {
+      background-color: #002211;
+      color: #00ffaa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .okay-hierarchy tr:nth-child(even) {
+      background-color: #0f1510;
+    }
+    .okay-hierarchy tr:nth-child(odd) {
+      background-color: #0a0f0a;
+    }
+    .okay-hierarchy strong {
+      color: #00ffcc;
+    }
+
+    /* Древо */
+    .okay-tree {
+      background: #0a0a0a;
+      border: 1px solid #00ffaa;
+      border-radius: 4px;
+      padding: 25px;
+      margin: 30px 0;
+    }
+    .tree-level {
+      margin: 22px 0;
+    }
+    .rank-title {
+      font-weight: bold;
+      color: #00ffcc;
+      font-size: 20px;
+    }
+    .rank-names {
+      margin-top: 8px;
+      font-size: 17px;
+      color: #ffcc00;
+    }
+    .empty {
+      color: #666;
+      font-style: italic;
+    }
+    .separator {
+      color: #00aa77;
+      margin: 12px 0;
+      font-size: 26px;
+    }
+
+    /* Общие ссылки */
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #00cc88;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .okay-hierarchy {
+        font-size: 12px;
+      }
+      .okay-hierarchy td,
+      .okay-hierarchy th {
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="https://f22raf.github.io/my-music-site/1755282188910.jpg" alt="Логотип Окей">
+      <h1>ИЕРАРХИЯ ОРДЕНА «ОКЕЙ»</h1>
+      <div class="subtitle">«Сначала — взгляд. Потом — выбор. Потом — путь»</div>
+    </header>
+
+    <!-- Таблица условий -->
+    <h2>📜 Система Рангов</h2>
+    <table class="okay-hierarchy">
+      <thead>
+        <tr>
+          <th>Уровень</th>
+          <th>Титул</th>
+          <th>Условия</th>
+          <th>Артефакт</th>
+          <th>Статус</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong></td>
+          <td><strong>Временный Рейнджер Страж</strong></td>
+          <td>Посещение + <strong>личное признание от «Окей»</strong></td>
+          <td>Временный значок</td>
+          <td><strong>Не ранг!</strong><br>→ Если <strong>в фан-базе</strong> → <strong>равен АФ×1</strong><br>→ Если <strong>не в фан-базе</strong> → <strong>вне иерархии</strong> (почётный одиночка)</td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td><strong>Активный Фанат ×1</strong></td>
+          <td>Посещение + <strong>состояние в фан-базе</strong></td>
+          <td>—</td>
+          <td>Базовый член Ордена</td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td><strong>Активный Фанат ×2</strong></td>
+          <td>2 посещения + фан-база</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td><strong>Активный Фанат ×3</strong></td>
+          <td>3 посещения + фан-база</td>
+          <td>—</td>
+          <td>= Трижды Супер Плакатоносец (по глубине, но ниже по статусу)</td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td><strong>Супер Плакатоносец</strong></td>
+          <td>1 плакат + фан-база</td>
+          <td>Плакат</td>
+          <td><strong>Выше АФ×1</strong> (артефактное посвящение)</td>
+        </tr>
+        <tr>
+          <td><strong>6</strong></td>
+          <td><strong>Дважды Супер Плакатоносец</strong></td>
+          <td>2 плаката + фан-база</td>
+          <td>—</td>
+          <td>= АФ×2</td>
+        </tr>
+        <tr>
+          <td><strong>7</strong></td>
+          <td><strong>Трижды Супер Плакатоносец</strong></td>
+          <td>3 плаката + фан-база</td>
+          <td>—</td>
+          <td>= АФ×3 (но <strong>выше рангом</strong>)</td>
+        </tr>
+        <tr>
+          <td><strong>8–10</strong></td>
+          <td><strong>Четырежды → Шестикратный Супер Плакатоносец</strong></td>
+          <td>4–6 плакатов + фан-база</td>
+          <td>—</td>
+          <td>Шестикратный — <strong>на 1 шаг от Окейтозавра</strong></td>
+        </tr>
+        <tr>
+          <td><strong>11</strong></td>
+          <td><strong>Архивариус</strong></td>
+          <td><strong>Путь 1</strong>: АФ×4<br><strong>Путь 2</strong>: ВРС (в фан-базе!) + Супер Плакатоносец + активность</td>
+          <td>Книга</td>
+          <td>Выше всех Плакатоносцев</td>
+        </tr>
+        <tr>
+          <td><strong>12–14</strong></td>
+          <td><strong>Архивариус +1 / +2 / +3</strong></td>
+          <td>+ выступления после посвящения</td>
+          <td>—</td>
+          <td>→ <strong>Окейтозавр</strong></td>
+        </tr>
+        <tr>
+          <td><strong>∞</strong></td>
+          <td><strong>Окейтозавр</strong></td>
+          <td>Завершение любого пути</td>
+          <td>Паспорт</td>
+          <td>Высший ранг</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Древо с именами -->
+    <h2>🌳 Живое Древо Ордена</h2>
+    <div class="okay-tree">
+      <div class="tree-level">
+        <div class="rank-title">∞ Окейтозавр</div>
+        <div class="rank-names empty">[ещё нет]</div>
+      </div>
+
+      <div class="separator">↓</div>
+
+      <div class="tree-level">
+        <div class="rank-title">Архивариус</div>
+        <div class="rank-names empty">[ещё нет]</div>
+      </div>
+
+      <div class="separator">↓</div>
+
+      <div class="tree-level">
+        <div class="rank-title">Супер Плакатоносец</div>
+        <div class="rank-names">Мира</div>
+      </div>
+
+      <div class="separator">↓</div>
+
+      <div class="tree-level">
+        <div class="rank-title">Активный Фанат ×3</div>
+        <div class="rank-names">Ксюха, Настюха</div>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-link">← Вернуться на главную страницу «Окей»</a>
+  </div>
+</body>
+</html>
