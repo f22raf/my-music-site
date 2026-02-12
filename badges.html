@@ -304,19 +304,4 @@
         });
     </script>
 </body>
-</html>            const tgSection = document.getElementById('tgSection');
-            const payLink = document.getElementById('payLink');
-            
-            // Если флаг есть — показываем ТГ
-            if (localStorage.getItem('badge_payment_clicked')) {
-                tgSection.style.display = 'block';
-            }
-            
-            // Ставим флаг при клике на оплату
-            payLink.addEventListener('click', function() {
-                localStorage.setItem('badge_payment_clicked', 'true');
-            });
-        });
-    </script>
-</body>
 </html>
