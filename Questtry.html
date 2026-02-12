@@ -6,288 +6,190 @@
     <title>Окей • Квест</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
-
-        body {
-            margin: 0;
-            padding: 0;
-            color: #fff;
-            text-align: center;
-            font-family: 'Nosifer', cursive;
-            background-image: url('https://github.com/f22raf/my-music-site/raw/main/1746449062889.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            min-height: 100vh;
-            font-size: 1.2em;
-            text-shadow: 1px 1px 0 #000, 2px 2px 0 #333;
-        }
-
-        .container {
-            max-width: 720px;
-            margin: 20px auto;
-            padding: 25px;
-            background: rgba(0, 0, 0, 0.65);
-            border: 3px solid #ff0000;
-            backdrop-filter: blur(1px);
-        }
-
-        .group-name {
-            font-size: 2.4em;
-            font-weight: 900;
-            color: #ff004f;
-            margin: 10px 0 10px;
-            text-shadow: 2px 2px 0 #000, 4px 4px 0 #ff2200;
-        }
-
-        h2 {
-            color: #ffcc00;
-            margin: 22px 0 14px;
-            font-size: 1.9em;
-            letter-spacing: 1px;
-        }
-
-        h3 {            color: #ffcc00;
-            margin: 20px 0 12px;
-            font-size: 1.6em;
-        }
-
-        .question {
-            color: #fff;
-            margin: 15px 0;
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-
-        input {
-            background: #111;
-            border: 2px solid #ff004f;
-            color: #fff;
-            padding: 12px;
-            width: 80%;
-            margin: 10px auto;
-            font-family: 'Nosifer', cursive;
-            font-size: 1.1em;
-            text-align: center;
-            display: block;
-            border-radius: 0;
-            box-shadow: 0 3px 0 #000;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #ffcc00;
-        }
-
-        .social-link {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
-            color: white;
-            text-decoration: none;
-            border: 2px solid;
-            font-size: 1.3em;
-            min-width: 140px;
-            transition: transform 0.1s;
-        }
-
-        .social-link:hover {
-            transform: translateX(3px) translateY(3px);
-            box-shadow: 3px 3px 0 #000;
-        }
-
-        .link1 { border-color: #ff0000; background: #ff004f; }        .link2 { border-color: #4c75a8; background: #4c75a8; }
-        .link3 { border-color: #0088cc; background: #0088cc; }
-
-        .card-display {
-            border: 4px double #ffcc00;
-            padding: 20px;
-            background: rgba(139, 0, 0, 0.3);
-            margin-top: 25px;
-            box-shadow: 0 0 15px #ffcc00, 0 4px 0 #000;
-            animation: glow 1s infinite alternate;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 10px #ffcc00, 0 4px 0 #000; }
-            to { box-shadow: 0 0 25px #ffcc00, 0 4px 0 #000; }
-        }
-
-        .card-img {
-            width: 100%;
-            max-width: 280px;
-            border-radius: 0;
-            border: 3px solid #ff004f;
-            margin-bottom: 15px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 4px 0 #000;
-        }
-
-        .card-title {
-            color: #ffcc00;
-            margin: 5px 0;
-            font-size: 1.4em;
-            text-shadow: 2px 2px 0 #000;
-        }
-
-        .card-series {
-            color: #ff004f;
-            font-size: 1em;
-            font-style: italic;
-        }
-
-        .warning {
-            background: rgba(139, 0, 0, 0.3);
-            border-left: 4px solid #ff004f;
-            padding: 15px;
-            margin: 25px 0;
-            font-size: 0.9em;
-            color: #fff;
-            text-align: left;            border-radius: 0;
-        }
-
-        .warning strong {
-            color: #ffcc00;
-        }
-
-        .error-msg {
-            color: #ff004f;
-            font-weight: bold;
-            margin: 15px 0;
-            font-size: 1.1em;
-            text-shadow: 2px 2px 0 #000;
-        }
-
-        .success-msg {
-            color: #ffcc00;
-            font-weight: bold;
-            margin: 15px 0;
-            font-size: 1.2em;
-            text-shadow: 2px 2px 0 #000;
-        }
-
-        @media (max-width: 600px) {
-            body {
-                font-size: 1em;
-            }
-
-            .container {
-                padding: 15px;
-                margin: 10px;
-            }
-
-            .group-name {
-                font-size: 1.8em;
-            }
-
-            input {
-                width: 90%;
-                font-size: 1em;
-                padding: 10px;
-            }
-
-            .social-link {
-                padding: 8px 15px;
-                font-size: 1.1em;
-                min-width: 120px;
-                margin: 8px;
-            }
-            .card-img {
-                max-width: 220px;
-            }
-        }
+        body { margin:0; padding:0; color:#fff; text-align:center; font-family:'Nosifer',cursive; background-image:url('https://github.com/f22raf/my-music-site/raw/main/1746449062889.jpg'); background-size:cover; background-position:center; min-height:100vh; font-size:1.2em; text-shadow:1px 1px 0 #000,2px 2px 0 #333; }
+        .container { max-width:720px; margin:20px auto; padding:25px; background:rgba(0,0,0,0.65); border:3px solid #ff0000; }
+        .group-name { font-size:2.4em; color:#ff004f; margin:10px 0; text-shadow:2px 2px 0 #000,4px 4px 0 #ff2200; }
+        h2 { color:#ffcc00; margin:22px 0 14px; font-size:1.9em; letter-spacing:1px; }
+        .question { color:#fff; margin:15px 0; font-size:1.1em; line-height:1.4; }
+        input { background:#111; border:2px solid #ff004f; color:#fff; padding:12px; width:80%; margin:10px auto; font-family:'Nosifer',cursive; font-size:1.1em; text-align:center; display:block; border-radius:0; box-shadow:0 3px 0 #000; }
+        input:focus { outline:none; border-color:#ffcc00; }
+        .btn { display:inline-block; padding:10px 20px; margin:10px; color:white; text-decoration:none; border:2px solid #ff0000; background:#ff004f; font-family:'Nosifer',cursive; font-size:1.3em; min-width:140px; transition:transform 0.1s; }
+        .btn:hover { transform:translateX(3px) translateY(3px); box-shadow:3px 3px 0 #000; }
+        .card { border:4px double #ffcc00; padding:20px; background:rgba(139,0,0,0.3); margin:25px 0; box-shadow:0 0 15px #ffcc00,0 4px 0 #000; animation:glow 1s infinite alternate; }
+        @keyframes glow { from { box-shadow:0 0 10px #ffcc00,0 4px 0 #000; } to { box-shadow:0 0 25px #ffcc00,0 4px 0 #000; } }
+        .card-img { width:100%; max-width:280px; border:3px solid #ff004f; margin:0 auto 15px; display:block; box-shadow:0 4px 0 #000; }
+        .card-text { color:#ffcc00; margin:5px 0; font-size:1.2em; text-shadow:2px 2px 0 #000; }
+        .warn { background:rgba(139,0,0,0.3); border-left:4px solid #ff004f; padding:15px; margin:25px 0; font-size:0.9em; color:#fff; text-align:left; }
+        .debug { color:#0f0; font-size:0.8em; margin-top:10px; }
+        .test-badge { color:#ffcc00; background:#8B0000; padding:5px 10px; display:inline-block; margin-top:10px; font-size:0.9em; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="group-name">Окей</div>
-        
         <h2>🎸 КВЕСТ ДЛЯ ФАНБАЗЫ 🎸</h2>
-        
         <div id="content">
-            <p class="question">Введи дату основания группы:</p>
-            <input type="password" id="pass-field" placeholder="ДДММГГГГ" maxlength="8">
+            <p class="question">Дата основания группы:</p>
+            <input type="password" id="pass" placeholder="ДДММГГГГ" maxlength="8">
             <br>
-            <a href="#" class="social-link link1" onclick="checkPass()">ВВОД</a>
+            <a href="#" class="btn" onclick="go()">ВВОД</a>
+            <div class="debug">Тест: 00000000 = вход без списания карт</div>
         </div>
     </div>
 
     <script>
-        // Список твоих карт
+        let isTestMode = false;
+        let currentQuestions = [];
+        
+        // 🃏 20 карт = 10 уникальных × 2 экземпляра (коллекции №5 и №6)
         const cards = [
-            { title: "Коллекционная карточка Окей!", file: "Cards/InShot_20260208_021444024.jpg", text: "Серия LEGENDS OKEY" },
-            { title: "Коллекционная карточка Окей!", file: "Cards/InShot_20260208_022242270.jpg", text: "Серия LEGENDS OKEY" },
-            { title: "Коллекционная карточка Окей!", file: "Cards/InShot_20260208_022506814.jpg", text: "Серия LEGENDS OKEY" },
-            { title: "Коллекционная карточка Окей!", file: "Cards/InShot_20260208_023708134.jpg", text: "Серия LEGENDS OKEY" },
-            { title: "Коллекционная карточка Окей!", file: "Cards/InShot_20260208_024434872.jpg", text: "Серия LEGENDS OKEY" },
-            { title: "Коллекционная карточка Окей!", file: "Cards/InShot_20260208_024852106.jpg", text: "Серия LEGENDS OKEY" },
-            { title: "Коллекционная карточка Окей!", file: "Cards/InShot_20260208_025430478.jpg", text: "Серия LEGENDS OKEY" },
-            { title: "Коллекционная карточка Окей!", file: "Cards/InShot_20260208_025808772.jpg", text: "Серия LEGENDS OKEY" },
-            { title: "Коллекционная карточка Окей!", file: "Cards/InShot_20260208_030521457.jpg", text: "Серия LEGENDS OKEY" },
-            { title: "Коллекционная карточка Окей!", file: "Cards/InShot_20260208_031058054.jpg", text: "Серия LEGENDS OKEY" }
+            {img:"Cards/InShot_20260208_021444024.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_022242270.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_022506814.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_023708134.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_024434872.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},            {img:"Cards/InShot_20260208_024852106.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_025430478.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_025808772.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_030521457.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_031058054.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_021444024.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
+            {img:"Cards/InShot_20260208_022242270.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
+            {img:"Cards/InShot_20260208_022506814.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
+            {img:"Cards/InShot_20260208_023708134.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
+            {img:"Cards/InShot_20260208_024434872.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
+            {img:"Cards/InShot_20260208_024852106.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
+            {img:"Cards/InShot_20260208_025430478.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
+            {img:"Cards/InShot_20260208_025808772.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
+            {img:"Cards/InShot_20260208_030521457.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
+            {img:"Cards/InShot_20260208_031058054.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"}
         ];
 
-        function checkPass() {
-            const p = document.getElementById('pass-field').value;
-            if(p === '26082022') {
-                renderQuiz();
+        // ❓ Банк вопросов (12 штук)
+        const questionBank = [
+            { q: "Кто в группе играет на бас-гитаре?", a: ["томас"] },
+            { q: "Сколько раз из 12 выступлений была сыграна 'Изумрудный Город'?", a: ["11"] },
+            { q: "Автор какой песни Окей является Лёха Панк?", a: ["степная трава"] },
+            { q: "Какая фамилия у Ротгара?", a: ["михайлов"] },
+            { q: "Кто написал песню 'Юрский Движ'?", a: ["ковбой раф евро", "раф евро", "ковбой раф"] },
+            { q: "Какая акустическая гитара была у Белого Джинна в Окей?", a: ["colombo", "колумбо", "коломбо"] },
+            { q: "Кем был Птеро до Окей?", a: ["ковидный"] },
+            { q: "В каком году Томас пришёл в Окей?", a: ["2025"] },
+            { q: "На каком инструменте изначально игралось соло в 'Изумрудный Город'?", a: ["флейта"] },
+            { q: "Как называется путь от Временного Рейнджера Стража до Окейтозавра?", a: ["калифорнийская тропа"] },
+            { q: "Сколько рук у Ковбоя Рафа Евро?", a: ["2", "две"] },
+            { q: "Какая электроакустическая гитара была у Клауса в Окей?", a: ["martinez", "мартинез"] }
+        ];
+
+        // 🔀 Выбираем 3 случайных вопроса
+        function getRandomQuestions() {
+            const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 3);
+        }
+
+        // ✅ Проверка ответа с нормализацией
+        function checkAnswer(userAns, correctAnswers) {
+            const norm = userAns.trim().toLowerCase()
+                .replace(/ё/g, 'е')
+                .replace(/йо/g, 'ё');
+            return correctAnswers.some(a => norm.includes(a));
+        }
+
+        function go() {
+            const p = document.getElementById('pass').value;
+                        // 🔑 ТЕСТОВЫЙ РЕЖИМ
+            if (p === '00000000') {
+                isTestMode = true;
+                alert('🧪 ТЕСТОВЫЙ РЕЖИМ: карты не списываются!');
+                startQuiz();
+                return;
+            }
+            
+            // Обычная проверка кулдауна
+            const last = localStorage.getItem('quest_time');
+            if (last && Date.now() - last < 86400000) {
+                alert('⏳ Уже проходил квест! Следующая попытка завтра.');
+                return;
+            }
+            
+            if (p === '26082022') {
+                isTestMode = false;
+                startQuiz();
             } else {
-                document.getElementById('content').innerHTML = `
-                    <p class="error-msg">❌ ПТЕРО УЖЕ ВЫЛЕТЕЛ ЗА ТОБОЙ!</p>
-                    <a href="#" class="social-link link1" onclick="location.reload()">ПОПРОБОВАТЬ СНОВА</a>
-                `;
+                alert('❌ Птеро уже вылетел за тобой!');
             }
         }
 
-        function renderQuiz() {
-            document.getElementById('content').innerHTML = `
-                <p class="question">1. Кто в группе на бас-гитаре?</p>                <input type="text" id="ans1" placeholder="...">
-                
-                <p class="question">2. Сколько раз из 12 выступлений была сыграна 'Изумрудный Город'?</p>
-                <input type="number" id="ans2" placeholder="...">
-                
-                <p class="question">3. Автор какой песни Окей является Лёха Панк?</p>
-                <input type="text" id="ans3" placeholder="...">
-                
-                <br>
-                <a href="#" class="social-link link1" onclick="checkQuiz()">ОТВЕТИТЬ</a>
-            `;
+        function startQuiz() {
+            currentQuestions = getRandomQuestions();
+            let html = '';
+            currentQuestions.forEach((q, i) => {
+                html += `<p class="question">${i+1}. ${q.q}</p>
+                         <input type="text" id="a${i+1}" placeholder="...">`;
+            });
+            html += `<br><a href="#" class="btn" onclick="check()">ОТВЕТИТЬ</a>`;
+            if (isTestMode) html += `<div class="test-badge">🧪 ТЕСТОВЫЙ РЕЖИМ</div>`;
+            
+            document.getElementById('content').innerHTML = html;
         }
 
-        function checkQuiz() {
-            const a1 = document.getElementById('ans1').value.toLowerCase();
-            const a2 = document.getElementById('ans2').value;
-            const a3 = document.getElementById('ans3').value.toLowerCase();
-
-            if (a1.includes('томас') && a2 == '11' && a3.includes('степная трава')) {
-                const c = cards[Math.floor(Math.random() * cards.length)];
-                showFinalCard(c);
+        function check() {
+            const answers = [
+                document.getElementById('a1').value,
+                document.getElementById('a2').value,
+                document.getElementById('a3').value
+            ];
+            
+            // Проверяем все 3 ответа
+            const allCorrect = currentQuestions.every((q, i) => 
+                checkAnswer(answers[i], q.a)
+            );
+            
+            if (allCorrect) {
+                // Получаем список использованных карт (только если не тест)                const used = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used') || '[]');
+                const available = cards.filter((_, i) => !used.includes(i));
+                
+                if (!isTestMode && available.length === 0) {
+                    alert('🎉 Все карты коллекций №5 и №6 разыграны!');
+                    location.href = 'index.html';
+                    return;
+                }
+                
+                // Выбираем случайную из оставшихся
+                const idx = Math.floor(Math.random() * available.length);
+                const cardIdx = cards.indexOf(available[idx]);
+                const card = cards[cardIdx];
+                
+                // Сохраняем прогресс ТОЛЬКО если не тест
+                if (!isTestMode) {
+                    used.push(cardIdx);
+                    localStorage.setItem('quest_used', JSON.stringify(used));
+                    localStorage.setItem('quest_time', Date.now().toString());
+                }
+                
+                show(card, cardIdx + 1);
             } else {
-                document.getElementById('content').innerHTML = `
-                    <p class="error-msg">❌ ПЛОХО! ИДИ УЧИ ЛОР!</p>
-                    <a href="#" class="social-link link1" onclick="location.reload()">НАЧАТЬ ЗАНОВО</a>
-                `;
+                alert('❌ Ошибка в ответах! Иди учи лор на главной.');
+                location.reload();
             }
         }
 
-        function showFinalCard(card) {
+        function show(card, num) {
+            const testBadge = isTestMode ? '<div class="test-badge">🧪 ТЕСТОВЫЙ РЕЖИМ — карта не списана</div>' : '';
+            
             document.getElementById('content').innerHTML = `
-                <div class="card-display">
-                    <h3 class="card-title">💎 ТВОЯ НАГРАДА:</h3>
-                    <img src="${card.file}" class="card-img" alt="${card.title}">
-                    <div class="card-title">${card.title}</div>
-                    <div class="card-series">${card.text}</div>
+                <div class="card">
+                    <img src="${card.img}" class="card-img">
+                    <div class="card-text">Коллекционная карточка Окей!</div>
+                    <div class="card-text" style="color:#ff004f; font-size:0.9em;">${card.txt}</div>
+                    <div style="color:#ffcc00; margin-top:8px; font-size:0.9em;">Уникальный №: ${num}/20</div>
+                    ${testBadge}
                 </div>
-                
-                <div class="warning">
-                    <strong>⚠️ СДЕЛАЙ СКРИНШОТ!</strong><br>
-                    Для обмена на физическую карту пиши Ковбою Рафу.<br>
-                    (Только Челябинск. Никаких Сахалинов и Казахстанов!!!)
+                <div class="warn">
+                    <strong>⚠️ СКРИНШОТ!</strong><br>
+                    Пиши Ковбою Рафу за физической картой.<br>
+                    (Только Челябинск!)
                 </div>
-                
-                <a href="index.html" class="social-link link2">← НА ГЛАВНУЮ</a>
+                <a href="index.html" class="btn" style="border-color:#4c75a8;background:#4c75a8;">← НА ГЛАВНУЮ</a>
             `;
         }
     </script>
