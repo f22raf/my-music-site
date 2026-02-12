@@ -41,7 +41,7 @@
         let isTestMode = false;
         let currentQuestions = [];
         
-        // 🃏 20 карт = 10 уникальных × 2 экземпляра (коллекции №5 и №6)
+        // 🃏 20 карт (10 уникальных × 2 экз.)
         const cards = [
             {img:"Cards/InShot_20260208_021444024.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
             {img:"Cards/InShot_20260208_022242270.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
@@ -64,7 +64,7 @@
             {img:"Cards/InShot_20260208_031058054.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"}
         ];
 
-        // ❓ Банк вопросов (12 штук)
+        // ❓ 12 вопросов
         const questionBank = [
             { q: "Кто в группе играет на бас-гитаре?", a: ["томас"] },
             { q: "Сколько раз из 12 выступлений была сыграна 'Изумрудный Город'?", a: ["11"] },
@@ -80,38 +80,30 @@
             { q: "Какая электроакустическая гитара была у Клауса в Окей?", a: ["martinez", "мартинез"] }
         ];
 
-        // 🔀 Выбираем 3 случайных вопроса
         function getRandomQuestions() {
-            const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, 3);
+            return [...questionBank].sort(() => 0.5 - Math.random()).slice(0, 3);
         }
 
-        // ✅ Проверка ответа с нормализацией
-        function checkAnswer(userAns, correctAnswers) {
-            const norm = userAns.trim().toLowerCase()
-                .replace(/ё/g, 'е')
-                .replace(/йо/g, 'ё');
-            return correctAnswers.some(a => norm.includes(a));
+        function normalize(str) {
+            return str.trim().toLowerCase().replace(/ё/g, 'е');
+        }
+
+        function checkAnswer(user, correct) {
+            const norm = normalize(user);
+            return correct.some(a => norm.includes(normalize(a)));
         }
 
         function go() {
             const p = document.getElementById('pass').value;
-                        // 🔑 ТЕСТОВЫЙ РЕЖИМ
             if (p === '00000000') {
-                isTestMode = true;
-                alert('🧪 ТЕСТОВЫЙ РЕЖИМ: карты не списываются!');
+                isTestMode = true;                alert('🧪 ТЕСТОВЫЙ РЕЖИМ: карты не списываются!');
                 startQuiz();
-                return;
-            }
-            
-            // Обычная проверка кулдауна
-            const last = localStorage.getItem('quest_time');
-            if (last && Date.now() - last < 86400000) {
-                alert('⏳ Уже проходил квест! Следующая попытка завтра.');
-                return;
-            }
-            
-            if (p === '26082022') {
+            } else if (p === '26082022') {
+                const last = localStorage.getItem('quest_time');
+                if (last && Date.now() - last < 86400000) {
+                    alert('⏳ Уже проходил квест! Следующая попытка завтра.');
+                    return;
+                }
                 isTestMode = false;
                 startQuiz();
             } else {
@@ -121,64 +113,49 @@
 
         function startQuiz() {
             currentQuestions = getRandomQuestions();
-            let html = '';
-            currentQuestions.forEach((q, i) => {
-                html += `<p class="question">${i+1}. ${q.q}</p>
-                         <input type="text" id="a${i+1}" placeholder="...">`;
-            });
+            let html = currentQuestions.map((q, i) => 
+                `<p class="question">${i+1}. ${q.q}</p><input type="text" id="a${i+1}" placeholder="...">`
+            ).join('');
             html += `<br><a href="#" class="btn" onclick="check()">ОТВЕТИТЬ</a>`;
             if (isTestMode) html += `<div class="test-badge">🧪 ТЕСТОВЫЙ РЕЖИМ</div>`;
-            
             document.getElementById('content').innerHTML = html;
         }
 
         function check() {
-            const answers = [
-                document.getElementById('a1').value,
-                document.getElementById('a2').value,
-                document.getElementById('a3').value
-            ];
-            
-            // Проверяем все 3 ответа
-            const allCorrect = currentQuestions.every((q, i) => 
-                checkAnswer(answers[i], q.a)
-            );
-            
-            if (allCorrect) {
-                // Получаем список использованных карт (только если не тест)                const used = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used') || '[]');
-                const available = cards.filter((_, i) => !used.includes(i));
-                
-                if (!isTestMode && available.length === 0) {
-                    alert('🎉 Все карты коллекций №5 и №6 разыграны!');
-                    location.href = 'index.html';
-                    return;
-                }
-                
-                // Выбираем случайную из оставшихся
-                const idx = Math.floor(Math.random() * available.length);
-                const cardIdx = cards.indexOf(available[idx]);
-                const card = cards[cardIdx];
-                
-                // Сохраняем прогресс ТОЛЬКО если не тест
-                if (!isTestMode) {
-                    used.push(cardIdx);
-                    localStorage.setItem('quest_used', JSON.stringify(used));
-                    localStorage.setItem('quest_time', Date.now().toString());
-                }
-                
-                show(card, cardIdx + 1);
-            } else {
+            const answers = [1,2,3].map(i => document.getElementById(`a${i}`).value);
+            if (!currentQuestions.every((q, i) => checkAnswer(answers[i], q.a))) {
                 alert('❌ Ошибка в ответах! Иди учи лор на главной.');
                 location.reload();
+                return;
             }
+
+            // Выбираем случайную карту
+            const used = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used') || '[]');
+            const available = cards.filter((_, i) => !used.includes(i));
+            
+            if (!isTestMode && available.length === 0) {
+                alert('🎉 Все карты разыграны!');
+                location.href = 'index.html';
+                return;
+            }
+
+            const randIdx = Math.floor(Math.random() * available.length);
+            const card = available[randIdx];
+            const globalIdx = cards.findIndex(c => c.img === card.img && c.txt === card.txt);
+
+            if (!isTestMode) {
+                used.push(globalIdx);
+                localStorage.setItem('quest_used', JSON.stringify(used));                localStorage.setItem('quest_time', Date.now().toString());
+            }
+
+            show(card, globalIdx + 1);
         }
 
         function show(card, num) {
             const testBadge = isTestMode ? '<div class="test-badge">🧪 ТЕСТОВЫЙ РЕЖИМ — карта не списана</div>' : '';
-            
             document.getElementById('content').innerHTML = `
                 <div class="card">
-                    <img src="${card.img}" class="card-img">
+                    <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27100%27 height=%27100%27 fill=%27%23ff004f%27/></svg>'">
                     <div class="card-text">Коллекционная карточка Окей!</div>
                     <div class="card-text" style="color:#ff004f; font-size:0.9em;">${card.txt}</div>
                     <div style="color:#ffcc00; margin-top:8px; font-size:0.9em;">Уникальный №: ${num}/20</div>
