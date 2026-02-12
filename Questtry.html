@@ -60,7 +60,7 @@ function renderQuiz() {
         <p>2. Сколько раз из 12 выступлений Окей, была сыгранна песня 'Изумрудный Город'?</p>
         <input type="number" id="ans2">
         <p>3. Автор какой песни Окей является Лёха Панк?</p>
-        <input type="number" id="ans3">
+        <input type="text" id="ans3">
         <br>
         <button onclick="checkQuiz()">ВЫБИТЬ КАРТУ</button>
     `;
@@ -73,7 +73,7 @@ function checkQuiz() {
     
 
     // Ответы: Томас , 11 раз , Степная Трава 
-    if(a1.includes('томас') && a2 == '11' && a2 == 'Степная Трава') {
+    if(a1.includes('томас') && a2 == '11' && a3 == 'Степная Трава') {
         const c = cards[Math.floor(Math.random() * cards.length)];
         showFinalCard(c);
     } else {
