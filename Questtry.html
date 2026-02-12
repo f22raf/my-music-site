@@ -38,27 +38,27 @@
         let isTestMode = false;
         let currentQuestions = [];
         
-        // 🃏 20 карт (10 уникальных × 2 экз.)
+        // 🃏 20 карт (10 уникальных × 2 экз.) — коллекции №5 и №6
         const cards = [
-            {img:"Cards/InShot_20260208_021444024.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_022242270.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_022506814.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_023708134.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_024434872.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_024852106.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_025430478.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_025808772.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},            {img:"Cards/InShot_20260208_030521457.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_031058054.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_021444024.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
-            {img:"Cards/InShot_20260208_022242270.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
-            {img:"Cards/InShot_20260208_022506814.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
-            {img:"Cards/InShot_20260208_023708134.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
-            {img:"Cards/InShot_20260208_024434872.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
-            {img:"Cards/InShot_20260208_024852106.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
-            {img:"Cards/InShot_20260208_025430478.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
-            {img:"Cards/InShot_20260208_025808772.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
-            {img:"Cards/InShot_20260208_030521457.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
-            {img:"Cards/InShot_20260208_031058054.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"}
+            {img:"Cards/InShot_20260208_021444024.jpg", номер:1, экз:5},
+            {img:"Cards/InShot_20260208_022242270.jpg", номер:2, экз:5},
+            {img:"Cards/InShot_20260208_022506814.jpg", номер:3, экз:5},
+            {img:"Cards/InShot_20260208_023708134.jpg", номер:4, экз:5},
+            {img:"Cards/InShot_20260208_024434872.jpg", номер:5, экз:5},
+            {img:"Cards/InShot_20260208_024852106.jpg", номер:6, экз:5},
+            {img:"Cards/InShot_20260208_025430478.jpg", номер:7, экз:5},
+            {img:"Cards/InShot_20260208_025808772.jpg", номер:8, экз:5},            {img:"Cards/InShot_20260208_030521457.jpg", номер:9, экз:5},
+            {img:"Cards/InShot_20260208_031058054.jpg", номер:10, экз:5},
+            {img:"Cards/InShot_20260208_021444024.jpg", номер:1, экз:6},
+            {img:"Cards/InShot_20260208_022242270.jpg", номер:2, экз:6},
+            {img:"Cards/InShot_20260208_022506814.jpg", номер:3, экз:6},
+            {img:"Cards/InShot_20260208_023708134.jpg", номер:4, экз:6},
+            {img:"Cards/InShot_20260208_024434872.jpg", номер:5, экз:6},
+            {img:"Cards/InShot_20260208_024852106.jpg", номер:6, экз:6},
+            {img:"Cards/InShot_20260208_025430478.jpg", номер:7, экз:6},
+            {img:"Cards/InShot_20260208_025808772.jpg", номер:8, экз:6},
+            {img:"Cards/InShot_20260208_030521457.jpg", номер:9, экз:6},
+            {img:"Cards/InShot_20260208_031058054.jpg", номер:10, экз:6}
         ];
 
         // ❓ 12 вопросов
@@ -135,7 +135,7 @@
 
             const randIdx = Math.floor(Math.random() * available.length);
             const card = available[randIdx];
-            const globalIdx = cards.findIndex(c => c.img === card.img && c.txt === card.txt);
+            const globalIdx = cards.findIndex(c => c.img === card.img && c.номер === card.номер && c.экз === card.экз);
 
             if (!isTestMode) {
                 used.push(globalIdx);
@@ -150,8 +150,8 @@
                 <div class="card">
                     <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27280%27 height=%27380%27 fill=%27%23222%27/><text x=%2750%27 y=%27200%27 fill=%27%23ff004f%27 font-size=%2724%27>КАРТА</text></svg>'">
                     <div class="card-text">Коллекционная карточка Окей!</div>
-                    <div class="card-text" style="color:#ff004f; font-size:0.9em;">${card.txt}</div>
-                    <div style="color:#ffcc00; margin-top:8px; font-size:0.9em;">Уникальный №: ${num}/20</div>
+                    <div class="card-text" style="color:#ff004f; font-size:0.9em;">${card.номер}/10, Экз. ${card.экз}/6</div>
+                    <div style="color:#ffcc00; margin-top:8px; font-size:0.8em;">Уникальный №: ${num}/20</div>
                 </div>
                 <div class="warn">
                     <strong>⚠️ СКРИНШОТ!</strong><br>
