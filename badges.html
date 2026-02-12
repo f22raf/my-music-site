@@ -190,15 +190,60 @@
             letter-spacing: 2px;
         }
 
-        .footer {
-            margin-top: 25px;
-            color: #ccc;
+        .card-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(139, 0, 0, 0.3);
+            border: 3px solid #ffcc00;            border-radius: 0;
+        }
+
+        .card-title {
+            color: #ffcc00;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .card-blur {
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            display: block;
+            filter: blur(8px);
+            opacity: 0.7;
+            border: 3px solid #ffcc00;
+            box-shadow: 0 4px 0 #000;
+        }
+
+        .card-reveal {
+            display: none;
+            text-align: center;
+        }
+
+        .card-img {
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            display: block;
+            border: 3px solid #ff004f;
+            box-shadow: 0 4px 0 #000;
+        }
+
+        .card-text {
+            color: #ffcc00;
+            margin: 10px 0;
+            font-size: 1.2em;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .card-series {
+            color: #ff004f;
+            font-size: 1em;
             font-style: italic;
-            font-size: 0.9em;        }
+        }
 
         @media (max-width: 600px) {
-            body {
-                font-size: 1em;
+            body {                font-size: 1em;
             }
 
             .container {
@@ -232,6 +277,10 @@
             .tg-section {
                 padding: 15px;
             }
+
+            .card-blur, .card-img {
+                max-width: 220px;
+            }
         }
     </style>
 </head>
@@ -255,6 +304,18 @@
             — ЧЕЛЯБИНСК — ЛИЧНО В РУКИ —
         </div>
 
+        <div class="card-section">
+            <div class="card-title">🎁 БОНУС ЗА ПОКУПКУ</div>
+            <p style="color:#fff; margin-bottom:15px; font-size:0.95em;">
+                Купи значок и получи рандомную карточку из коллекции №4!
+            </p>
+            
+            <div id="cardDisplay">
+                <img src="Cards/InShot_20260208_021444024.jpg" class="card-blur" alt="Карточка">
+                <p style="color:#ffcc00; margin-top:10px; font-size:0.9em;">Карточка откроется после оплаты</p>
+            </div>
+        </div>
+
         <div class="steps">
             <div class="step"><span class="step-number">1.</span> Нажми кнопку и оплати:</div>
             <a href="https://send.tinkoff.ru/xxxxx" class="social-link pay-link" id="payLink">Оплатить 100₽</a>
@@ -272,29 +333,91 @@
             
             <div style="margin-top: 20px; color: #fff; font-size: 0.95em; text-align: left;">
                 <div class="step"><span class="step-number">4.</span> Договариваемся о месте</div>
-                <div class="step"><span class="step-number">5.</span> Встреча → значок в руки</div>
+                <div class="step"><span class="step-number">5.</span> Встреча → значок + карточка в руки</div>
             </div>
         </div>
 
         <div class="warning">
-            <strong>⚠️</strong> После оплаты нажми «назад» в браузере или закрой вкладку оплаты — кнопка ТГ появится автоматически.
+            <strong>⚠️</strong> После оплаты нажми «назад» в браузере или закрой вкладку оплаты — кнопка ТГ и карточка появятся автоматически.
         </div>
 
-        <p class="footer">Без почты. Только живое рукопожатие. 🤘</p>
-
-        <div style="margin-top: 30px;">
-            <a href="index.html" class="social-link home-link">← На главную</a>
+        <div style="margin-top: 30px;">            <a href="index.html" class="social-link home-link">← На главную</a>
         </div>
     </div>
 
     <script>
-        // Проверяем, был ли клик на оплату
+        // 🃏 10 карт коллекции №4 (только за покупку значков)
+        const cards = [
+            {img:"Cards/InShot_20260208_021444024.jpg", номер:1, экз:4},
+            {img:"Cards/InShot_20260208_022242270.jpg", номер:2, экз:4},
+            {img:"Cards/InShot_20260208_022506814.jpg", номер:3, экз:4},
+            {img:"Cards/InShot_20260208_023708134.jpg", номер:4, экз:4},
+            {img:"Cards/InShot_20260208_024434872.jpg", номер:5, экз:4},
+            {img:"Cards/InShot_20260208_024852106.jpg", номер:6, экз:4},
+            {img:"Cards/InShot_20260208_025430478.jpg", номер:7, экз:4},
+            {img:"Cards/InShot_20260208_025808772.jpg", номер:8, экз:4},
+            {img:"Cards/InShot_20260208_030521457.jpg", номер:9, экз:4},
+            {img:"Cards/InShot_20260208_031058054.jpg", номер:10, экз:4}
+        ];
+
+        // Проверяем, была ли оплата
         document.addEventListener('DOMContentLoaded', function() {
             const tgSection = document.getElementById('tgSection');
             const payLink = document.getElementById('payLink');
-                        // Если флаг есть — показываем ТГ
+            const cardDisplay = document.getElementById('cardDisplay');
+            
+            // Если флаг оплаты есть — показываем ТГ и карточку
             if (localStorage.getItem('badge_payment_clicked')) {
                 tgSection.style.display = 'block';
+                
+                // Проверяем, выдавалась ли уже карточка коллекции №4
+                const cardGiven = localStorage.getItem('badge_card_given');
+                if (!cardGiven) {
+                    // Получаем список использованных карт коллекции №4
+                    const used = JSON.parse(localStorage.getItem('badge_card_used') || '[]');
+                    const available = cards.filter((_, i) => !used.includes(i));
+                    
+                    if (available.length > 0) {
+                        // Выбираем случайную из оставшихся
+                        const randIdx = Math.floor(Math.random() * available.length);
+                        const card = available[randIdx];
+                        const globalIdx = cards.findIndex(c => c.img === card.img && c.номер === card.номер && c.экз === card.экз);
+                        
+                        // Сохраняем карточку как выданную
+                        used.push(globalIdx);
+                        localStorage.setItem('badge_card_used', JSON.stringify(used));
+                        localStorage.setItem('badge_card_given', 'yes');
+                        
+                        // Показываем карточку
+                        cardDisplay.innerHTML = `
+                            <div class="card-reveal">                                <img src="${card.img}" class="card-img" alt="Карточка">
+                                <div class="card-text">Коллекционная карточка Окей!</div>
+                                <div class="card-series">${card.номер}/10, Экз. ${card.экз}/6</div>
+                                <div style="color:#ffcc00; margin-top:8px; font-size:0.85em;">
+                                    ⚠️ СКРИНШОТ! Покажи при получении значка.
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // Все карты коллекции №4 разыграны
+                        cardDisplay.innerHTML = `
+                            <div class="card-reveal">
+                                <img src="Cards/InShot_20260208_021444024.jpg" class="card-img" alt="Карточка">
+                                <div class="card-text">Коллекционная карточка Окей!</div>
+                                <div class="card-series">Все карты коллекции №4 разыграны!</div>
+                            </div>
+                        `;
+                    }
+                } else {
+                    // Карточка уже была выдана ранее
+                    cardDisplay.innerHTML = `
+                        <div class="card-reveal">
+                            <img src="Cards/InShot_20260208_021444024.jpg" class="card-img" alt="Карточка">
+                            <div class="card-text">Коллекционная карточка Окей!</div>
+                            <div class="card-series">Карточка уже получена</div>
+                        </div>
+                    `;
+                }
             }
             
             // Ставим флаг при клике на оплату
