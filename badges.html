@@ -59,19 +59,13 @@
             line-height: 1.5;
         }
 
-        .badge-img {
-            width: 180px;
-            height: 180px;
-            background: #222;
-            border: 4px solid #ff004f;
-            border-radius: 50%;
+        .badge-photo {
+            max-width: 280px;
             margin: 20px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
-            font-weight: bold;
-            box-shadow: 0 6px 0 #000, 0 10px 15px rgba(0,0,0,0.7);
+            display: block;
+            border: 2px solid #ff004f;
+            border-radius: 0;
+            box-shadow: 0 4px 0 #000, 0 6px 10px rgba(0,0,0,0.7);
         }
 
         .badge-name {
@@ -96,13 +90,13 @@
             line-height: 1.6;
         }
 
-        .steps {            margin: 30px 0;
+        .steps {
+            margin: 30px 0;
             text-align: left;
         }
 
         .step {
-            margin-bottom: 12px;
-            padding-left: 25px;
+            margin-bottom: 12px;            padding-left: 25px;
             border-left: 3px solid #ff004f;
             color: #fff;
             font-size: 1em;
@@ -115,37 +109,47 @@
             margin-right: 5px;
         }
 
-        .pay-link {
+        .social-link {
             display: inline-block;
-            background: #ff004f;
-            color: #fff;
+            padding: 10px 20px;
+            margin: 10px;
+            color: white;
             text-decoration: none;
-            padding: 15px 40px;
-            margin: 25px auto;
-            font-family: 'Nosifer', cursive;
-            font-size: 1.4em;
-            font-weight: bold;
-            border: 3px solid #ff004f;
-            border-radius: 0;
-            box-shadow: 0 4px 0 #000, 0 6px 10px rgba(0,0,0,0.7);
-            letter-spacing: 1px;
-            transition: transform 0.1s, box-shadow 0.1s;
+            border: 2px solid;
+            font-size: 1.3em;
+            min-width: 140px;
+            transition: transform 0.1s;
         }
 
-        .pay-link:hover {
+        .social-link:hover {
             transform: translateX(3px) translateY(3px);
-            box-shadow: 3px 3px 0 #000, 5px 5px 8px rgba(0,0,0,0.5);
+            box-shadow: 3px 3px 0 #000;
+        }
+
+        .pay-link {
+            border-color: #ff0000;
+            background: #ff004f;
+        }
+
+        .tg-link {
+            border-color: #0088cc;
+            background: #0088cc;
+        }
+
+        .home-link {
+            border-color: #4c75a8;
+            background: #4c75a8;
         }
 
         .tg-section {
             display: none;
             margin: 30px 0;
             padding: 25px;
-            background: rgba(139, 0, 0, 0.3);
-            border: 3px solid #ff004f;
+            background: rgba(139, 0, 0, 0.3);            border: 3px solid #ff004f;
             border-radius: 0;
             box-shadow: 0 4px 0 #000, 0 6px 10px rgba(0,0,0,0.7);
         }
+
         .tg-title {
             color: #ffcc00;
             font-size: 1.8em;
@@ -161,28 +165,6 @@
             line-height: 1.6;
         }
 
-        .tg-link {
-            display: inline-block;
-            background: #ff004f;
-            color: #fff;
-            text-decoration: none;
-            padding: 12px 30px;
-            margin-top: 15px;
-            font-family: 'Nosifer', cursive;
-            font-size: 1.3em;
-            font-weight: bold;
-            border: 3px solid #ff004f;
-            border-radius: 0;
-            box-shadow: 0 4px 0 #000, 0 6px 10px rgba(0,0,0,0.7);
-            letter-spacing: 1px;
-            transition: transform 0.1s, box-shadow 0.1s;
-        }
-
-        .tg-link:hover {
-            transform: translateX(3px) translateY(3px);
-            box-shadow: 3px 3px 0 #000, 5px 5px 8px rgba(0,0,0,0.5);
-        }
-
         .warning {
             background: rgba(139, 0, 0, 0.3);
             border-left: 4px solid #ff004f;
@@ -194,7 +176,8 @@
             border-radius: 0;
         }
 
-        .warning strong {            color: #ffcc00;
+        .warning strong {
+            color: #ffcc00;
         }
 
         .chel-only {
@@ -211,8 +194,7 @@
             margin-top: 25px;
             color: #ccc;
             font-style: italic;
-            font-size: 0.9em;
-        }
+            font-size: 0.9em;        }
 
         @media (max-width: 600px) {
             body {
@@ -228,10 +210,8 @@
                 font-size: 1.8em;
             }
 
-            .badge-img {
-                width: 140px;
-                height: 140px;
-                font-size: 45px;
+            .badge-photo {
+                max-width: 220px;
             }
 
             .badge-name {
@@ -242,10 +222,11 @@
                 font-size: 2.2em;
             }
 
-            .pay-link, .tg-link {
-                padding: 12px 25px;                font-size: 1.1em;
-                width: 100%;
-                box-sizing: border-box;
+            .social-link {
+                padding: 8px 15px;
+                font-size: 1.1em;
+                min-width: 120px;
+                margin: 8px;
             }
 
             .tg-section {
@@ -260,12 +241,11 @@
         
         <h2>Металлические Значки</h2>
         
-        <div class="badge-img">OKIE</div>
+        <img src="IMG_20260213_014557_690.jpg" alt="Значок Окей" class="badge-photo">
         
-        <div class="badge-name">Значок "Окей"</div>
-        
+        <div class="badge-name">Значок "Окей"</div>        
         <div class="badge-desc">
-            Металл, качественное покрытие, не царапается.<br>
+            Металл, качественное покрытие.<br>
             Эксклюзивный аксессуар для фанбазы!
         </div>
         
@@ -277,7 +257,7 @@
 
         <div class="steps">
             <div class="step"><span class="step-number">1.</span> Нажми кнопку и оплати:</div>
-            <a href="https://send.tinkoff.ru/xxxxx" class="pay-link" id="payLink">Оплатить 100₽</a>
+            <a href="https://send.tinkoff.ru/xxxxx" class="social-link pay-link" id="payLink">Оплатить 100₽</a>
             
             <div class="step"><span class="step-number">2.</span> После оплаты вернись сюда</div>
             <div class="step"><span class="step-number">3.</span> Появится кнопка ТГ → пиши мне</div>
@@ -288,11 +268,12 @@
             <div class="tg-instruction">
                 Напиши: «Значок, оплатил» + свой район Челябинска
             </div>
-            <a href="https://t.me/raf_evro" class="tg-link">Перейти в Telegram</a>
+            <a href="https://t.me/raf_evro" class="social-link tg-link">Telegram</a>
             
             <div style="margin-top: 20px; color: #fff; font-size: 0.95em; text-align: left;">
                 <div class="step"><span class="step-number">4.</span> Договариваемся о месте</div>
-                <div class="step"><span class="step-number">5.</span> Встреча → значок в руки</div>            </div>
+                <div class="step"><span class="step-number">5.</span> Встреча → значок в руки</div>
+            </div>
         </div>
 
         <div class="warning">
@@ -302,9 +283,7 @@
         <p class="footer">Без почты. Только живое рукопожатие. 🤘</p>
 
         <div style="margin-top: 30px;">
-            <a href="index.html" class="pay-link" style="background: #8B0000; border-color: #ff004f; font-size: 1.2em; padding: 10px 30px;">
-                ← На главную
-            </a>
+            <a href="index.html" class="social-link home-link">← На главную</a>
         </div>
     </div>
 
@@ -312,6 +291,20 @@
         // Проверяем, был ли клик на оплату
         document.addEventListener('DOMContentLoaded', function() {
             const tgSection = document.getElementById('tgSection');
+            const payLink = document.getElementById('payLink');
+                        // Если флаг есть — показываем ТГ
+            if (localStorage.getItem('badge_payment_clicked')) {
+                tgSection.style.display = 'block';
+            }
+            
+            // Ставим флаг при клике на оплату
+            payLink.addEventListener('click', function() {
+                localStorage.setItem('badge_payment_clicked', 'true');
+            });
+        });
+    </script>
+</body>
+</html>            const tgSection = document.getElementById('tgSection');
             const payLink = document.getElementById('payLink');
             
             // Если флаг есть — показываем ТГ
