@@ -5,9 +5,10 @@
     <title>АРХИВ ОКЕЙ - КВЕСТ</title>
     <style>
         body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; overflow-x: hidden; }
-        #quest-box { border: 3px solid #00ff00; padding: 30px; max-width: 500px; width: 90%; text-align: center; background: rgba(0,20,0,0.9); box-shadow: 0 0 20px #00ff00; }
-        input { background: #000; border: 1px solid #00ff00; color: #00ff00; padding: 12px; width: 80%; margin: 10px 0; font-size: 16px; text-align: center; }
-        button { background: #00ff00; color: #000; border: none; padding: 12px 25px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; }
+        #quest-box { border: 3px solid #00ff00; padding: 30px; max-width: 500px; width: 90%; text-align: center; background: rgba(0,20,0,0.9); box-shadow: 0 0 20px #00ff00; position: relative; }
+        #quest-box::before { content: " "; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; pointer-events: none; }
+        input { background: #000; border: 1px solid #00ff00; color: #00ff00; padding: 12px; width: 80%; margin: 10px 0; font-size: 16px; text-align: center; outline: none; }
+        button { background: #00ff00; color: #000; border: none; padding: 12px 25px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; font-family: 'Courier New', monospace; }
         button:hover { background: #fff; transform: scale(1.05); }
         .card-display { border: 5px double gold; padding: 15px; background: #111; margin-top: 20px; animation: glow 1s infinite alternate; }
         @keyframes glow { from { box-shadow: 0 0 5px gold; } to { box-shadow: 0 0 20px gold; } }
@@ -19,32 +20,32 @@
 
 <div id="quest-box">
     <div id="content">
-        <h1>🔐 ДОСТУП В АРХИВ</h1>
-        <p>Введите дату основания группы (ДДММГГГГ):</p>
-        <input type="text" id="pass-field" placeholder="Пример: 01012022">
+        <h1>🔐 SYSTEM ACCESS</h1>
+        <p>> Введите дату основания группы (ДДММГГГГ):</p>
+        <input type="password" id="pass-field" placeholder="********" maxlength="8">
         <br>
-        <button onclick="checkPass()">ПОДТВЕРДИТЬ</button>
+        <button onclick="checkPass()">ENTER</button>
     </div>
 </div>
 
 <script>
-// Список твоих карт из папки Cards
+// Список твоих карт из папки Cards [cite: 2026-02-08]
 const cards = [
-    { title: "Коллекционная карточка Окей", file: "InShot_20260208_021444024.jpg", text: "Высшая ступень эволюции фаната!" },
-    { title: "Коллекционная карточка Окей", file: "InShot_20260208_022242270.jpg", text: "Грайдер Младший на защите твоего звука." },
-    { title: "Коллекционная карточка Окей", file: "InShot_20260208_022506814.jpg", text: "Почетный хранитель лора и артефактов." },
-    { title: "Коллекционная карточка Окей", file: "InShot_20260208_023708134.jpg", text: "Мастер коммутации и лампового жира." },
-    { title: "Коллекционная карточка Окей", file: "InShot_20260208_024434872.jpg", text: "Верность до самого конца." },
-    { title: "Коллекционная карточка Окей", file: "InShot_20260208_024852106.jpg", text: "Топчи танцпол как диплодок!" },
-    { title: "Коллекционная карточка Окей", file: "InShot_20260208_025430478.jpg", text: "Вестерн-вайб в каждой ноте." },
-    { title: "Коллекционная карточка Окей", file: "InShot_20260208_025808772.jpg", text: "Путь по дороге из желтого кирпича." },
-    { title: "Коллекционная карточка Окей", file: "InShot_20260208_030521457.jpg", text: "Основатель и голос Окей." },
-    { title: "Коллекционная карточка Окей", file: "InShot_20260208_031058054.jpg", text: "Драйв, шляпа и грязный звук!" }
+    { title: "Коллекционная карточка Окей!", file: "InShot_20260208_021444024.jpg", text: "Серия LEGENDS OKEY" },
+    { title: "Коллекционная карточка Окей!", file: "InShot_20260208_022242270.jpg", text: "Серия LEGENDS OKEY" },
+    { title: "Коллекционная карточка Окей!", file: "InShot_20260208_022506814.jpg", text: "Серия LEGENDS OKEY" },
+    { title: "Коллекционная карточка Окей!", file: "InShot_20260208_023708134.jpg", text: "Серия LEGENDS OKEY" },
+    { title: "Коллекционная карточка Окей!", file: "InShot_20260208_024434872.jpg", text: "Серия LEGENDS OKEY" },
+    { title: "Коллекционная карточка Окей!", file: "InShot_20260208_024852106.jpg", text: "Серия LEGENDS OKEY" },
+    { title: "Коллекционная карточка Окей!", file: "InShot_20260208_025430478.jpg", text: "Серия LEGENDS OKEY" },
+    { title: "Коллекционная карточка Окей!", file: "InShot_20260208_025808772.jpg", text: "Серия LEGENDS OKEY" },
+    { title: "Коллекционная карточка Окей!", file: "InShot_20260208_030521457.jpg", text: "Серия LEGENDS OKEY" },
+    { title: "Коллекционная карточка Окей!", file: "InShot_20260208_031058054.jpg", text: "Серия LEGENDS OKEY" }
 ];
 
 function checkPass() {
     const p = document.getElementById('pass-field').value;
-    // Пароль, который ты просил
+    // Твой секретный код основания [cite: 2026-02-08]
     if(p === '26082022') {
         renderQuiz();
     } else {
@@ -54,10 +55,10 @@ function checkPass() {
 
 function renderQuiz() {
     document.getElementById('content').innerHTML = `
-        <h2>ТЕСТ ДЛЯ ТРУ</h2>
+        <h2 style="color:#00ff00;">[ ТЕСТ ДЛЯ ТРУ ]</h2>
         <p>1. Кто в группе на бас-гитаре?</p>
         <input type="text" id="ans1">
-        <p>2. Сколько раз из 12 выступлений Окей, была сыгранна песня 'Изумрудный Город'?</p>
+        <p>2. Сколько раз из 12 выступлений Окей была сыграна песня 'Изумрудный Город'?</p>
         <input type="number" id="ans2">
         <p>3. Автор какой песни Окей является Лёха Панк?</p>
         <input type="text" id="ans3">
@@ -69,11 +70,10 @@ function renderQuiz() {
 function checkQuiz() {
     const a1 = document.getElementById('ans1').value.toLowerCase();
     const a2 = document.getElementById('ans2').value;
-    const a3 = document.getElementById('ans3').value;
-    
+    const a3 = document.getElementById('ans3').value.toLowerCase();
 
-    // Ответы: Томас , 11 раз , Степная Трава 
-    if(a1.includes('томас') && a2 == '11' && a3 == 'Степная Трава') {
+    // Проверка: Томас [cite: 2026-02-08], 11 раз, Степная Трава
+    if (a1.includes('томас') && a2 == '11' && a3.includes('степная трава')) {
         const c = cards[Math.floor(Math.random() * cards.length)];
         showFinalCard(c);
     } else {
@@ -87,19 +87,18 @@ function showFinalCard(card) {
         <div class="card-display">
             <h3 style="color:gold; margin-top:0;">💎 ТВОЯ НАГРАДА:</h3>
             <img src="Cards/${card.file}" class="card-img" alt="${card.title}">
-            <h1 style="margin:5px 0; color:#fff;">${card.title}</h1>
-            <p style="font-size:14px; font-style:italic;">${card.text}</p>
+            <h1 style="margin:5px 0; color:#fff; font-size: 24px;">${card.title}</h1>
+            <p style="font-size:14px; font-style:italic; color:#00ff00;">${card.text}</p>
         </div>
         <div class="warning">
             ⚠️ Сделай скриншот!<br>
-            Для обмена на физическую карту пиши Ковбою Рафу.<br>
+            Для обмена на физическую карту пиши Ковбою Рафу [cite: 2025-06-19].<br>
             (Только Челябинск. Никаких Сахалинов и Казахстанов!!!)
         </div>
-        <button onclick="location.href='index.html'" style="background:#444; color:#fff;">НА ГЛАВНУЮ</button>
+        <button onclick="location.href='index.html'" style="background:#444; color:#fff; margin-top:20px;">НА ГЛАВНУЮ</button>
     `;
 }
 </script>
 
 </body>
 </html>
-
