@@ -20,8 +20,6 @@
         .card-img { width:100%; max-width:280px; border:3px solid #ff004f; margin:0 auto 15px; display:block; box-shadow:0 4px 0 #000; }
         .card-text { color:#ffcc00; margin:5px 0; font-size:1.2em; text-shadow:2px 2px 0 #000; }
         .warn { background:rgba(139,0,0,0.3); border-left:4px solid #ff004f; padding:15px; margin:25px 0; font-size:0.9em; color:#fff; text-align:left; }
-        .debug { color:#0f0; font-size:0.8em; margin-top:10px; }
-        .test-badge { color:#ffcc00; background:#8B0000; padding:5px 10px; display:inline-block; margin-top:10px; font-size:0.9em; }
     </style>
 </head>
 <body>
@@ -33,7 +31,6 @@
             <input type="password" id="pass" placeholder="ДДММГГГГ" maxlength="8">
             <br>
             <a href="#" class="btn" onclick="go()">ВВОД</a>
-            <div class="debug">Тест: 00000000 = вход без списания карт</div>
         </div>
     </div>
 
@@ -47,10 +44,10 @@
             {img:"Cards/InShot_20260208_022242270.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
             {img:"Cards/InShot_20260208_022506814.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
             {img:"Cards/InShot_20260208_023708134.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_024434872.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},            {img:"Cards/InShot_20260208_024852106.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_024434872.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_024852106.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
             {img:"Cards/InShot_20260208_025430478.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_025808772.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
-            {img:"Cards/InShot_20260208_030521457.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
+            {img:"Cards/InShot_20260208_025808772.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},            {img:"Cards/InShot_20260208_030521457.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
             {img:"Cards/InShot_20260208_031058054.jpg", txt:"Серия LEGENDS OKEY • Коллекция №5"},
             {img:"Cards/InShot_20260208_021444024.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
             {img:"Cards/InShot_20260208_022242270.jpg", txt:"Серия LEGENDS OKEY • Коллекция №6"},
@@ -96,11 +93,10 @@
         function go() {
             const p = document.getElementById('pass').value;
             if (p === '00000000') {
-                isTestMode = true;                alert('🧪 ТЕСТОВЫЙ РЕЖИМ: карты не списываются!');
+                isTestMode = true;
                 startQuiz();
             } else if (p === '26082022') {
-                const last = localStorage.getItem('quest_time');
-                if (last && Date.now() - last < 86400000) {
+                const last = localStorage.getItem('quest_time');                if (last && Date.now() - last < 86400000) {
                     alert('⏳ Уже проходил квест! Следующая попытка завтра.');
                     return;
                 }
@@ -117,7 +113,6 @@
                 `<p class="question">${i+1}. ${q.q}</p><input type="text" id="a${i+1}" placeholder="...">`
             ).join('');
             html += `<br><a href="#" class="btn" onclick="check()">ОТВЕТИТЬ</a>`;
-            if (isTestMode) html += `<div class="test-badge">🧪 ТЕСТОВЫЙ РЕЖИМ</div>`;
             document.getElementById('content').innerHTML = html;
         }
 
@@ -129,7 +124,6 @@
                 return;
             }
 
-            // Выбираем случайную карту
             const used = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used') || '[]');
             const available = cards.filter((_, i) => !used.includes(i));
             
@@ -145,21 +139,19 @@
 
             if (!isTestMode) {
                 used.push(globalIdx);
-                localStorage.setItem('quest_used', JSON.stringify(used));                localStorage.setItem('quest_time', Date.now().toString());
+                localStorage.setItem('quest_used', JSON.stringify(used));
+                localStorage.setItem('quest_time', Date.now().toString());
             }
 
             show(card, globalIdx + 1);
         }
-
         function show(card, num) {
-            const testBadge = isTestMode ? '<div class="test-badge">🧪 ТЕСТОВЫЙ РЕЖИМ — карта не списана</div>' : '';
             document.getElementById('content').innerHTML = `
                 <div class="card">
-                    <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27100%27 height=%27100%27 fill=%27%23ff004f%27/></svg>'">
+                    <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27280%27 height=%27380%27 fill=%27%23222%27/><text x=%2750%27 y=%27200%27 fill=%27%23ff004f%27 font-size=%2724%27>КАРТА</text></svg>'">
                     <div class="card-text">Коллекционная карточка Окей!</div>
                     <div class="card-text" style="color:#ff004f; font-size:0.9em;">${card.txt}</div>
                     <div style="color:#ffcc00; margin-top:8px; font-size:0.9em;">Уникальный №: ${num}/20</div>
-                    ${testBadge}
                 </div>
                 <div class="warn">
                     <strong>⚠️ СКРИНШОТ!</strong><br>
