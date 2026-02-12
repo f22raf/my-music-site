@@ -143,15 +143,14 @@
                 localStorage.setItem('quest_time', Date.now().toString());
             }
 
-            show(card, globalIdx + 1);
+            show(card);
         }
-        function show(card, num) {
+        function show(card) {
             document.getElementById('content').innerHTML = `
                 <div class="card">
                     <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27280%27 height=%27380%27 fill=%27%23222%27/><text x=%2750%27 y=%27200%27 fill=%27%23ff004f%27 font-size=%2724%27>КАРТА</text></svg>'">
                     <div class="card-text">Коллекционная карточка Окей!</div>
-                    <div class="card-text" style="color:#ff004f; font-size:0.9em;">${card.номер}/10, Экз. ${card.экз}/6</div>
-                    <div style="color:#ffcc00; margin-top:8px; font-size:0.8em;">Уникальный №: ${num}/20</div>
+                    <div class="card-text" style="color:#ff004f; font-size:1.1em;">${card.номер}/10, Экз. ${card.экз}/6</div>
                 </div>
                 <div class="warn">
                     <strong>⚠️ СКРИНШОТ!</strong><br>
