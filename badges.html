@@ -19,8 +19,8 @@
 
         .container {
             max-width: 720px; margin: 20px auto; padding: 25px;
-            background: rgba(0, 0, 0, 0.75); border: 3px solid #ff0000;
-            backdrop-filter: blur(2px); position: relative; z-index: 10;
+            background: rgba(0, 0, 0, 0.85); border: 3px solid #ff0000;
+            backdrop-filter: blur(5px); position: relative; z-index: 10;
         }
 
         .group-name {
@@ -43,7 +43,8 @@
         .social-link {
             display: inline-block; padding: 12px 20px; margin: 10px;
             color: white; text-decoration: none; border: 2px solid;
-            font-size: 1.2em; min-width: 160px; transition: 0.1s;
+            font-size: 1.1em; min-width: 160px; transition: 0.1s;
+            cursor: pointer;
         }
 
         .social-link:hover { transform: scale(1.05); box-shadow: 4px 4px 0 #000; }
@@ -51,39 +52,32 @@
         .tg-link { border-color: #0088cc; background: #0088cc; }
         .home-link { border-color: #444; background: #222; font-size: 0.8em; }
 
-        /* СЕКЦИЯ КАРТОЧКИ */
+        /* КАРТОЧКА */
         .card-section {
             margin: 30px 0; padding: 20px; border: 3px solid #ffcc00;
-            background: rgba(139, 0, 0, 0.2); overflow: hidden;
+            background: rgba(139, 0, 0, 0.3);
         }
 
         .card-img {
             width: 100%; max-width: 260px; border: 3px solid #ff004f;
-            box-shadow: 0 0 15px #ff004f; margin: 10px auto;
-            display: block;
+            box-shadow: 0 0 15px #ff004f; margin: 10px auto; display: block;
         }
 
-        .card-locked {
-            filter: blur(10px) grayscale(1); opacity: 0.5;
-        }
+        .card-locked { filter: blur(12px) grayscale(1); opacity: 0.4; }
 
-        /* АНИМАЦИЯ ВЫЛЕТА */
+        /* АНИМАЦИИ */
         @keyframes cardSpawn {
-            0% { transform: scale(0.3) rotate(-15deg); opacity: 0; filter: brightness(4); }
+            0% { transform: scale(0.2) rotate(-20deg); opacity: 0; filter: brightness(5); }
             70% { transform: scale(1.1) rotate(5deg); filter: brightness(1.5); }
             100% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); }
         }
 
         .card-appear {
             animation: cardSpawn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            box-shadow: 0 0 35px #ff004f;
-            border: 4px solid #ffcc00;
-            display: inline-block;
-            background: #000;
-            padding: 5px;
+            box-shadow: 0 0 40px #ff004f; border: 4px solid #ffcc00;
+            display: inline-block; background: #000; padding: 10px;
         }
 
-        /* ЭФФЕКТ ВСПЫШКИ */
         #flash {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #fff; opacity: 0; pointer-events: none; z-index: 1000;
@@ -92,7 +86,7 @@
         .do-flash { animation: flashAnim 0.4s ease-out; }
         @keyframes flashAnim {
             0% { opacity: 0; }
-            20% { opacity: 0.9; }
+            25% { opacity: 1; }
             100% { opacity: 0; }
         }
 
@@ -100,7 +94,13 @@
         
         .step {
             text-align: left; border-left: 3px solid #ff004f;
-            padding-left: 15px; margin: 10px 0; font-size: 0.9em;
+            padding-left: 15px; margin: 15px 0; font-size: 0.9em;
+        }
+
+        .reset-btn {
+            margin-top: 15px; background: #ffcc00; color: #000; 
+            border: 2px solid #000; padding: 8px 15px; 
+            font-family: 'Nosifer', cursive; font-size: 0.6em; cursor: pointer;
         }
     </style>
 </head>
@@ -121,7 +121,7 @@
         <div style="color: #ffcc00; font-size: 1.2em; margin-bottom: 10px;">🎁 БОНУСНАЯ КАРТА</div>
         <div id="cardContent">
             <img src="Cards/InShot_20260208_021444024.jpg" class="card-img card-locked" alt="Locked">
-            <p style="color:#ffcc00; font-size:0.8em;">Откроется после оплаты</p>
+            <p style="color:#ffcc00; font-size:0.7em;">Откроется после нажатия на оплату</p>
         </div>
     </div>
 
@@ -131,18 +131,19 @@
            target="_blank" class="social-link pay-link" id="payBtn">ВВЕСТИ 100₽ И ОПЛАТИТЬ</a>
         
         <div id="tgSection" class="tg-section">
-            <div style="color: #0f0; margin-bottom: 10px;">✔️ ОПЛАТА НАЖАТА</div>
+            <div style="color: #0f0; margin-bottom: 10px;">✔️ ПЕРЕХОД ВЫПОЛНЕН</div>
             <p style="font-size: 0.8em;">Сделай скрин карты и пиши Рафу в ТГ!</p>
             <a href="https://t.me/raf_evro_okey" target="_blank" class="social-link tg-link">TELEGRAM</a>
         </div>
     </div>
 
-    <div style="margin-top: 20px;">
+    <div style="margin-top: 30px;">
         <a href="index.html" class="social-link home-link">← НА ГЛАВНУЮ</a>
     </div>
 </div>
 
 <script>
+    // Коллекция №4 [cite: 2026-02-08]
     const cardsSet4 = [
         {img:"Cards/InShot_20260208_021444024.jpg", n:1},
         {img:"Cards/InShot_20260208_022242270.jpg", n:2},
@@ -166,18 +167,26 @@
             let myCardIdx = localStorage.getItem('okey_my_card_idx');
             
             if (myCardIdx === null) {
-                // ПЕРВЫЙ ЗАПУСК - ЭФФЕКТЫ
+                // Эффект вспышки
                 flash.classList.add('do-flash');
+                setTimeout(() => flash.classList.remove('do-flash'), 500);
                 
+                // Выбор новой карты (которой еще не было)
                 const used = JSON.parse(localStorage.getItem('okey_used_set4') || '[]');
-                const available = cardsSet4.filter((_, i) => !used.includes(i));
-                let finalIdx = 0;
-                if (available.length > 0) {
-                    const rand = Math.floor(Math.random() * available.length);
-                    finalIdx = cardsSet4.findIndex(c => c.img === available[rand].img);
-                    used.push(finalIdx);
-                    localStorage.setItem('okey_used_set4', JSON.stringify(used));
+                let available = cardsSet4.filter((_, i) => !used.includes(i));
+                
+                // Если все карты выбиты, сбрасываем цикл
+                if (available.length === 0) {
+                    localStorage.setItem('okey_used_set4', '[]');
+                    available = cardsSet4;
                 }
+                
+                const rand = Math.floor(Math.random() * available.length);
+                const chosen = available[rand];
+                const finalIdx = cardsSet4.findIndex(c => c.img === chosen.img);
+                
+                used.push(finalIdx);
+                localStorage.setItem('okey_used_set4', JSON.stringify(used));
                 localStorage.setItem('okey_my_card_idx', finalIdx);
                 myCardIdx = finalIdx;
             }
@@ -188,14 +197,22 @@
                     <img src="${card.img}" class="card-img" alt="Card" style="box-shadow:none; border:none; margin:0;">
                     <div style="color:gold; font-size:1em; margin-top:10px; font-family: sans-serif; font-weight:bold;">ТВОЙ АРТЕФАКТ:</div>
                     <div style="font-size:0.8em; color:#ff004f; font-family: sans-serif;">№${card.n}/10, Серия №4</div>
+                    <button onclick="resetForNewPurchase()" class="reset-btn">КУПИТЬ ЕЩЁ ОДИН?</button>
                 </div>
             `;
         }
     }
 
+    function resetForNewPurchase() {
+        if(confirm("Хочешь выбить ещё один значок и новую карту?")) {
+            localStorage.removeItem('okey_badge_paid');
+            localStorage.removeItem('okey_my_card_idx');
+            location.reload();
+        }
+    }
+
     document.getElementById('payBtn').addEventListener('click', function() {
         localStorage.setItem('okey_badge_paid', 'true');
-        // Небольшая задержка для плавности на мобилках
         setTimeout(checkStatus, 400);
     });
 
