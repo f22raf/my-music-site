@@ -14,12 +14,13 @@
             background-size: cover; background-position: center center;
             background-attachment: fixed; min-height: 100vh; font-size: 1.2em;
             text-shadow: 1px 1px 0 #000, 2px 2px 0 #333;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 720px; margin: 20px auto; padding: 25px;
             background: rgba(0, 0, 0, 0.75); border: 3px solid #ff0000;
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px); position: relative; z-index: 10;
         }
 
         .group-name {
@@ -50,18 +51,49 @@
         .tg-link { border-color: #0088cc; background: #0088cc; }
         .home-link { border-color: #444; background: #222; font-size: 0.8em; }
 
+        /* СЕКЦИЯ КАРТОЧКИ */
         .card-section {
             margin: 30px 0; padding: 20px; border: 3px solid #ffcc00;
-            background: rgba(139, 0, 0, 0.2);
+            background: rgba(139, 0, 0, 0.2); overflow: hidden;
         }
 
         .card-img {
             width: 100%; max-width: 260px; border: 3px solid #ff004f;
             box-shadow: 0 0 15px #ff004f; margin: 10px auto;
+            display: block;
         }
 
         .card-locked {
             filter: blur(10px) grayscale(1); opacity: 0.5;
+        }
+
+        /* АНИМАЦИЯ ВЫЛЕТА */
+        @keyframes cardSpawn {
+            0% { transform: scale(0.3) rotate(-15deg); opacity: 0; filter: brightness(4); }
+            70% { transform: scale(1.1) rotate(5deg); filter: brightness(1.5); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); }
+        }
+
+        .card-appear {
+            animation: cardSpawn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            box-shadow: 0 0 35px #ff004f;
+            border: 4px solid #ffcc00;
+            display: inline-block;
+            background: #000;
+            padding: 5px;
+        }
+
+        /* ЭФФЕКТ ВСПЫШКИ */
+        #flash {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; opacity: 0; pointer-events: none; z-index: 1000;
+        }
+
+        .do-flash { animation: flashAnim 0.4s ease-out; }
+        @keyframes flashAnim {
+            0% { opacity: 0; }
+            20% { opacity: 0.9; }
+            100% { opacity: 0; }
         }
 
         .tg-section { display: none; margin-top: 25px; padding: 20px; border: 2px dashed #ffcc00; }
@@ -74,6 +106,8 @@
 </head>
 <body>
 
+<div id="flash"></div>
+
 <div class="container">
     <div class="group-name">Окей</div>
     <h2>МЕТАЛЛИЧЕСКИЙ ЗНАЧОК</h2>
@@ -84,7 +118,7 @@
     <div class="badge-price">100 ₽</div>
 
     <div class="card-section" id="cardContainer">
-        <div style="color: #ffcc00; font-size: 1.2em;">🎁 БОНУСНАЯ КАРТА</div>
+        <div style="color: #ffcc00; font-size: 1.2em; margin-bottom: 10px;">🎁 БОНУСНАЯ КАРТА</div>
         <div id="cardContent">
             <img src="Cards/InShot_20260208_021444024.jpg" class="card-img card-locked" alt="Locked">
             <p style="color:#ffcc00; font-size:0.8em;">Откроется после оплаты</p>
@@ -92,14 +126,14 @@
     </div>
 
     <div class="steps">
-        <div class="step">1. Переведи ровно 100₽:</div>
-        <a href="https://www.sberbank.ru/ru/choise_bank?requisiteNumber=+79925205912&bankCode=100000000004&amount=100" 
-           target="_blank" class="social-link pay-link" id="payBtn">ОПЛАТИТЬ 100₽</a>
+        <div class="step">1. Переведи 100₽ (введи сумму вручную):</div>
+        <a href="https://www.sberbank.ru/ru/choise_bank?requisiteNumber=+79925205912&bankCode=100000000004" 
+           target="_blank" class="social-link pay-link" id="payBtn">ВВЕСТИ 100₽ И ОПЛАТИТЬ</a>
         
         <div id="tgSection" class="tg-section">
             <div style="color: #0f0; margin-bottom: 10px;">✔️ ОПЛАТА НАЖАТА</div>
             <p style="font-size: 0.8em;">Сделай скрин карты и пиши Рафу в ТГ!</p>
-            <a href="https://t.me/raf_evro" class="social-link tg-link">TELEGRAM</a>
+            <a href="https://t.me/raf_evro_okey" target="_blank" class="social-link tg-link">TELEGRAM</a>
         </div>
     </div>
 
@@ -125,12 +159,16 @@
     function checkStatus() {
         const tgSec = document.getElementById('tgSection');
         const cardBox = document.getElementById('cardContent');
+        const flash = document.getElementById('flash');
 
         if (localStorage.getItem('okey_badge_paid')) {
             tgSec.style.display = 'block';
             let myCardIdx = localStorage.getItem('okey_my_card_idx');
             
             if (myCardIdx === null) {
+                // ПЕРВЫЙ ЗАПУСК - ЭФФЕКТЫ
+                flash.classList.add('do-flash');
+                
                 const used = JSON.parse(localStorage.getItem('okey_used_set4') || '[]');
                 const available = cardsSet4.filter((_, i) => !used.includes(i));
                 let finalIdx = 0;
@@ -146,16 +184,19 @@
 
             const card = cardsSet4[myCardIdx];
             cardBox.innerHTML = `
-                <img src="${card.img}" class="card-img" alt="Card">
-                <div style="color:gold; font-size:1.1em; margin-top:10px;">ТВОЙ АРТЕФАКТ:</div>
-                <div style="font-size:0.8em; color:#ff004f;">№${card.n}/10, Серия №4</div>
+                <div class="card-appear">
+                    <img src="${card.img}" class="card-img" alt="Card" style="box-shadow:none; border:none; margin:0;">
+                    <div style="color:gold; font-size:1em; margin-top:10px; font-family: sans-serif; font-weight:bold;">ТВОЙ АРТЕФАКТ:</div>
+                    <div style="font-size:0.8em; color:#ff004f; font-family: sans-serif;">№${card.n}/10, Серия №4</div>
+                </div>
             `;
         }
     }
 
     document.getElementById('payBtn').addEventListener('click', function() {
         localStorage.setItem('okey_badge_paid', 'true');
-        setTimeout(checkStatus, 500);
+        // Небольшая задержка для плавности на мобилках
+        setTimeout(checkStatus, 400);
     });
 
     window.addEventListener('load', checkStatus);
