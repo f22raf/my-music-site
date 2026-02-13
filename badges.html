@@ -60,7 +60,6 @@
             box-shadow: 0 0 15px #ff004f; margin: 10px auto;
         }
 
-        /* Блюр для закрытой карты */
         .card-locked {
             filter: blur(10px) grayscale(1); opacity: 0.5;
         }
@@ -70,10 +69,6 @@
         .step {
             text-align: left; border-left: 3px solid #ff004f;
             padding-left: 15px; margin: 10px 0; font-size: 0.9em;
-        }
-        
-        .warning {
-            font-size: 0.7em; color: #aaa; margin-top: 20px; line-height: 1.2;
         }
     </style>
 </head>
@@ -92,24 +87,20 @@
         <div style="color: #ffcc00; font-size: 1.2em;">🎁 БОНУСНАЯ КАРТА</div>
         <div id="cardContent">
             <img src="Cards/InShot_20260208_021444024.jpg" class="card-img card-locked" alt="Locked">
-            <p style="color:#ffcc00; font-size:0.8em;">Откроется после нажатия на оплату</p>
+            <p style="color:#ffcc00; font-size:0.8em;">Откроется после оплаты</p>
         </div>
     </div>
 
     <div class="steps">
-        <div class="step">1. Оплати 100₽ по ссылке:</div>
-        <a href="https://send.tinkoff.ru/xxxxx" target="_blank" class="social-link pay-link" id="payBtn">ОПЛАТИТЬ</a>
+        <div class="step">1. Переведи ровно 100₽:</div>
+        <a href="https://www.sberbank.ru/ru/choise_bank?requisiteNumber=+79925205912&bankCode=100000000004&amount=100" 
+           target="_blank" class="social-link pay-link" id="payBtn">ОПЛАТИТЬ 100₽</a>
         
         <div id="tgSection" class="tg-section">
-            <div style="color: #0f0; margin-bottom: 10px;">✔️ ПЕРЕХОД ВЫПОЛНЕН</div>
-            <p style="font-size: 0.8em;">Теперь пиши Ковбою Рафу в ТГ, чтобы забрать значок в Челябе!</p>
+            <div style="color: #0f0; margin-bottom: 10px;">✔️ ОПЛАТА НАЖАТА</div>
+            <p style="font-size: 0.8em;">Сделай скрин карты и пиши Рафу в ТГ!</p>
             <a href="https://t.me/raf_evro" class="social-link tg-link">TELEGRAM</a>
         </div>
-    </div>
-
-    <div class="warning">
-        ⚠️ Если после оплаты карта не открылась — просто обнови страницу. <br>
-        Все артефакты выдаются лично в Челябинске!
     </div>
 
     <div style="margin-top: 20px;">
@@ -118,7 +109,6 @@
 </div>
 
 <script>
-    // Коллекция №4 — только за бабло! [cite: 2026-02-08]
     const cardsSet4 = [
         {img:"Cards/InShot_20260208_021444024.jpg", n:1},
         {img:"Cards/InShot_20260208_022242270.jpg", n:2},
@@ -137,21 +127,16 @@
         const cardBox = document.getElementById('cardContent');
 
         if (localStorage.getItem('okey_badge_paid')) {
-            // 1. Показываем ТГ
             tgSec.style.display = 'block';
-
-            // 2. Достаем или генерим карту
             let myCardIdx = localStorage.getItem('okey_my_card_idx');
             
             if (myCardIdx === null) {
                 const used = JSON.parse(localStorage.getItem('okey_used_set4') || '[]');
                 const available = cardsSet4.filter((_, i) => !used.includes(i));
-                
                 let finalIdx = 0;
                 if (available.length > 0) {
                     const rand = Math.floor(Math.random() * available.length);
-                    const chosen = available[rand];
-                    finalIdx = cardsSet4.findIndex(c => c.img === chosen.img);
+                    finalIdx = cardsSet4.findIndex(c => c.img === available[rand].img);
                     used.push(finalIdx);
                     localStorage.setItem('okey_used_set4', JSON.stringify(used));
                 }
@@ -164,19 +149,15 @@
                 <img src="${card.img}" class="card-img" alt="Card">
                 <div style="color:gold; font-size:1.1em; margin-top:10px;">ТВОЙ АРТЕФАКТ:</div>
                 <div style="font-size:0.8em; color:#ff004f;">№${card.n}/10, Серия №4</div>
-                <div style="font-size:0.6em; margin-top:5px; color:#aaa;">СДЕЛАЙ СКРИН ДЛЯ РАФА</div>
             `;
         }
     }
 
-    // Слушаем клик по кнопке оплаты
     document.getElementById('payBtn').addEventListener('click', function() {
         localStorage.setItem('okey_badge_paid', 'true');
-        // Даем время записать в память перед уходом со страницы
         setTimeout(checkStatus, 500);
     });
 
-    // Проверка при загрузке и при возврате назад
     window.addEventListener('load', checkStatus);
     window.addEventListener('pageshow', checkStatus);
 </script>
