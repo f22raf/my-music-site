@@ -20,10 +20,16 @@
         <div id="stats"><div>ДЕНЬГИ: <span id="m">0</span>₽</div><div id="timer">ВРЕМЯ: 30 дней</div><div>СТАТУС: <span id="st">БОМЖ</span></div></div>
         <div class="goal" id="goal-text">🎯 Цель: 30 000₽ на аренду</div>
         
+        <div id="jobs"><h3>💼 ПОДРАБОТКИ</h3>
+            <div class="item"><div>🚶 Пешком (10 мин)<div class="hint">+50₽</div></div><button onclick="doJob('walk')">РАБОТАТЬ</button></div>
+            <div class="item"><div>🚲 Велосипед (30 мин)<div class="hint">Аренда: 100₽ | +200₽</div><div class="req" id="bike-req">Сначала арендуй</div></div><button id="bike-btn" onclick="doJob('bike')">АРЕНДОВАТЬ</button></div>
+            <div class="item"><div>🛵 Самокат (30 мин)<div class="hint">Аренда: 200₽ | +400₽</div><div class="req" id="scooter-req">Сначала арендуй</div></div><button id="scooter-btn" onclick="doJob('scooter')">АРЕНДОВАТЬ</button></div>
+        </div>
+        
         <div id="main"><button id="street" disabled onclick="streetClick()">🎸 СТРИТОВАТЬ (нужна гитара)</button><div id="risk" style="text-align:center;font-size:12px;color:#777;margin-top:5px">⚠️ Риск: чем дольше стритуешь — тем выше шанс пиздюлей</div></div>
         
-        <div id="jobs"><h3>🎤 КОНЦЕРТЫ</h3>
-            <div class="item" id="apartment-item"><div>🏠 Фуфло-квартирник<div class="hint">Нужна фуфло-гитара | +300₽ | 1ч</div></div><button disabled onclick="doConcert('apartment')">ВЫСТУПИТЬ</button></div>
+        <div id="concerts"><h3>🎤 КОНЦЕРТЫ</h3>
+            <div class="item" id="apartment-item" style="display:none"><div>🏠 Фуфло-квартирник<div class="hint">Нужна фуфло-гитара | +300₽ | 1ч</div></div><button disabled onclick="doConcert('apartment')">ВЫСТУПИТЬ</button></div>
             <div class="item" id="fuflo-concert-item" style="display:none"><div>🎪 Фуфло-концерт<div class="hint">Нужны: фуфло-гитара, бас, ударные | +8000₽ | 4ч</div></div><button disabled onclick="doConcert('fuflo')">ОРГАНИЗОВАТЬ</button></div>
             <div class="item" id="real-concert-item" style="display:none"><div>🌟 Настоящий концерт<div class="hint">Нужны: Гибсон, Фендер, Ямаха | +50000₽ | 8ч</div></div><button disabled onclick="doConcert('real')">ОРГАНИЗОВАТЬ</button></div>
             <div class="item" id="super-concert-item" style="display:none"><div>🔥 СУПЕР КОНЦЕРТ!<div class="hint">Нужны: все инструменты + связи | +500000₽ | 12ч</div></div><button disabled onclick="doConcert('super')">ЗАПУСТИТЬ</button></div>
@@ -50,6 +56,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             let s = {
                 m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,
+                bk:false,sc:false,
                 metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,
                 streetClicks:0,streetRisk:0
             };
@@ -58,6 +65,16 @@
             
             window.showScene = n => {['s1','s2','s3'].forEach(id=>el(id).classList.add('hidden'));el('s'+n).classList.remove('hidden')};
             window.startGame = () => {el('scenes').style.display='none';el('game').style.display='block';load();gi=setInterval(update,1000)};
+            
+            window.doJob = t => {
+                if(s.t<=0)return;
+                switch(t){
+                    case'walk':if(s.t<600)return alert('Недостаточно времени!');s.m+=50;s.t-=600;break;
+                    case'bike':if(!s.bk){if(s.m<100)return alert('Нет денег на аренду!');s.m-=100;s.bk=true;el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none';return}if(s.t<1800)return alert('Недостаточно времени!');s.m+=200;s.t-=1800;break;
+                    case'scooter':if(!s.sc){if(s.m<200)return alert('Нет денег на аренду!');s.m-=200;s.sc=true;el('scooter-btn').innerText='РАБОТАТЬ';el('scooter-req').style.display='none';return}if(s.t<1800)return alert('Недостаточно времени!');s.m+=400;s.t-=1800;break;
+                }
+                save();upd();
+            };
             
             window.streetClick = () => {
                 if(!s.g)return;
@@ -114,7 +131,7 @@
                 const prices={guitar:500,bass:3000,drums:5000,realGuitar:50000,realBass:40000,realDrums:60000};
                 if(s.m<prices[i])return alert('Нет денег!');
                 switch(i){
-                    case'guitar':if(s.g)return alert('Уже есть!');s.g=true;el('street').disabled=false;el('street').innerText='🎸 СТРИТОВАТЬ (+10₽)';el('guitar-btn').disabled=true;el('apartment-item').querySelector('button').disabled=false;break;
+                    case'guitar':if(s.g)return alert('Уже есть!');s.g=true;el('street').disabled=false;el('street').innerText='🎸 СТРИТОВАТЬ (+10₽)';el('guitar-btn').disabled=true;el('apartment-item').style.display='block';el('apartment-item').querySelector('button').disabled=false;break;
                     case'bass':if(s.b)return alert('Уже есть!');s.b=true;break;
                     case'drums':if(s.d)return alert('Уже есть!');s.d=true;break;
                     case'realGuitar':if(s.rg)return alert('Уже есть!');s.rg=true;break;
@@ -134,7 +151,7 @@
             
             window.newGame = () => {
                 if(gi)clearInterval(gi);
-                s={m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,streetClicks:0,streetRisk:0};
+                s={m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,bk:false,sc:false,metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,streetClicks:0,streetRisk:0};
                 el('game-over').style.display='none';el('scenes').style.display='flex';el('game').style.display='none';window.showScene(1);localStorage.removeItem('okGame');
             };
             
@@ -143,25 +160,25 @@
                 const d=Math.floor(s.t/86400),h=Math.floor((s.t%86400)/3600);el('timer').innerText=`ВРЕМЯ: ${d}д ${h}ч`;
                 if(s.m>=500000)s.st='РОК-ЗВЕЗДА 🌟';else if(s.m>=100000)s.st='ЗВЕЗДА СТУДИИ 🎸';else if(s.m>=30000)s.st='ПРОФЕССИОНАЛ 🎤';else if(s.m>=10000)s.st='МУЗЫКАНТ 🎼';else if(s.m>=1000)s.st='УЛИЧНЫЙ 🎧';else s.st='БОМЖ';el('st').innerText=s.st;
                 if(s.m>=30000&&!document.getElementById('goal-text').innerHTML.includes('✅')){document.getElementById('goal-text').innerHTML='✅ Аренда оплачена!<br>🎯 Цель: 500 000₽ - СУПЕР КОНЦЕРТ!';document.getElementById('goal-text').style.borderColor='#0f0';}
+                el('bike-btn').disabled=s.bk&&s.t<1800;
+                el('scooter-btn').disabled=s.sc&&s.t<1800;
                 el('guitar-btn').disabled=s.g||s.m<500;
-                if(s.g&&!s.metFufloMusicians)el('apartment-item').querySelector('button').disabled=false;
-                if(s.g&&s.b&&s.d&&!s.metFufloOrg)el('fuflo-concert-item').querySelector('button').disabled=false;
-                if(s.rg&&s.rb&&s.rd&&!s.metProducer)el('real-concert-item').querySelector('button').disabled=false;
-                if(s.metProducer&&s.metRealOrg)el('super-concert-item').querySelector('button').disabled=false;
-            };
-            const update=()=>{if(s.t<=0){clearInterval(gi);endGame(s.m>=30000);return};s.t--;upd();save()};
-            const save=()=>localStorage.setItem('okGame',JSON.stringify(s));
-            const load=()=>{
-                const d=localStorage.getItem('okGame');if(d){Object.assign(s,JSON.parse(d));
-                if(s.g){el('street').disabled=false;el('street').innerText='🎸 СТРИТОВАТЬ (+10₽)';el('guitar-btn').disabled=true;if(!s.metFufloMusicians)el('apartment-item').querySelector('button').disabled=false;}
-                if(s.metFufloMusicians){el('bass-item').style.display='block';el('drums-item').style.display='block';el('fuflo-concert-item').style.display='block';el('apartment-item').style.display='none';}
-                if(s.metFufloOrg){el('real-guitar-item').style.display='block';el('real-bass-item').style.display='block';el('real-drums-item').style.display='block';el('fuflo-concert-item').style.display='none';el('real-concert-item').style.display='block';}
-                if(s.metProducer){el('real-concert-item').style.display='none';el('super-concert-item').style.display='block';}
                 if(s.b)el('bass-item').querySelector('button').disabled=true;
                 if(s.d)el('drums-item').querySelector('button').disabled=true;
                 if(s.rg)el('real-guitar-item').querySelector('button').disabled=true;
                 if(s.rb)el('real-bass-item').querySelector('button').disabled=true;
                 if(s.rd)el('real-drums-item').querySelector('button').disabled=true;
+            };
+            const update=()=>{if(s.t<=0){clearInterval(gi);endGame(s.m>=30000);return};s.t--;upd();save()};
+            const save=()=>localStorage.setItem('okGame',JSON.stringify(s));
+            const load=()=>{
+                const d=localStorage.getItem('okGame');if(d){Object.assign(s,JSON.parse(d));
+                if(s.bk){el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none'}
+                if(s.sc){el('scooter-btn').innerText='РАБОТАТЬ';el('scooter-req').style.display='none'}
+                if(s.g){el('street').disabled=false;el('street').innerText='🎸 СТРИТОВАТЬ (+10₽)';el('guitar-btn').disabled=true;if(!s.metFufloMusicians)el('apartment-item').style.display='block';}
+                if(s.metFufloMusicians){el('bass-item').style.display='block';el('drums-item').style.display='block';el('fuflo-concert-item').style.display='block';el('apartment-item').style.display='none';}
+                if(s.metFufloOrg){el('real-guitar-item').style.display='block';el('real-bass-item').style.display='block';el('real-drums-item').style.display='block';el('fuflo-concert-item').style.display='none';el('real-concert-item').style.display='block';}
+                if(s.metProducer){el('real-concert-item').style.display='none';el('super-concert-item').style.display='block';}
                 if(s.g&&s.b&&s.d&&!s.metFufloOrg)el('fuflo-concert-item').querySelector('button').disabled=false;
                 if(s.rg&&s.rb&&s.rd&&!s.metProducer)el('real-concert-item').querySelector('button').disabled=false;
                 if(s.metProducer&&s.metRealOrg)el('super-concert-item').querySelector('button').disabled=false;}
