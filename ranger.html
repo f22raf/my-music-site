@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Окей: Рейнджер Страж</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;background:#111;color:#0f0;line-height:1.5;padding-bottom:80px}#scenes{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;background:rgba(0,0,0,0.95);z-index:100}button{background:#0f0;color:#000;border:none;padding:10px 20px;font-family:'Courier New',monospace;margin:6px;cursor:pointer;border-radius:5px;font-size:16px;transition:all 0.2s}button:hover{background:#0d0;transform:scale(1.03)}button.no{background:#f44}button:disabled{opacity:0.4;cursor:not-allowed;background:#444;color:#777}#game{display:none;max-width:700px;margin:15px auto;padding:0 10px}#stats{background:#000;border:1px solid #0f0;border-radius:8px;padding:12px;margin:10px 0;text-align:center;font-size:17px}#timer{color:#ff5252;font-weight:bold;font-size:20px;margin:5px 0}#main{margin:15px 0}#jobs,#upgrades{background:#1a1a1a;border-radius:8px;padding:10px;margin:12px 0;border:1px solid #333}h3{color:#0f0;text-align:center;margin:8px 0;font-size:18px}.item{display:flex;justify-content:space-between;align-items:center;background:#222;padding:8px;margin:6px 0;border-radius:5px;font-size:15px}.hint{font-size:12px;color:#777;margin-top:3px;text-align:right}.req{font-size:11px;color:#f55;margin-top:2px}.hidden{display:none}.card{background:linear-gradient(120deg,#667eea,#764ba2);padding:15px;border-radius:12px;max-width:350px;margin:15px auto;text-align:center}.qr{width:100px;height:100px;background:#fff;margin:10px auto;border:2px solid #0f0}
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;background:#111;color:#0f0;line-height:1.5;padding-bottom:100px}#scenes{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;background:rgba(0,0,0,0.95);z-index:100}button{background:#0f0;color:#000;border:none;padding:8px 15px;font-family:'Courier New',monospace;margin:5px;cursor:pointer;border-radius:4px;font-size:14px;transition:all 0.2s}button:hover{background:#0d0;transform:scale(1.02)}button.no{background:#f44}button:disabled{opacity:0.3;cursor:not-allowed;background:#444;color:#666}#game{display:none;max-width:650px;margin:10px auto;padding:0 8px}#stats{background:#000;border:1px solid #0f0;border-radius:6px;padding:10px;margin:8px 0;text-align:center;font-size:15px}#timer{color:#ff5252;font-weight:bold;font-size:18px;margin:4px 0}#main{margin:10px 0}#jobs,#upgrades{background:#1a1a1a;border-radius:6px;padding:8px;margin:10px 0;border:1px solid #333}h3{color:#0f0;text-align:center;margin:6px 0;font-size:16px}.item{display:flex;justify-content:space-between;align-items:center;background:#222;padding:6px;margin:4px 0;border-radius:4px;font-size:13px}.hint{font-size:11px;color:#777;margin-top:2px;text-align:right}.req{font-size:10px;color:#f55;margin-top:1px}.hidden{display:none}.card{background:linear-gradient(120deg,#667eea,#764ba2);padding:12px;border-radius:10px;max-width:300px;margin:12px auto;text-align:center}.qr{width:80px;height:80px;background:#fff;margin:8px auto;border:2px solid #0f0}.event{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#ff4757;color:white;padding:15px;border-radius:10px;z-index:200;max-width:80%;text-align:center;font-weight:bold;box-shadow:0 0 20px rgba(255,0,0,0.7);animation:shake 0.5s}
+        @keyframes shake{0%,100%{transform:translateX(-50%) rotate(0deg)}25%{transform:translateX(-52%) rotate(-2deg)}75%{transform:translateX(-48%) rotate(2deg)}}
     </style>
 </head>
 <body>
@@ -16,7 +17,7 @@
     </div>
 
     <div id="game">
-        <h1 style="text-align:center;font-size:24px;margin:10px 0">ОКЕЙ: РЕЙНДЖЕР СТРАЖ</h1>
+        <h1 style="text-align:center;font-size:20px;margin:8px 0">ОКЕЙ: РЕЙНДЖЕР СТРАЖ</h1>
         <div id="stats">
             <div>ДЕНЬГИ: <span id="m">0</span>₽</div>
             <div id="timer">ВРЕМЯ: 48:00:00</div>
@@ -26,6 +27,7 @@
         
         <div id="main">
             <button id="street" disabled onclick="clk()">🎸 СТРИТОВАТЬ (нужна гитара)</button>
+            <div id="risk" style="text-align:center;font-size:12px;color:#777;margin-top:5px">⚠️ Риск: чем дольше стритуешь — тем выше шанс пиздюлей</div>
         </div>
         
         <div id="jobs">
@@ -35,73 +37,131 @@
                 <button onclick="j('walk')">РАБОТАТЬ</button>
             </div>
             <div class="item">
-                <div>🚲 Велосипед (30 мин)<div class="hint">Аренда: 100₽ | +200₽</div><div class="req" id="bike-req">Сначала арендуй велосипед</div></div>
-                <button id="bike-btn" disabled onclick="j('bike')">АРЕНДОВАТЬ</button>
+                <div>🚲 Велосипед (30 мин)<div class="hint">Аренда: 100₽ | +200₽</div><div class="req" id="bike-req">Сначала арендуй</div></div>
+                <button id="bike-btn" onclick="j('bike')">АРЕНДОВАТЬ</button>
             </div>
             <div class="item">
-                <div>🛵 Самокат (30 мин)<div class="hint">Аренда: 200₽ | +400₽</div><div class="req" id="scooter-req">Сначала арендуй самокат</div></div>
-                <button id="scooter-btn" disabled onclick="j('scooter')">АРЕНДОВАТЬ</button>
+                <div>🛵 Самокат (30 мин)<div class="hint">Аренда: 200₽ | +400₽</div><div class="req" id="scooter-req">Сначала арендуй</div></div>
+                <button id="scooter-btn" onclick="j('scooter')">АРЕНДОВАТЬ</button>
             </div>
-            <div class="item">
-                <div>🏭 Завод (1 час)<div class="hint">Требуется: документы</div><div class="req" id="factory-req">Разблокируй документы</div></div>
-                <button id="factory-btn" disabled onclick="j('factory')">СОБЕСЕДОВАНИЕ</button>
+            <div class="item" id="apartment-item" style="display:none">
+                <div>🏠 Фуфло-квартирник (1 час)<div class="hint">Стоимость: 200₽ | Знакомство с музыкантами</div></div>
+                <button onclick="j('apartment')">СХОДИТЬ</button>
             </div>
         </div>
         
         <div id="upgrades">
             <h3>🛒 ПОКУПКИ</h3>
             <div class="item">
-                <div>🎸 Фуфло-гитара<div class="hint">500₽ | Разблокирует стритование</div></div>
-                <button onclick="b('guitar')">КУПИТЬ</button>
+                <div>🎸 Фуфло-гитара<div class="hint">500₽ | Разблокирует стритование</div><div class="req" id="guitar-req">Нужна для стритов</div></div>
+                <button id="guitar-btn" onclick="b('guitar')">КУПИТЬ</button>
             </div>
-            <div class="item">
-                <div>🔊 Аккум. колонка<div class="hint">3000₽ | Для микрофона</div></div>
+            <div class="item" id="speaker-item" style="display:none">
+                <div>🔊 Фуфло-колонка<div class="hint">3000₽ | Для микрофона</div></div>
                 <button onclick="b('speaker')">КУПИТЬ</button>
             </div>
-            <div class="item">
-                <div>🎤 Микрофон<div class="hint">1000₽ | +0.5₽/сек (требуется колонка)</div><div class="req" id="mic-req">Сначала купи колонку</div></div>
+            <div class="item" id="mic-item" style="display:none">
+                <div>🎤 Фуфло-микрофон<div class="hint">1000₽ | +0.5₽/сек (требуется колонка)</div><div class="req" id="mic-req">Сначала купи колонку</div></div>
                 <button id="mic-btn" disabled onclick="b('mic')">КУПИТЬ</button>
             </div>
-            <div class="item">
-                <div>📄 Документы для завода<div class="hint">1000₽ | Разблокирует завод</div></div>
-                <button onclick="b('docs')">ОФОРМИТЬ</button>
+            <div class="item" id="bass-item" style="display:none">
+                <div>🎸 Фуфло-бас<div class="hint">3000₽ | Для басиста</div></div>
+                <button onclick="b('bass')">КУПИТЬ</button>
+            </div>
+            <div class="item" id="drums-item" style="display:none">
+                <div>🥁 Фуфло-барабаны<div class="hint">5000₽ | Для ударника</div></div>
+                <button onclick="b('drums')">КУПИТЬ</button>
+            </div>
+            <div class="item" id="concert-item" style="display:none">
+                <div>🎪 Фуфло-концерт<div class="hint">Организация: 5000₽ | Прибыль: 20000₽</div><div class="req" id="concert-req">Нужны: гитарист, басист, ударник</div></div>
+                <button id="concert-btn" disabled onclick="b('concert')">ОРГАНИЗОВАТЬ</button>
             </div>
         </div>
     </div>
 
     <script>
-        let s={m:0,t:172800,cps:0,clk:0,g:false,sp:false,bk:false,sc:false,doc:false,up:{guitar:false,speaker:false,mic:0,drums:0,keys:0}};
-        const el=(id)=>document.getElementById(id);
-        const show=(n)=>{['s1','s2','s3'].forEach(id=>el(id).classList.add('hidden'));el('s'+n).classList.remove('hidden')};
+        let s={
+            m:0,t:172800,cps:0,clk:0,
+            g:false,sp:false,bk:false,sc:false,
+            hasBass:false,hasDrums:false,
+            metMusician:false,bandReady:false,
+            streetClicks:0,streetRisk:0,
+            up:{mic:0}
+        };
+        
+        const el=id=>document.getElementById(id);
+        const show=n=>{['s1','s2','s3'].forEach(id=>el(id).classList.add('hidden'));el('s'+n).classList.remove('hidden')};
         const go=()=>{alert('Тебя выгнали из квартиры...\nВ следующий раз сканируй карточку!');location.reload()};
         const start=()=>{el('scenes').style.display='none';el('game').style.display='block';load();setInterval(upd,1000)};
         
+        // Событие "отпиздили"
+        const showPizdyuli=()=>{
+            const event=document.createElement('div');
+            event.className='event';
+            event.innerHTML='⚠️ ТЕБЯ ОТПИЗДИЛИ И ОТНЯЛИ ГИТАРУ!<br>Потеряно 1000₽!';
+            document.body.appendChild(event);
+            setTimeout(()=>event.remove(),3000);
+        };
+        
         // Подработки
-        const j=(t)=>{
+        const j=t=>{
             if(s.t<=0)return;
             switch(t){
                 case'walk':if(s.t<600)return alert('Недостаточно времени!');s.m+=50;s.t-=600;break;
                 case'bike':if(!s.bk){if(s.m<100)return alert('Нет денег на аренду!');s.m-=100;s.bk=true;el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none';return}if(s.t<1800)return alert('Недостаточно времени!');s.m+=200;s.t-=1800;break;
                 case'scooter':if(!s.sc){if(s.m<200)return alert('Нет денег на аренду!');s.m-=200;s.sc=true;el('scooter-btn').innerText='РАБОТАТЬ';el('scooter-req').style.display='none';return}if(s.t<1800)return alert('Недостаточно времени!');s.m+=400;s.t-=1800;break;
-                case'factory':if(!s.doc)return alert('Сначала оформи документы!');if(s.t<3600)return alert('Недостаточно времени!');s.m+=500;s.t-=3600;break;
+                case'apartment':if(s.m<200)return alert('Нет денег на вход!');if(s.t<3600)return alert('Недостаточно времени!');s.m-=200;s.t-=3600;s.metMusician=true;el('bass-item').style.display='block';el('drums-item').style.display='block';el('apartment-item').style.display='none';alert('Познакомился с фуфло-басистом и фуфло-ударником!\nТеперь можешь нанять их для фуфло-концерта.');break;
             }
             save();upd();
         };
         
         // Покупки
-        const b=(t)=>{
+        const b=t=>{
             if(s.t<=0)return;
             switch(t){
-                case'guitar':if(s.m<500)return alert('Нет денег!');s.m-=500;s.g=true;s.clk=10;el('street').disabled=false;el('street').innerText='🎸 СТРИТОВАТЬ (+10₽)';break;
-                case'speaker':if(s.m<3000)return alert('Нет денег!');s.m-=3000;s.sp=true;el('mic-btn').disabled=false;el('mic-req').style.display='none';break;
+                case'guitar':if(s.m<500)return alert('Нет денег!');if(s.g)return alert('У тебя уже есть фуфло-гитара!');s.m-=500;s.g=true;s.clk=10;s.streetClicks=0;s.streetRisk=0;el('street').disabled=false;el('street').innerText='🎸 СТРИТОВАТЬ (+10₽)';el('guitar-btn').disabled=true;el('guitar-req').style.display='none';el('apartment-item').style.display='block';break;
+                case'speaker':if(s.m<3000)return alert('Нет денег!');s.m-=3000;s.sp=true;el('mic-btn').disabled=false;el('mic-req').style.display='none';el('speaker-item').style.display='none';break;
                 case'mic':if(!s.sp)return alert('Сначала купи колонку!');if(s.m<1000)return alert('Нет денег!');s.m-=1000;s.cps+=0.5;s.up.mic++;break;
-                case'docs':if(s.m<1000)return alert('Нет денег!');s.m-=1000;s.doc=true;el('factory-btn').disabled=false;el('factory-req').style.display='none';el('factory-btn').innerText='РАБОТАТЬ';break;
+                case'bass':if(s.m<3000)return alert('Нет денег!');s.m-=3000;s.hasBass=true;checkBand();break;
+                case'drums':if(s.m<5000)return alert('Нет денег!');s.m-=5000;s.hasDrums=true;checkBand();break;
+                case'concert':if(!s.bandReady)return alert('Собери группу сначала!');if(s.m<5000)return alert('Нет денег на организацию!');s.m-=5000;s.m+=20000;alert('ФУФЛО-КОНЦЕРТ ПРОШЁЛ УСПЕШНО!\n+20000₽ на счету!');break;
             }
             save();upd();
         };
         
-        // Стритование
-        const clk=()=>{if(s.g){s.m+=s.clk;save();upd()}};
+        // Проверка готовности группы
+        const checkBand=()=>{
+            if(s.g && s.hasBass && s.hasDrums){
+                s.bandReady=true;
+                el('concert-btn').disabled=false;
+                el('concert-req').style.display='none';
+                el('concert-item').style.display='block';
+            }
+        };
+        
+        // Стритование с риском
+        const clk=()=>{
+            if(!s.g)return;
+            s.m+=s.clk;
+            s.streetClicks++;
+            s.streetRisk+=0.5; // Риск растёт с каждым кликом
+            
+            // Шанс пиздюлей после 30 кликов
+            if(s.streetClicks>30 && Math.random()*100 < s.streetRisk){
+                // Отпиздили!
+                const loss=Math.min(1000,Math.floor(s.m*0.3));
+                s.m=Math.max(0,s.m-loss);
+                s.g=false;
+                s.streetClicks=0;
+                s.streetRisk=0;
+                el('street').disabled=true;
+                el('street').innerText='🎸 СТРИТОВАТЬ (нужна гитара)';
+                el('guitar-btn').disabled=false;
+                el('guitar-req').style.display='block';
+                showPizdyuli();
+            }
+            save();upd();
+        };
         
         // Обновление
         const upd=()=>{
@@ -110,18 +170,31 @@
             const h=Math.floor(s.t/3600),m=Math.floor((s.t%3600)/60),se=s.t%60;
             el('timer').innerText=`ВРЕМЯ: ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${se.toString().padStart(2,'0')}`;
             el('m').innerText=Math.floor(s.m);el('cps').innerText=s.cps.toFixed(1);
-            if(s.m>=100000)s.st='ЛЕГЕНДА 🌟';else if(s.m>=50000)s.st='ЗВЕЗДА 🎸';else if(s.m>=10000)s.st='МУЗЫКАНТ 🎤';else if(s.m>=1000)s.st='УЛИЧНЫЙ 🎼';else s.st='БОМЖ';
+            if(s.m>=100000)s.st='ФУФЛО-ЛЕГЕНДА 🌟';else if(s.m>=50000)s.st='ФУФЛО-ЗВЕЗДА 🎸';else if(s.m>=10000)s.st='ФУФЛО-МУЗЫКАНТ 🎤';else if(s.m>=1000)s.st='ФУФЛО-УЛИЧНЫЙ 🎼';else s.st='БОМЖ';
             el('st').innerText=s.st;
             // Обновление кнопок
             el('bike-btn').disabled=s.bk&&s.t<1800;
             el('scooter-btn').disabled=s.sc&&s.t<1800;
-            el('factory-btn').disabled=!s.doc||s.t<3600;
+            el('guitar-btn').disabled=s.g||s.m<500;
             el('mic-btn').disabled=!s.sp||s.m<1000;
+            el('concert-btn').disabled=!s.bandReady||s.m<5000;
         };
         
-        const win=()=>{if(confirm(`ПОБЕДА!\nТы заработал ${Math.floor(s.m)}₽!\nАренда оплачена. Группа ОКЕЙ ждёт тебя!\n\nПерейти на сайт?`))location.href='https://f22raf.github.io/my-music-site/';else location.reload()};
+        const win=()=>{if(confirm(`ПОБЕДА!\nТы заработал ${Math.floor(s.m)}₽!\nАренда оплачена. Ты — ФУФЛО-РЕЙНДЖЕР!\n\nПерейти на сайт ОКЕЙ?`))location.href='https://f22raf.github.io/my-music-site/';else location.reload()};
         const save=()=>localStorage.setItem('okGame',JSON.stringify(s));
-        const load=()=>{const d=localStorage.getItem('okGame');if(d){s=JSON.parse(d);if(s.g){el('street').disabled=false;el('street').innerText=`🎸 СТРИТОВАТЬ (+${s.clk}₽)`}if(s.sp){el('mic-btn').disabled=false;el('mic-req').style.display='none'}if(s.bk){el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none'}if(s.sc){el('scooter-btn').innerText='РАБОТАТЬ';el('scooter-req').style.display='none'}if(s.doc){el('factory-btn').disabled=false;el('factory-btn').innerText='РАБОТАТЬ';el('factory-req').style.display='none'}}upd()};
+        const load=()=>{
+            const d=localStorage.getItem('okGame');
+            if(d){
+                s=JSON.parse(d);
+                if(s.g){el('street').disabled=false;el('street').innerText=`🎸 СТРИТОВАТЬ (+${s.clk}₽)`;el('guitar-btn').disabled=true;el('guitar-req').style.display='none';el('apartment-item').style.display='block'}
+                if(s.sp){el('mic-btn').disabled=false;el('mic-req').style.display='none'}
+                if(s.bk){el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none'}
+                if(s.sc){el('scooter-btn').innerText='РАБОТАТЬ';el('scooter-req').style.display='none'}
+                if(s.metMusician){el('bass-item').style.display='block';el('drums-item').style.display='block';el('apartment-item').style.display='none'}
+                if(s.hasBass && s.hasDrums){checkBand()}
+            }
+            upd();
+        };
     </script>
 </body>
 </html>
