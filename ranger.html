@@ -11,6 +11,7 @@
         #game-over h2{font-size:32px;margin-bottom:20px;color:#ff4757}
         #game-over p{font-size:18px;margin:10px 0}
         #game-over button{padding:12px 30px;font-size:18px;margin:10px}
+        .goal{background:#2a1a3a;border-left:3px solid #9d4edd;padding:8px;margin:8px 0;border-radius:0 4px 4px 0;font-size:14px}
     </style>
 </head>
 <body>
@@ -28,6 +29,7 @@
             <div>ДОХОД: <span id="cps">0</span>₽/сек</div>
             <div>СТАТУС: <span id="st">БОМЖ</span></div>
         </div>
+        <div class="goal" id="goal-text">🎯 Цель: 30 000₽ на аренду</div>
         
         <div id="main">
             <button id="street" disabled onclick="streetClick()">🎸 СТРИТОВАТЬ (нужна гитара)</button>
@@ -77,8 +79,16 @@
                 <button onclick="buy('drums')">КУПИТЬ</button>
             </div>
             <div class="item" id="concert-item" style="display:none">
-                <div>🎪 Фуфло-концерт<div class="hint">Организация: 5000₽ | Прибыль: 20000₽</div><div class="req" id="concert-req">Нужны: гитарист, басист, ударник</div></div>
+                <div>🎪 Фуфло-концерт<div class="hint">Организация: 5000₽ | Прибыль: 8000₽</div><div class="req" id="concert-req">Нужны: гитарист, басист, ударник | Время: 4 часа</div></div>
                 <button id="concert-btn" disabled onclick="buy('concert')">ОРГАНИЗОВАТЬ</button>
+            </div>
+            <div class="item" id="pro-guitar-item" style="display:none">
+                <div>🎸 Настоящая гитара<div class="hint">15000₽ | +50₽ за клик | После фуфло-концерта</div></div>
+                <button onclick="buy('proGuitar')">КУПИТЬ</button>
+            </div>
+            <div class="item" id="studio-item" style="display:none">
+                <div>🎧 Фуфло-студия<div class="hint">50000₽ | +10₽/сек | После настоящей гитары</div></div>
+                <button onclick="buy('studio')">АРЕНДОВАТЬ</button>
             </div>
         </div>
     </div>
@@ -106,7 +116,10 @@
             bandReady: false,
             streetClicks: 0,
             streetRisk: 0,
-            micLevel: 0
+            micLevel: 0,
+            hasProGuitar: false,
+            hasStudio: false,
+            mainGoalDone: false
         };
         let gameInterval = null;
         
@@ -221,9 +234,30 @@
                 case 'concert':
                     if (!state.bandReady) return alert('Собери группу сначала!');
                     if (state.money < 5000) return alert('Нет денег на организацию!');
+                    if (state.time < 14400) return alert('Недостаточно времени! Фуфло-концерт занимает 4 часа.');
                     state.money -= 5000;
-                    state.money += 20000;
-                    alert('ФУФЛО-КОНЦЕРТ ПРОШЁЛ УСПЕШНО!\n+20000₽ на счету!');
+                    state.time -= 14400; // 4 часа!
+                    state.money += 8000; // Чистая прибыль 3000₽
+                    alert('ФУФЛО-КОНЦЕРТ ПРОШЁЛ!\n+8000₽ на счету!\nЗатрачено 4 часа.');
+                    // Открываем настоящую гитару после первого концерта
+                    if (!state.hasProGuitar) el('pro-guitar-item').style.display = 'block';
+                    break;
+                case 'proGuitar':
+                    if (state.money < 15000) return alert('Нет денег!');
+                    state.money -= 15000;
+                    state.clickValue += 50;
+                    state.hasProGuitar = true;
+                    el('pro-guitar-item').style.display = 'none';
+                    el('studio-item').style.display = 'block';
+                    alert('Купил настоящую гитару! Теперь клики приносят +50₽');
+                    break;
+                case 'studio':
+                    if (state.money < 50000) return alert('Нет денег!');
+                    state.money -= 50000;
+                    state.cps += 10;
+                    state.hasStudio = true;
+                    el('studio-item').style.display = 'none';
+                    alert('Арендовал фуфло-студию! Теперь +10₽/сек пассивного дохода');
                     break;
             }
             saveGame();
@@ -271,22 +305,38 @@
             const m = Math.floor((state.time % 3600) / 60);
             const s = state.time % 60;
             el('timer').innerText = `ВРЕМЯ: ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-            if (state.money >= 100000) state.status = 'ФУФЛО-ЛЕГЕНДА 🌟';
-            else if (state.money >= 50000) state.status = 'ФУФЛО-ЗВЕЗДА 🎸';
-            else if (state.money >= 10000) state.status = 'ФУФЛО-МУЗЫКАНТ 🎤';
-            else if (state.money >= 1000) state.status = 'ФУФЛО-УЛИЧНЫЙ 🎼';
+            
+            // Новые цели после 30к
+            if (state.money >= 30000 && !state.mainGoalDone) {
+                state.mainGoalDone = true;
+                el('goal-text').innerHTML = '✅ Аренда оплачена!<br>🎯 Новая цель: 100 000₽ - настоящая студия!';
+                el('goal-text').style.borderColor = '#0f0';
+            } else if (state.money >= 100000) {
+                el('goal-text').innerHTML = '✅ Студия арендована!<br>🎯 Легендарная цель: 500 000₽ - тур по России!';
+                el('goal-text').style.borderColor = '#ff4757';
+            }
+            
+            // Статусы
+            if (state.money >= 500000) state.status = 'ЛЕГЕНДА 🌟';
+            else if (state.money >= 100000) state.status = 'ЗВЕЗДА СТУДИИ 🎸';
+            else if (state.money >= 50000) state.status = 'ПРОФЕССИОНАЛ 🎤';
+            else if (state.money >= 10000) state.status = 'МУЗЫКАНТ 🎼';
+            else if (state.money >= 1000) state.status = 'УЛИЧНЫЙ 🎧';
             else state.status = 'БОМЖ';
             el('st').innerText = state.status;
+            
+            // Обновление кнопок
             el('bike-btn').disabled = state.hasBike && state.time < 1800;
             el('scooter-btn').disabled = state.hasScooter && state.time < 1800;
             el('guitar-btn').disabled = state.hasGuitar || state.money < 500;
             el('mic-btn').disabled = !state.hasSpeaker || state.money < 1000;
-            el('concert-btn').disabled = !state.bandReady || state.money < 5000;
+            el('concert-btn').disabled = !state.bandReady || state.money < 5000 || state.time < 14400;
         }
         
         function update() {
             if (state.time <= 0) {
                 clearInterval(gameInterval);
+                // Победа если набрал 30к, иначе поражение
                 endGame(state.money >= 30000);
                 return;
             }
@@ -304,87 +354,9 @@
             if (isWin) {
                 el('game-over-title').innerText = 'ПОБЕДА!';
                 el('game-over-title').style.color = '#0f0';
-                el('game-over-text').innerText = `Ты заработал ${Math.floor(state.money)}₽!\nАренда оплачена. Ты — ФУФЛО-РЕЙНДЖЕР!`;
-            } else {
-                el('game-over-title').innerText = 'ТЫ ПРОИГРАЛ';
-                el('game-over-title').style.color = '#ff4757';
-                if (state.time > 0) {
-                    el('game-over-text').innerText = 'Тебя выгнали из квартиры. Ты живёшь на улице...\nВ следующий раз не проёживай!';
+                if (state.money >= 500000) {
+                    el('game-over-text').innerText = `ТЫ ЛЕГЕНДА!\nЗаработал ${Math.floor(state.money)}₽!\nТур по России ждёт тебя!\n\nГруппа ОКЕЙ приглашает тебя в состав!`;
+                } else if (state.money >= 100000) {
+                    el('game-over-text').innerText = `УСПЕХ!\nЗаработал ${Math.floor(state.money)}₽!\nАрендовал студию и записал хит!\n\nГруппа ОКЕЙ замечает тебя!`;
                 } else {
-                    el('game-over-text').innerText = 'Время вышло! Тебя выгнали из квартиры...\nНужно было быстрее зарабатывать!';
-                }
-            }
-            localStorage.removeItem('okGame');
-        }
-        
-        function newGame() {
-            if (gameInterval) clearInterval(gameInterval);
-            state = {
-                money: 0,
-                time: 172800,
-                cps: 0,
-                clickValue: 0,
-                hasGuitar: false,
-                hasSpeaker: false,
-                hasBike: false,
-                hasScooter: false,
-                metMusicians: false,
-                hasBass: false,
-                hasDrums: false,
-                bandReady: false,
-                streetClicks: 0,
-                streetRisk: 0,
-                micLevel: 0
-            };
-            el('game-over').style.display = 'none';
-            el('scenes').style.display = 'flex';
-            el('game').style.display = 'none';
-            showScene(1);
-            localStorage.removeItem('okGame');
-        }
-        
-        function saveGame() {
-            localStorage.setItem('okGame', JSON.stringify(state));
-        }
-        
-        function loadGame() {
-            const saved = localStorage.getItem('okGame');
-            if (saved) {
-                Object.assign(state, JSON.parse(saved));
-                if (state.hasGuitar) {
-                    el('street').disabled = false;
-                    el('street').innerText = `🎸 СТРИТОВАТЬ (+${state.clickValue}₽)`;
-                    el('guitar-btn').disabled = true;
-                    el('guitar-req').style.display = 'none';
-                    el('apartment-item').style.display = 'block';
-                }
-                if (state.hasSpeaker) {
-                    el('mic-btn').disabled = false;
-                    el('mic-req').style.display = 'none';
-                }
-                if (state.hasBike) {
-                    el('bike-btn').innerText = 'РАБОТАТЬ';
-                    el('bike-req').style.display = 'none';
-                }
-                if (state.hasScooter) {
-                    el('scooter-btn').innerText = 'РАБОТАТЬ';
-                    el('scooter-req').style.display = 'none';
-                }
-                if (state.metMusicians) {
-                    el('bass-item').style.display = 'block';
-                    el('drums-item').style.display = 'block';
-                    el('apartment-item').style.display = 'none';
-                }
-                if (state.hasBass && state.hasDrums) {
-                    checkBandReady();
-                }
-            }
-            updateUI();
-        }
-        
-        // Инициализация
-        showScene(1);
-    </script>
-</body>
-</html>
-
+                    el('game-over-text
