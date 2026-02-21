@@ -60,7 +60,7 @@
     </div>
 
     <div id="park-mode">
-        <h2 style="text-align:center;color:#ffd700;font-size:24px">🎢 ${s?.name || 'Рейнджер'} LAND</h2>
+        <h2 style="text-align:center;color:#ffd700;font-size:24px">🎢 РЕЙНДЖЕР LAND</h2>
         <div id="park-stats"></div>
         <div id="park-actions"></div>
         <div id="park-attractions"></div>
@@ -68,7 +68,7 @@
     </div>
 
     <div id="party-mode">
-        <h2 style="text-align:center;color:#ff4752;font-size:24px">🍾 ТУСОВКА ${s?.name || 'Рейнджер'}</h2>
+        <h2 style="text-align:center;color:#ff4752;font-size:24px">🍾 ТУСОВКА РЕЙНДЖЕРА</h2>
         <div id="party-stats"></div>
         <div id="party-actions"></div>
         <button style="background:#666;width:100%;padding:10px;margin-top:15px" onclick="backToPostgame()">← НАЗАД К ВЫБОРУ</button>
@@ -81,34 +81,40 @@
             bk:false,sc:false,name:"Рейнджер",band:"",
             metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,
             streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false,
-            // Пост-игра
             pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100,pgFans:1000,
-            // Парк - сложная механика
             pgSecurity:1,pgFood:0,pgFoodQuality:0,pgInspections:{tax:30,fire:30,health:30},pgBribes:{tax:0,fire:0,health:0},pgConstruction:[]
         };
         let gi = null, pgTimer = null;
+        
+        // ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ
         const el = id => document.getElementById(id);
         
-        // ФУНКЦИИ ДОСТУПНЫ ИЗ HTML
-        window.showScene = n => {
-            ['s1','s2','s3'].forEach(id => el(id).classList.add('hidden'));
+        // ПОКАЗАТЬ СЦЕНУ
+        function showScene(n) {
+            el('s1').classList.add('hidden');
+            el('s2').classList.add('hidden');
+            el('s3').classList.add('hidden');
             el('s'+n).classList.remove('hidden');
-        };
-        
-        window.setName = () => {
-            const name = el('name-input').value.trim() || "Рейнджер";            s.name = name;
+        }
+                // УСТАНОВИТЬ ИМЯ
+        function setName() {
+            const nameInput = el('name-input');
+            const name = nameInput.value.trim() || "Рейнджер";
+            s.name = name;
             showScene(3);
-        };
+        }
         
-        window.startGame = () => {
+        // НАЧАТЬ ИГРУ
+        function startGame() {
             el('scenes').style.display = 'none';
             el('game').style.display = 'block';
             load();
             gi = setInterval(update, 1000);
             el('st').innerText = s.name;
-        };
+        }
         
-        window.doJob = t => {
+        // ПОДРАБОТКА
+        function doJob(t) {
             if(s.t<=0)return;
             switch(t){
                 case'walk':if(s.t<600)return alert('Недостаточно времени!');s.m+=50;s.t-=600;break;
@@ -116,9 +122,10 @@
                 case'scooter':if(!s.sc){if(s.m<200)return alert('Нет денег на аренду!');s.m-=200;s.sc=true;el('scooter-btn').innerText='РАБОТАТЬ';el('scooter-req').style.display='none';return}if(s.t<1800)return alert('Недостаточно времени!');s.m+=400;s.t-=1800;break;
             }
             save();upd();
-        };
+        }
         
-        window.streetClick = () => {
+        // СТРИТОВАТЬ
+        function streetClick() {
             if(!s.g)return;
             s.m+=10;s.streetClicks++;s.streetRisk+=0.5;
             if(s.streetClicks>30&&Math.random()*100<s.streetRisk){
@@ -128,14 +135,17 @@
                 el('street').disabled=true;el('street').innerText='🎸 СТРИТОВАТЬ (нужна гитара)';el('guitar-btn').disabled=false;el('apartment-item').querySelector('button').disabled=true;
             }
             save();upd();
-        };
+        }
         
-        const getMultiplier = () => s.highestConcert >= 3 ? 2.0 : (s.highestConcert >= 2 ? 1.5 : 1.0);
+        // КОЭФФИЦИЕНТ УСПЕХА
+        function getMultiplier() {
+            return s.highestConcert >= 3 ? 2.0 : (s.highestConcert >= 2 ? 1.5 : 1.0);
+        }
         
-        window.doConcert = t => {
+        // КОНЦЕРТ
+        function doConcert(t) {
             if(s.t<=0)return;
-            const mult = getMultiplier();
-            let payout = 0, timeCost = 0, alertMsg = '';
+            const mult = getMultiplier();            let payout = 0, timeCost = 0, alertMsg = '';
             
             switch(t){
                 case'apartment':
@@ -145,7 +155,8 @@
                     timeCost = 3600;
                     alertMsg = `🔥 ФУФЛО-КВАРТИРНИК!\n+${payout}₽ (x${mult})\n`;
                     if(!s.metFufloMusicians){
-                        alertMsg += 'Познакомился с фуфло-музыкантами и фуфло-организатором!';                        s.metFufloMusicians=true;
+                        alertMsg += 'Познакомился с фуфло-музыкантами и фуфло-организатором!';
+                        s.metFufloMusicians=true;
                         el('bass-item').style.display='block';
                         el('drums-item').style.display='block';
                         el('fuflo-concert-item').style.display='block';
@@ -156,7 +167,7 @@
                     if(!s.g||!s.b||!s.d)return alert('Нужны все фуфло-инструменты!');
                     if(s.t<14400)return alert('Недостаточно времени!');
                     
-                    // ВВОД НАЗВАНИЯ ГРУППЫ ПРИ ПЕРВОМ ФУФЛО-КОНЦЕРТЕ
+                    // ВВОД НАЗВАНИЯ ГРУППЫ
                     if(!s.bandNamed){
                         const band = prompt(`Организатор спрашивает:\n"Как называется ваша группа?"\n\n(Совет: назови как-нибудь эпично!)`, "ФУФЛО");
                         s.band = band && band.trim() ? band.trim() : "ФУФЛО-ГРУППА";
@@ -183,8 +194,7 @@
                     payout = 50000;
                     timeCost = 28800;
                     alertMsg = `🌟 НАСТОЯЩИЙ КОНЦЕРТ "${s.band}"!\n+50000₽\n`;
-                    if(!s.metProducer){
-                        alertMsg += 'Познакомился с крутым продюсером и ТВ-каналами!\nТеперь ты ХЕДЛАЙНЕР!';
+                    if(!s.metProducer){                        alertMsg += 'Познакомился с крутым продюсером и ТВ-каналами!\nТеперь ты ХЕДЛАЙНЕР!';
                         s.metProducer=true;
                         s.metRealOrg=true;
                         el('super-concert-item').style.display='block';
@@ -194,16 +204,18 @@
                 case'super':
                     if(!s.metProducer||!s.metRealOrg)return alert('Нужны связи с продюсером и организатором!');
                     if(s.t<43200)return alert('Недостаточно времени!');
-                    payout = 500000;                    timeCost = 43200;
+                    payout = 500000;
+                    timeCost = 43200;
                     alertMsg = `🔥 СУПЕР ПИЗДАТЫЙ КОНЦЕРТ "${s.band}"!\n+500000₽\nТы ЗВЕЗДА! Контракты с брендами, гастроли по миру!`;
                     if(s.highestConcert < 4) s.highestConcert = 4;
-                    setTimeout(()=>showVictory(),500);
+                    setTimeout(showVictory,500);
                     break;
             }
             s.m += payout; s.t -= timeCost; alert(alertMsg); save(); upd();
-        };
+        }
         
-        window.buy = i => {
+        // ПОКУПКА
+        function buy(i) {
             if(s.t<=0)return;
             const prices={guitar:500,bass:3000,drums:5000,realGuitar:50000,realBass:40000,realDrums:60000};
             if(s.m<prices[i])return alert('Нет денег!');
@@ -218,9 +230,10 @@
             s.m-=prices[i];save();upd();
             if(s.g&&s.b&&s.d)el('fuflo-concert-item').querySelector('button').disabled=false;
             if(s.rg&&s.rb&&s.rd)el('real-concert-item').querySelector('button').disabled=false;
-        };
+        }
         
-        window.showVictory = () => {
+        // ПОБЕДА
+        function showVictory() {
             if(gi)clearInterval(gi);
             el('game').style.display='none';
             s.pg = true;
@@ -229,10 +242,9 @@
             s.pgFans = 10000;
             el('postgame-text').innerHTML = `Поздравляю, ${s.name}!<br>Твоя группа "${s.band}" — ЛЕГЕНДА!<br>Деньги: ${Math.floor(s.m)}₽<br><br>Что дальше? У тебя целый ГОД (365 дней),<br>чтобы построить империю!`;
             el('postgame').style.display='flex';
-        };
-        
-        // ============ РЕЖИМ "ТУСИТЬ" (ИСПРАВЛЕННЫЙ) ============
-        window.startPartyMode = () => {
+        }
+                // ============ РЕЖИМ "ТУСИТЬ" ============
+        function startPartyMode() {
             el('postgame').style.display='none';
             el('party-mode').style.display='flex';
             s.pgDays = 365;
@@ -243,18 +255,19 @@
             showPartyActions();
             
             if(pgTimer) clearInterval(pgTimer);
-            pgTimer = setInterval(() => {                s.pgDays--;
+            pgTimer = setInterval(() => {
+                s.pgDays--;
                 updatePartyStats();
                 if(s.pgDays <= 0 || s.pgReputation <= 0) {
                     clearInterval(pgTimer);
-                    const msg = s.pgReputation > 70 ? `ЛЕГЕНДА! ${s.pgFans.toLocaleString()} фанатов! Тебя приглашают на главную сцену Вселенной!` : 
-                                s.pgReputation > 40 ? `Неплохо! ${s.pgFans.toLocaleString()} фанатов. Можно продолжать творить.` : 
-                                `ПРОВАЛ! Скандалы убили карьеру. Фанатов: ${s.pgFans.toLocaleString()}.`;
+                    const msg = s.pgReputation > 70 ? `ЛЕГЕНДА! ${s.pgFans.toLocaleString()} фанатов!` : 
+                                s.pgReputation > 40 ? `Неплохо! ${s.pgFans.toLocaleString()} фанатов.` : 
+                                `ПРОВАЛ! Скандалы убили карьеру.`;
                     alert(`ГОД ПРОШЁЛ!\nРепутация: ${s.pgReputation}\nФанаты: ${s.pgFans.toLocaleString()}\n\n${msg}`);
                     backToPostgame();
                 }
             }, 1000);
-        };
+        }
         
         function updatePartyStats() {
             el('party-stats').innerHTML = `ДНИ: ${s.pgDays} | РЕПУТАЦИЯ: ${s.pgReputation} | ФАНЫ: ${s.pgFans.toLocaleString()} | СКАНДАЛЫ: ${s.pgScandals}`;
@@ -276,48 +289,10 @@
             el('party-actions').innerHTML = html;
         }
         
-        window.showPartyChoices = (eventId) => {
+        function showPartyChoices(eventId) {
             const events = [
                 {name:"🎸 Джем с музыкантами", choices:[
-                    {text:"Импровизировать", rep:+15, fans:+500, scandal:0, headline:""},
-                    {text:"Играть хиты", rep:+10, fans:+300, scandal:0, headline:""},
-                    {text:"Напиться и забыть текст", rep:-10, fans:-200, scandal:1, headline:"ЗВЕЗДА ЗАБЫЛ ТЕКСТ НА СЦЕНЕ!"}
-                ]},
-                {name:"🍾 Вечеринка в отеле", choices:[
-                    {text:"Тихо посидеть с друзьями", rep:+5, fans:+100, scandal:0, headline:""},
-                    {text:"Устроить бассейн-пати", rep:+10, fans:+800, scandal:1, headline:"ЗВЕЗДА УСТРОИЛ БЕШЕНУЮ ВЕЧЕРИНКУ В ОТЕЛЕ!"},
-                    {text:"Разнести номер", rep:-25, fans:-1000, scandal:3, headline:"ПОЛИЦИЯ ВЫЗВАНА В ОТЕЛЬ ИЗ-ЗА ЗВЕЗДЫ!"}
-                ]},
-                {name:"📸 Фотосессия", choices:[
-                    {text:"Классика", rep:+12, fans:+400, scandal:0, headline:""},
-                    {text:"Провокация", rep:-5, fans:+1500, scandal:2, headline:"СКАНДАЛЬНАЯ ФОТОСЕССИЯ ВЗОРВАЛА СЕТЬ!"},
-                    {text:"Благотворительность", rep:+20, fans:+600, scandal:0, headline:"ЗВЕЗДА ПОМОГАЕТ ДЕТЯМ — СЛЕЗЫ НА СЪЁМКЕ!"}
-                ]},                {name:"📺 Эфир на ТВ", choices:[
-                    {text:"Быть вежливым", rep:+8, fans:+200, scandal:0, headline:""},
-                    {text:"Пошутить про политику", rep:-15, fans:+2000, scandal:4, headline:"ЗВЕЗДА УВОЛЕНА С ТВ ЗА ПОЛИТИЧЕСКИЕ ШУТКИ!"},
-                    {text:"Рассказать личную историю", rep:+18, fans:+1200, scandal:0, headline:"ЗВЕЗДА РАСКРЫЛА СЕКРЕТ — ФАНЫ В СЛЕЗАХ!"}
-                ]},
-                {name:"🤝 Коллаборация", choices:[
-                    {text:"С молодым артистом", rep:+10, fans:+700, scandal:0, headline:""},
-                    {text:"С рэпером", rep:+5, fans:+1500, scandal:1, headline:"НЕОЖИДАННЫЙ ДУЭТ ВЗОРВАЛ ЧАРТЫ!"},
-                    {text:"С конкурентом", rep:+25, fans:+2000, scandal:0, headline:"БЫВШИЕ ВРАГИ СЫГРАЛИ ВМЕСТЕ — ИСТОРИЯ ПОМИРЕНИЯ!"}
-                ]}
-            ];
-            
-            const event = events[eventId];
-            let html = `<div class="party-item"><strong>${event.name}</strong><br>`;
-            event.choices.forEach((choice, idx) => {
-                html += `<button class="party-btn" onclick="applyPartyChoice(${eventId},${idx})">${choice.text}</button>`;
-            });
-            html += `<br><button class="party-btn" style="background:#666" onclick="showPartyActions()">← НАЗАД</button></div>`;
-            el('party-actions').innerHTML = html;
-        };
-        
-        window.applyPartyChoice = (eventId, choiceIdx) => {
-            const events = [
-                {name:"🎸 Джем с музыкантами", choices:[
-                    {text:"Импровизировать", rep:+15, fans:+500, scandal:0, headline:""},
-                    {text:"Играть хиты", rep:+10, fans:+300, scandal:0, headline:""},
+                    {text:"Импровизировать", rep:+15, fans:+500, scandal:0, headline:""},                    {text:"Играть хиты", rep:+10, fans:+300, scandal:0, headline:""},
                     {text:"Напиться и забыть текст", rep:-10, fans:-200, scandal:1, headline:"ЗВЕЗДА ЗАБЫЛ ТЕКСТ НА СЦЕНЕ!"}
                 ]},
                 {name:"🍾 Вечеринка в отеле", choices:[
@@ -341,7 +316,45 @@
                     {text:"С конкурентом", rep:+25, fans:+2000, scandal:0, headline:"БЫВШИЕ ВРАГИ СЫГРАЛИ ВМЕСТЕ — ИСТОРИЯ ПОМИРЕНИЯ!"}
                 ]}
             ];
-                        const choice = events[eventId].choices[choiceIdx];
+            
+            const event = events[eventId];
+            let html = `<div class="party-item"><strong>${event.name}</strong><br>`;
+            event.choices.forEach((choice, idx) => {
+                html += `<button class="party-btn" onclick="applyPartyChoice(${eventId},${idx})">${choice.text}</button>`;
+            });
+            html += `<br><button class="party-btn" style="background:#666" onclick="showPartyActions()">← НАЗАД</button></div>`;
+            el('party-actions').innerHTML = html;
+        }
+        
+        function applyPartyChoice(eventId, choiceIdx) {
+            const events = [
+                {name:"🎸 Джем с музыкантами", choices:[
+                    {text:"Импровизировать", rep:+15, fans:+500, scandal:0, headline:""},
+                    {text:"Играть хиты", rep:+10, fans:+300, scandal:0, headline:""},
+                    {text:"Напиться и забыть текст", rep:-10, fans:-200, scandal:1, headline:"ЗВЕЗДА ЗАБЫЛ ТЕКСТ НА СЦЕНЕ!"}
+                ]},
+                {name:"🍾 Вечеринка в отеле", choices:[
+                    {text:"Тихо посидеть с друзьями", rep:+5, fans:+100, scandal:0, headline:""},
+                    {text:"Устроить бассейн-пати", rep:+10, fans:+800, scandal:1, headline:"ЗВЕЗДА УСТРОИЛ БЕШЕНУЮ ВЕЧЕРИНКУ В ОТЕЛЕ!"},
+                    {text:"Разнести номер", rep:-25, fans:-1000, scandal:3, headline:"ПОЛИЦИЯ ВЫЗВАНА В ОТЕЛЬ ИЗ-ЗА ЗВЕЗДЫ!"}
+                ]},
+                {name:"📸 Фотосессия", choices:[
+                    {text:"Классика", rep:+12, fans:+400, scandal:0, headline:""},
+                    {text:"Провокация", rep:-5, fans:+1500, scandal:2, headline:"СКАНДАЛЬНАЯ ФОТОСЕССИЯ ВЗОРВАЛА СЕТЬ!"},
+                    {text:"Благотворительность", rep:+20, fans:+600, scandal:0, headline:"ЗВЕЗДА ПОМОГАЕТ ДЕТЯМ — СЛЕЗЫ НА СЪЁМКЕ!"}                ]},
+                {name:"📺 Эфир на ТВ", choices:[
+                    {text:"Быть вежливым", rep:+8, fans:+200, scandal:0, headline:""},
+                    {text:"Пошутить про политику", rep:-15, fans:+2000, scandal:4, headline:"ЗВЕЗДА УВОЛЕНА С ТВ ЗА ПОЛИТИЧЕСКИЕ ШУТКИ!"},
+                    {text:"Рассказать личную историю", rep:+18, fans:+1200, scandal:0, headline:"ЗВЕЗДА РАСКРЫЛА СЕКРЕТ — ФАНЫ В СЛЕЗАХ!"}
+                ]},
+                {name:"🤝 Коллаборация", choices:[
+                    {text:"С молодым артистом", rep:+10, fans:+700, scandal:0, headline:""},
+                    {text:"С рэпером", rep:+5, fans:+1500, scandal:1, headline:"НЕОЖИДАННЫЙ ДУЭТ ВЗОРВАЛ ЧАРТЫ!"},
+                    {text:"С конкурентом", rep:+25, fans:+2000, scandal:0, headline:"БЫВШИЕ ВРАГИ СЫГРАЛИ ВМЕСТЕ — ИСТОРИЯ ПОМИРЕНИЯ!"}
+                ]}
+            ];
+            
+            const choice = events[eventId].choices[choiceIdx];
             
             s.pgReputation += choice.rep;
             s.pgFans += choice.fans;
@@ -372,13 +385,12 @@
             }
             
             showPartyActions();
-        };
+        }
         
         function showNewspaper(headline, fansChange) {
             const div = document.createElement('div');
             div.className = 'newspaper';
-            div.innerHTML = `
-                <h3>🎸 РОК-ГАЗЕТА 🎸</h3>
+            div.innerHTML = `                <h3>🎸 РОК-ГАЗЕТА 🎸</h3>
                 <p style="font-size:20px;font-weight:bold">${headline}</p>
                 <p class="fans-change ${fansChange >= 0 ? 'positive' : 'negative'}">
                     ${fansChange >= 0 ? '↑ +' : '↓ '} ${Math.abs(fansChange).toLocaleString()} ФАНОВ
@@ -390,10 +402,11 @@
                 div.style.opacity = '0';
                 div.style.transition = 'opacity 0.5s';
                 setTimeout(() => div.remove(), 500);
-            }, 6000); // 6 секунд на чтение!        }
+            }, 6000);
+        }
         
-        // ============ РЕЖИМ "ПАРК АТТРАКЦИОНОВ" (ИСПРАВЛЕННЫЙ) ============
-        window.startParkMode = () => {
+        // ============ РЕЖИМ "ПАРК АТТРАКЦИОНОВ" ============
+        function startParkMode() {
             el('postgame').style.display='none';
             el('park-mode').style.display='flex';
             s.pgDays = 365;
@@ -410,7 +423,6 @@
             
             if(pgTimer) clearInterval(pgTimer);
             pgTimer = setInterval(() => {
-                // Ежедневный доход и посетители
                 let dailyIncome = 0, dailyVisitors = 0;
                 s.pgAttractions.forEach(a => {
                     if(!a.broken) {
@@ -419,40 +431,31 @@
                     }
                 });
                 
-                // Еда
-                let foodIncome = 0, foodCost = 0, foodPoisonings = 0;
+                let foodIncome = 0, foodCost = 0;
                 if(s.pgFood > 0) {
                     const foodVisitors = Math.floor(dailyVisitors * 0.3);
-                    if(s.pgFoodQuality === 1) { // Безопасная
+                    if(s.pgFoodQuality === 1) {
                         foodIncome = foodVisitors * 500;
                         foodCost = foodVisitors * 450;
-                    } else if(s.pgFoodQuality === 2) { // Дешёвая
+                    } else if(s.pgFoodQuality === 2) {
                         foodIncome = foodVisitors * 500;
-                        foodCost = foodVisitors * 200;
-                        if(Math.random() < 0.05 && s.pgBribes.health < 100000) {
-                            foodPoisonings = Math.floor(foodVisitors * 0.1);
-                            showAlert(`⚠️ ОТРАВЛЕНИЕ! ${foodPoisonings} посетителей госпитализировано!`);
+                        foodCost = foodVisitors * 200;                        if(Math.random() < 0.05 && s.pgBribes.health < 100000) {
+                            const poisonings = Math.floor(foodVisitors * 0.1);
+                            showAlert(`⚠️ ОТРАВЛЕНИЕ! ${poisonings} посетителей госпитализировано!`);
                         }
                     }
                 }
                 
-                // Безбилетники и драки (зависит от охраны)
-                let freeloaders = 0, fights = 0;
+                let freeloaders = 0;
                 if(s.pgSecurity === 1) {
-                    freeloaders = Math.floor(dailyVisitors * 0.2);                    fights = Math.floor(dailyVisitors * 0.05);
+                    freeloaders = Math.floor(dailyVisitors * 0.2);
                 } else if(s.pgSecurity === 2) {
                     freeloaders = Math.floor(dailyVisitors * 0.1);
-                    fights = Math.floor(dailyVisitors * 0.03);
-                } else if(s.pgSecurity >= 50) {
-                    freeloaders = 0;
-                    fights = 0;
                 }
                 
-                // Итоговый доход
                 s.pgMoney += (dailyIncome + foodIncome - foodCost);
                 s.pgVisitors += (dailyVisitors - freeloaders);
                 
-                // Строительство
                 s.pgConstruction = s.pgConstruction.filter(c => {
                     c.days--;
                     if(c.days <= 0) {
@@ -473,7 +476,6 @@
                     return true;
                 });
                 
-                // Проверки инстанций (раз в 30 дней)
                 Object.keys(s.pgInspections).forEach(key => {
                     s.pgInspections[key]--;
                     if(s.pgInspections[key] <= 0) {
@@ -486,9 +488,8 @@
                         s.pgInspections[key] = 30;
                     }
                 });
-                
-                // Поломки аттракционов
-                s.pgAttractions.forEach(a => {                    if(!a.broken && Math.random() < 0.01) {
+                                s.pgAttractions.forEach(a => {
+                    if(!a.broken && Math.random() < 0.01) {
                         a.broken = true;
                         showAlert(`⚠️ "${a.name}" сломался! Нужен ремонт.`);
                     }
@@ -506,7 +507,7 @@
                     backToPostgame();
                 }
             }, 1000);
-        };
+        }
         
         function updateParkStats() {
             el('park-stats').innerHTML = `ДНИ: ${s.pgDays} | ДЕНЬГИ: ${Math.floor(s.pgMoney).toLocaleString()}₽ | ПОСЕТИТЕЛИ: ${s.pgVisitors.toLocaleString()}<br>Охрана: Lv.${s.pgSecurity} | Еда: ${s.pgFood > 0 ? (s.pgFoodQuality === 1 ? 'Безопасная' : 'Дешёвая') : 'Нет'} | Строительство: ${s.pgConstruction.length}`;
@@ -536,8 +537,8 @@
                         const upgradeCost = Math.floor(a.cost * (0.5 + (owned.level * 0.1)));
                         const upgrading = s.pgConstruction.find(c => c.type === 'upgrade' && c.targetId === a.id);
                         if(upgrading) {
-                            html += `<div class="park-item construction">${a.name} Lv.${owned.level} → ${owned.level+1}<br>Улучшается... ${upgrading.days} дней</div>`;
-                        } else {                            html += `<div class="park-item">${a.name} Lv.${owned.level}<br>Посетители: ${owned.visitors}/день | Доход: ${owned.income.toLocaleString()}₽/день${owned.broken ? '<br><span style="color:#ff4752">⚠️ СЛОМАН</span>' : ''}<br><button class="park-btn" ${s.pgMoney < upgradeCost || owned.broken ? 'disabled' : ''} onclick="startUpgrade('${a.id}',${upgradeCost})">ГРЕЙД (+50%) — ${upgradeCost.toLocaleString()}₽ (5 дней)</button>${owned.broken ? `<br><button class="park-btn" onclick="repairAttraction('${a.id}')">ПОЧИНИТЬ — 10000₽</button>` : ''}</div>`;
+                            html += `<div class="park-item construction">${a.name} Lv.${owned.level} → ${owned.level+1}<br>Улучшается... ${upgrading.days} дней</div>`;                        } else {
+                            html += `<div class="park-item">${a.name} Lv.${owned.level}<br>Посетители: ${owned.visitors}/день | Доход: ${owned.income.toLocaleString()}₽/день${owned.broken ? '<br><span style="color:#ff4752">⚠️ СЛОМАН</span>' : ''}<br><button class="park-btn" ${s.pgMoney < upgradeCost || owned.broken ? 'disabled' : ''} onclick="startUpgrade('${a.id}',${upgradeCost})">ГРЕЙД (+50%) — ${upgradeCost.toLocaleString()}₽ (5 дней)</button>${owned.broken ? `<br><button class="park-btn" onclick="repairAttraction('${a.id}')">ПОЧИНИТЬ — 10000₽</button>` : ''}</div>`;
                         }
                     }
                 } else {
@@ -584,9 +585,8 @@
             el('park-attractions').innerHTML = html;
         }
         
-        window.startBuild = (id, name, cost, visitors, income) => {
-            if(s.pgMoney < cost) {alert("Недостаточно денег!"); return;}
-            s.pgMoney -= cost;            // ИСПРАВЛЕНО: правильная структура объекта
+        function startBuild(id, name, cost, visitors, income) {
+            if(s.pgMoney < cost) {alert("Недостаточно денег!"); return;}            s.pgMoney -= cost;
             s.pgConstruction.push({
                 type:'attraction', 
                 days:10, 
@@ -595,18 +595,18 @@
             updateParkStats();
             showAlert(`Строительство "${name}" начато! 10 дней.`);
             showParkActions();
-        };
+        }
         
-        window.startUpgrade = (id, cost) => {
+        function startUpgrade(id, cost) {
             if(s.pgMoney < cost) {alert("Недостаточно денег!"); return;}
             s.pgMoney -= cost;
             s.pgConstruction.push({type:'upgrade', days:5, targetId:id});
             updateParkStats();
             showAlert(`Улучшение начато! 5 дней.`);
             showParkActions();
-        };
+        }
         
-        window.repairAttraction = (id) => {
+        function repairAttraction(id) {
             const idx = s.pgAttractions.findIndex(a => a.id === id);
             if(idx === -1) return;
             if(s.pgMoney < 10000) {alert("Недостаточно денег на ремонт!"); return;}
@@ -615,9 +615,9 @@
             updateParkStats();
             showAlert(`"${s.pgAttractions[idx].name}" отремонтирован!`);
             showParkActions();
-        };
+        }
         
-        window.upgradeSecurity = () => {
+        function upgradeSecurity() {
             const cost = 100000 + (s.pgSecurity * 20000);
             if(s.pgMoney < cost) {alert("Недостаточно денег!"); return;}
             s.pgMoney -= cost;
@@ -625,25 +625,25 @@
             updateParkStats();
             showAlert(`Охрана улучшена до Lv.${s.pgSecurity}!`);
             showParkActions();
-        };
+        }
         
-        window.setupFood = () => {
+        function setupFood() {
             if(s.pgMoney < 50000) {alert("Недостаточно денег!"); return;}
             s.pgMoney -= 50000;
             s.pgFood = 1;
-            s.pgFoodQuality = 1; // Безопасная по умолчанию
+            s.pgFoodQuality = 1;
             updateParkStats();
             showAlert("Точка питания открыта! Безопасная еда.");
             showParkActions();
-        };        
-        window.toggleFoodQuality = () => {
+        }        
+        function toggleFoodQuality() {
             s.pgFoodQuality = s.pgFoodQuality === 1 ? 2 : 1;
             updateParkStats();
             showAlert(`Качество еды изменено на ${s.pgFoodQuality === 1 ? 'БЕЗОПАСНУЮ' : 'ДЕШЁВУЮ'}!`);
             showParkActions();
-        };
+        }
         
-        window.payBribe = (type) => {
+        function payBribe(type) {
             const amounts = {tax:200000,fire:150000,health:180000};
             const needed = amounts[type] - s.pgBribes[type];
             if(s.pgMoney < needed) {alert("Недостаточно денег!"); return;}
@@ -653,7 +653,7 @@
             updateParkStats();
             showAlert(`Взятка ${type === 'tax' ? 'налоговой' : type === 'fire' ? 'пожарным' : 'санэпиду'} дана!`);
             showParkActions();
-        };
+        }
         
         function showAlert(msg) {
             const e = document.createElement('div');
@@ -663,31 +663,31 @@
             setTimeout(() => e.remove(), 2500);
         }
         
-        window.backToPostgame = () => {
+        function backToPostgame() {
             if(pgTimer) clearInterval(pgTimer);
             el('park-mode').style.display='none';
             el('party-mode').style.display='none';
             el('postgame').style.display='flex';
-        };
+        }
         
-        window.endGame = w => {
+        function endGame(w) {
             if(gi)clearInterval(gi);
             el('game').style.display='none';el('scenes').style.display='none';el('game-over').style.display='flex';
-            if(w){el('game-over-title').innerText='РОК-ЗВЕЗДА! 🌟';el('game-over-title').style.color:'#0f0';el('game-over-text').innerText=`${s.name}, ты победил!\nГруппа "${s.band}" — легенда!\nДеньги: ${Math.floor(s.m)}₽`;el('game-over').innerHTML+=`<button onclick="showVictory()" style="margin-top:15px;background:#ff4752;color:white;padding:12px 30px;font-size:18px">🚀 ПРОДОЛЖЕНИЕ</button>`;}else{el('game-over-title').innerText='ТЫ ПРОИГРАЛ';el('game-over-title').style.color:'#ff4757';if(s.t>0)el('game-over-text').innerText='Тебя выгнали из квартиры...';else el('game-over-text').innerText='Время вышло! Тебя выгнали...';}
+            if(w){el('game-over-title').innerText='РОК-ЗВЕЗДА! 🌟';el('game-over-title').style.color='#0f0';el('game-over-text').innerText=`${s.name}, ты победил!\nГруппа "${s.band}" — легенда!\nДеньги: ${Math.floor(s.m)}₽`;el('game-over').innerHTML+=`<button onclick="showVictory()" style="margin-top:15px;background:#ff4752;color:white;padding:12px 30px;font-size:18px">🚀 ПРОДОЛЖЕНИЕ</button>`;}else{el('game-over-title').innerText='ТЫ ПРОИГРАЛ';el('game-over-title').style.color='#ff4757';if(s.t>0)el('game-over-text').innerText='Тебя выгнали из квартиры...';else el('game-over-text').innerText='Время вышло! Тебя выгнали...';}
             localStorage.removeItem('okGame');
-        };
+        }
         
-        window.newGame = () => {
+        function newGame() {
             if(gi)clearInterval(gi);
             if(pgTimer)clearInterval(pgTimer);
             s={m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,bk:false,sc:false,name:"Рейнджер",band:"",metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false,pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100,pgFans:1000,pgSecurity:1,pgFood:0,pgFoodQuality:0,pgInspections:{tax:30,fire:30,health:30},pgBribes:{tax:0,fire:0,health:0},pgConstruction:[]};
             el('postgame').style.display='none';el('park-mode').style.display='none';el('party-mode').style.display='none';el('game-over').style.display='none';el('scenes').style.display='flex';el('game').style.display='none';showScene(1);localStorage.removeItem('okGame');
-        };
+        }
         
-        const upd=()=>{            el('m').innerText=Math.floor(s.m);
+        function upd(){            el('m').innerText=Math.floor(s.m);
             const d=Math.floor(s.t/86400),h=Math.floor((s.t%86400)/3600);el('timer').innerText=`ВРЕМЯ: ${d}д ${h}ч`;
             if(s.m>=500000)s.st='РОК-ЗВЕЗДА 🌟';else if(s.m>=100000)s.st='ХЕДЛАЙНЕР 🎸';else if(s.m>=30000)s.st='ПРОФЕССИОНАЛ 🎤';else if(s.m>=10000)s.st='МУЗЫКАНТ 🎼';else if(s.m>=1000)s.st='УЛИЧНЫЙ 🎧';else s.st='БОМЖ';el('st').innerText=s.name;
-            if(s.m>=30000&&!document.getElementById('goal-text').innerHTML.includes('✅')){document.getElementById('goal-text').innerHTML='✅ Аренда оплачена!<br>🎯 Цель: 500 000₽ - СУПЕР КОНЦЕРТ!';document.getElementById('goal-text').style.borderColor='#0f0';}
+            if(s.m>=30000&&!el('goal-text').innerHTML.includes('✅')){el('goal-text').innerHTML='✅ Аренда оплачена!<br>🎯 Цель: 500 000₽ - СУПЕР КОНЦЕРТ!';el('goal-text').style.borderColor='#0f0';}
             el('bike-btn').disabled=s.bk&&s.t<1800;el('scooter-btn').disabled=s.sc&&s.t<1800;el('guitar-btn').disabled=s.g||s.m<500;
             if(s.b)el('bass-item').querySelector('button').disabled=true;
             if(s.d)el('drums-item').querySelector('button').disabled=true;
@@ -697,11 +697,11 @@
             const mult = getMultiplier();
             if(s.metFufloMusicians) el('apartment-hint').innerText=`Нужна фуфло-гитара | +${Math.floor(300*mult)}₽ | 1ч (x${mult})`;
             if(s.metFufloOrg) el('fuflo-hint').innerText=`Нужны: фуфло-гитара, бас, ударные | +${Math.floor(8000*mult)}₽ | 4ч (x${mult})`;
-        };
+        }
         
-        const update=()=>{if(s.t<=0){clearInterval(gi);endGame(s.m>=30000);return};s.t--;upd();save()};
-        const save=()=>localStorage.setItem('okGame',JSON.stringify(s));
-        const load=()=>{
+        function update(){if(s.t<=0){clearInterval(gi);endGame(s.m>=30000);return};s.t--;upd();save();}
+        function save(){localStorage.setItem('okGame',JSON.stringify(s));}
+        function load(){
             const d=localStorage.getItem('okGame');if(d){Object.assign(s,JSON.parse(d));
             if(s.bk){el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none'}
             if(s.sc){el('scooter-btn').innerText='РАБОТАТЬ';el('scooter-req').style.display='none'}
@@ -713,7 +713,7 @@
             if(s.rg&&s.rb&&s.rd)el('real-concert-item').querySelector('button').disabled=false;
             if(s.metProducer&&s.metRealOrg)el('super-concert-item').querySelector('button').disabled=false;}
             upd();
-        };
+        }
         
         // ИНИЦИАЛИЗАЦИЯ
         showScene(1);
