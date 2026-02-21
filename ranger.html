@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Окей: Рейнджер Страж</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;background:#111;color:#0f0;line-height:1.5;padding-bottom:100px}#scenes{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;background:rgba(0,0,0,0.95);z-index:100}button{background:#0f0;color:#000;border:none;padding:8px 15px;font-family:'Courier New',monospace;margin:5px;cursor:pointer;border-radius:4px;font-size:14px;transition:all 0.2s}button:hover{background:#0d0;transform:scale(1.02)}button.no{background:#f44}button:disabled{opacity:0.3;cursor:not-allowed;background:#444;color:#666}#game{display:none;max-width:650px;margin:10px auto;padding:0 8px}#stats{background:#000;border:1px solid #0f0;border-radius:6px;padding:10px;margin:8px 0;text-align:center;font-size:15px}#timer{color:#ff4752;font-weight:bold;font-size:18px;margin:4px 0}#main{margin:10px 0}#jobs,#upgrades,#concerts{background:#1a1a1a;border-radius:6px;padding:8px;margin:10px 0;border:1px solid #333}h3{color:#0f0;text-align:center;margin:6px 0;font-size:16px}.item{display:flex;justify-content:space-between;align-items:center;background:#222;padding:6px;margin:4px 0;border-radius:4px;font-size:13px}.hint{font-size:11px;color:#777;margin-top:2px;text-align:right}.req{font-size:10px;color:#f55;margin-top:1px}.hidden{display:none}.card{background:linear-gradient(120deg,#667eea,#764ba2);padding:12px;border-radius:10px;max-width:300px;margin:12px auto;text-align:center}.qr{width:80px;height:80px;background:#fff;margin:8px auto;border:2px solid #0f0}.event{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#ff4757;color:white;padding:15px;border-radius:10px;z-index:200;max-width:80%;text-align:center;font-weight:bold;box-shadow:0 0 20px rgba(255,0,0,0.7);animation:shake 0.5s}@keyframes shake{0%,100%{transform:translateX(-50%) rotate(0deg)}25%{transform:translateX(-52%) rotate(-2deg)}75%{transform:translateX(-48%) rotate(2deg)}}#game-over{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:300;display:none}#game-over h2{font-size:32px;margin-bottom:20px;color:#ff4757}#game-over p{font-size:18px;margin:10px 0}#game-over button{padding:12px 30px;font-size:18px;margin:10px}.goal{background:#2a1a3a;border-left:3px solid #9d4edd;padding:8px;margin:8px 0;border-radius:0 4px 4px 0;font-size:14px}#name-input{background:#222;color:#0f0;border:1px solid #0f0;padding:8px;margin:10px 0;text-align:center;font-family:'Courier New',monospace;font-size:16px;width:80%}#band-input{background:#222;color:#0f0;border:1px solid #ff4752;padding:8px;margin:10px 0;text-align:center;font-family:'Courier New',monospace;font-size:16px;width:80%}.postgame{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:400;display:none}.postgame h2{font-size:36px;margin:15px 0;color:#ff4752}#postgame-text{font-size:18px;margin:10px 0;line-height:1.6}.postgame-btn{padding:12px 35px;font-size:18px;margin:8px;background:#ff4752;color:white;border:none;border-radius:6px;cursor:pointer;transition:all 0.2s}.postgame-btn:hover{background:#ff6b76;transform:scale(1.03)}.postgame-btn.park{background:#ffd700;color:#000}.postgame-btn.park:hover{background:#ffe033}#park-mode,#party-mode{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;flex-direction:column;padding:20px;z-index:500;overflow-y:auto}#park-stats,#party-stats{background:#111;border:1px solid #ffd700;padding:10px;margin-bottom:15px;text-align:center;font-size:16px}.park-item,.party-item{background:#1a1a2a;padding:10px;margin:8px 0;border-radius:4px}.park-btn,.party-btn{background:#ffd700;color:#000;width:100%;padding:8px;margin:5px 0;font-family:'Courier New',monospace;font-size:14px;border:none;border-radius:4px;cursor:pointer}.park-btn:hover,.party-btn:hover{background:#ffe033}.scandal{color:#ff4752;font-weight:bold}.attraction{border-left:3px solid #0f0;padding-left:8px;margin:5px 0}.fans{color:#4dff4d;font-weight:bold}.newspaper{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:20px;border-radius:8px;z-index:600;max-width:80%;text-align:center;font-family:'Courier New',monospace;font-size:18px;border:3px double #000;box-shadow:0 0 20px rgba(255,255,255,0.8)}.newspaper h3{color:#ff4752;font-size:24px;margin-bottom:10px}.fans-change{font-weight:bold;margin-top:5px}.positive{color:#4dff4d}.negative{color:#ff4752}
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;background:#111;color:#0f0;line-height:1.5;padding-bottom:100px}#scenes{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;background:rgba(0,0,0,0.95);z-index:100}button{background:#0f0;color:#000;border:none;padding:8px 15px;font-family:'Courier New',monospace;margin:5px;cursor:pointer;border-radius:4px;font-size:14px;transition:all 0.2s}button:hover{background:#0d0;transform:scale(1.02)}button.no{background:#f44}button:disabled{opacity:0.3;cursor:not-allowed;background:#444;color:#666}#game{display:none;max-width:650px;margin:10px auto;padding:0 8px}#stats{background:#000;border:1px solid #0f0;border-radius:6px;padding:10px;margin:8px 0;text-align:center;font-size:15px}#timer{color:#ff4752;font-weight:bold;font-size:18px;margin:4px 0}#main{margin:10px 0}#jobs,#upgrades,#concerts{background:#1a1a1a;border-radius:6px;padding:8px;margin:10px 0;border:1px solid #333}h3{color:#0f0;text-align:center;margin:6px 0;font-size:16px}.item{display:flex;justify-content:space-between;align-items:center;background:#222;padding:6px;margin:4px 0;border-radius:4px;font-size:13px}.hint{font-size:11px;color:#777;margin-top:2px;text-align:right}.req{font-size:10px;color:#f55;margin-top:1px}.hidden{display:none}.card{background:linear-gradient(120deg,#667eea,#764ba2);padding:12px;border-radius:10px;max-width:300px;margin:12px auto;text-align:center}.qr{width:80px;height:80px;background:#fff;margin:8px auto;border:2px solid #0f0}.event{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#ff4757;color:white;padding:15px;border-radius:10px;z-index:200;max-width:80%;text-align:center;font-weight:bold;box-shadow:0 0 20px rgba(255,0,0,0.7);animation:shake 0.5s}@keyframes shake{0%,100%{transform:translateX(-50%) rotate(0deg)}25%{transform:translateX(-52%) rotate(-2deg)}75%{transform:translateX(-48%) rotate(2deg)}}#game-over{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:300;display:none}#game-over h2{font-size:32px;margin-bottom:20px;color:#ff4757}#game-over p{font-size:18px;margin:10px 0}#game-over button{padding:12px 30px;font-size:18px;margin:10px}.goal{background:#2a1a3a;border-left:3px solid #9d4edd;padding:8px;margin:8px 0;border-radius:0 4px 4px 0;font-size:14px}#name-input{background:#222;color:#0f0;border:1px solid #0f0;padding:8px;margin:10px 0;text-align:center;font-family:'Courier New',monospace;font-size:16px;width:80%}#band-input{background:#222;color:#0f0;border:1px solid #ff4752;padding:8px;margin:10px 0;text-align:center;font-family:'Courier New',monospace;font-size:16px;width:80%}.postgame{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:400;display:none}.postgame h2{font-size:36px;margin:15px 0;color:#ff4752}#postgame-text{font-size:18px;margin:10px 0;line-height:1.6}.postgame-btn{padding:12px 35px;font-size:18px;margin:8px;background:#ff4752;color:white;border:none;border-radius:6px;cursor:pointer;transition:all 0.2s}.postgame-btn:hover{background:#ff6b76;transform:scale(1.03)}.postgame-btn.park{background:#ffd700;color:#000}.postgame-btn.park:hover{background:#ffe033}#park-mode,#party-mode{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;flex-direction:column;padding:20px;z-index:500;overflow-y:auto}#park-stats,#party-stats{background:#111;border:1px solid #ffd700;padding:10px;margin-bottom:15px;text-align:center;font-size:16px}.park-item,.party-item{background:#1a1a2a;padding:10px;margin:8px 0;border-radius:4px}.park-btn,.party-btn{background:#ffd700;color:#000;width:100%;padding:8px;margin:5px 0;font-family:'Courier New',monospace;font-size:14px;border:none;border-radius:4px;cursor:pointer}.park-btn:hover,.party-btn:hover{background:#ffe033}.scandal{color:#ff4752;font-weight:bold}.attraction{border-left:3px solid #0f0;padding-left:8px;margin:5px 0}.fans{color:#4dff4d;font-weight:bold}.newspaper{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:20px;border-radius:8px;z-index:600;max-width:80%;text-align:center;font-family:'Courier New',monospace;font-size:18px;border:3px double #000;box-shadow:0 0 20px rgba(255,255,255,0.8)}.newspaper h3{color:#ff4752;font-size:24px;margin-bottom:10px}.fans-change{font-weight:bold;margin-top:5px}.positive{color:#4dff4d}.negative{color:#ff4752}.construction{background:#ff8c00;color:#000;font-weight:bold}.inspection{background:#ff4752;color:white}.food-safe{color:#4dff4d}.food-cheap{color:#ff4752}
     </style>
 </head>
 <body>
@@ -82,7 +82,9 @@
             metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,
             streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false,
             // Пост-игра
-            pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100,pgFans:1000
+            pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100,pgFans:1000,
+            // Парк - сложная механика
+            pgSecurity:1,pgFood:0,pgFoodQuality:0,pgInspections:{tax:30,fire:30,health:30},pgBribes:{tax:0,fire:0,health:0},pgConstruction:[]
         };
         let gi = null, pgTimer = null;
         const el = id => document.getElementById(id);
@@ -94,9 +96,9 @@
         };
         
         window.setName = () => {
-            const name = el('name-input').value.trim() || "Рейнджер";
-            s.name = name;
-            showScene(3);        };
+            const name = el('name-input').value.trim() || "Рейнджер";            s.name = name;
+            showScene(3);
+        };
         
         window.startGame = () => {
             el('scenes').style.display = 'none';
@@ -143,9 +145,9 @@
                     timeCost = 3600;
                     alertMsg = `🔥 ФУФЛО-КВАРТИРНИК!\n+${payout}₽ (x${mult})\n`;
                     if(!s.metFufloMusicians){
-                        alertMsg += 'Познакомился с фуфло-музыкантами и фуфло-организатором!';
-                        s.metFufloMusicians=true;
-                        el('bass-item').style.display='block';                        el('drums-item').style.display='block';
+                        alertMsg += 'Познакомился с фуфло-музыкантами и фуфло-организатором!';                        s.metFufloMusicians=true;
+                        el('bass-item').style.display='block';
+                        el('drums-item').style.display='block';
                         el('fuflo-concert-item').style.display='block';
                         if(s.highestConcert < 1) s.highestConcert = 1;
                     } else alertMsg += 'Хороший слот благодаря твоему статусу!';
@@ -192,9 +194,9 @@
                 case'super':
                     if(!s.metProducer||!s.metRealOrg)return alert('Нужны связи с продюсером и организатором!');
                     if(s.t<43200)return alert('Недостаточно времени!');
-                    payout = 500000;
-                    timeCost = 43200;
-                    alertMsg = `🔥 СУПЕР ПИЗДАТЫЙ КОНЦЕРТ "${s.band}"!\n+500000₽\nТы ЗВЕЗДА! Контракты с брендами, гастроли по миру!`;                    if(s.highestConcert < 4) s.highestConcert = 4;
+                    payout = 500000;                    timeCost = 43200;
+                    alertMsg = `🔥 СУПЕР ПИЗДАТЫЙ КОНЦЕРТ "${s.band}"!\n+500000₽\nТы ЗВЕЗДА! Контракты с брендами, гастроли по миру!`;
+                    if(s.highestConcert < 4) s.highestConcert = 4;
                     setTimeout(()=>showVictory(),500);
                     break;
             }
@@ -229,7 +231,7 @@
             el('postgame').style.display='flex';
         };
         
-        // ============ РЕЖИМ "ТУСИТЬ" ============
+        // ============ РЕЖИМ "ТУСИТЬ" (УЛУЧШЕННЫЙ) ============
         window.startPartyMode = () => {
             el('postgame').style.display='none';
             el('party-mode').style.display='flex';
@@ -241,9 +243,9 @@
             showPartyActions();
             
             if(pgTimer) clearInterval(pgTimer);
-            pgTimer = setInterval(() => {
-                s.pgDays--;
-                updatePartyStats();                if(s.pgDays <= 0 || s.pgReputation <= 0) {
+            pgTimer = setInterval(() => {                s.pgDays--;
+                updatePartyStats();
+                if(s.pgDays <= 0 || s.pgReputation <= 0) {
                     clearInterval(pgTimer);
                     const msg = s.pgReputation > 70 ? `ЛЕГЕНДА! ${s.pgFans.toLocaleString()} фанатов! Тебя приглашают на главную сцену Вселенной!` : 
                                 s.pgReputation > 40 ? `Неплохо! ${s.pgFans.toLocaleString()} фанатов. Можно продолжать творить.` : 
@@ -290,20 +292,18 @@
             let html = '';
             events.forEach(e => {
                 html += `<div class="party-item"><strong>${e.name}</strong><br><span style="color:#777">${e.desc}</span><br>`;
-                e.choices.forEach((c,i) => {
-                    html += `<button class="party-btn" onclick="partyChoice(${JSON.stringify(c).replace(/"/g,'"')})">${c.text}</button>`;
-                });                html += `</div>`;
+                e.choices.forEach((c,i) => {                    html += `<button class="party-btn" onclick="partyChoice(${JSON.stringify(c).replace(/"/g,'"')})">${c.text}</button>`;
+                });
+                html += `</div>`;
             });
             el('party-actions').innerHTML = html;
         }
         
         window.partyChoice = (c) => {
-            // Парсим строку обратно в объект
             let choice;
             try {
                 choice = JSON.parse(c.replace(/"/g, '"'));
             } catch(e) {
-                // Fallback для простых случаев
                 eval(`choice = ${c}`);
             }
             
@@ -356,13 +356,19 @@
             }, 3000);
         }
         
-        // ============ РЕЖИМ "ПАРК АТТРАКЦИОНОВ" ============
+        // ============ РЕЖИМ "ПАРК АТТРАКЦИОНОВ" (ПОЛНАЯ ПЕРЕРАБОТКА) ============
         window.startParkMode = () => {
             el('postgame').style.display='none';
             el('park-mode').style.display='flex';
             s.pgDays = 365;
             s.pgVisitors = 0;
             s.pgAttractions = [];
+            s.pgSecurity = 1;
+            s.pgFood = 0;
+            s.pgFoodQuality = 0;
+            s.pgInspections = {tax:30,fire:30,health:30};
+            s.pgBribes = {tax:0,fire:0,health:0};
+            s.pgConstruction = [];
             updateParkStats();
             showParkActions();
             
@@ -371,41 +377,108 @@
                 // Ежедневный доход и посетители
                 let dailyIncome = 0, dailyVisitors = 0;
                 s.pgAttractions.forEach(a => {
-                    dailyVisitors += a.visitors;
-                    dailyIncome += a.income;
+                    if(!a.broken) {
+                        dailyVisitors += a.visitors;
+                        dailyIncome += a.income;
+                    }
                 });
-                s.pgMoney += dailyIncome;
-                s.pgVisitors += dailyVisitors;
                 
-                // Случайное событие
-                if(Math.random() < 0.03) {
-                    if(Math.random() < 0.7) {
-                        const bonus = Math.floor(dailyIncome * 0.4);
-                        s.pgMoney += bonus;
-                        showAlert(`Удача! Тургруппа из Японии: +${bonus}₽`);
-                    } else {
-                        s.pgScandals++;
-                        showAlert(`⚠️ Скандал! Аттракцион "${s.pgAttractions[Math.floor(Math.random()*s.pgAttractions.length)].name}" сломался`);
+                // Еда
+                let foodIncome = 0, foodCost = 0, foodPoisonings = 0;
+                if(s.pgFood > 0) {
+                    const foodVisitors = Math.floor(dailyVisitors * 0.3);
+                    if(s.pgFoodQuality === 1) { // Безопасная
+                        foodIncome = foodVisitors * 500;
+                        foodCost = foodVisitors * 450;
+                    } else if(s.pgFoodQuality === 2) { // Дешёвая                        foodIncome = foodVisitors * 500;
+                        foodCost = foodVisitors * 200;
+                        if(Math.random() < 0.05 && s.pgBribes.health < 100000) {
+                            foodPoisonings = Math.floor(foodVisitors * 0.1);
+                            showAlert(`⚠️ ОТРАВЛЕНИЕ! ${foodPoisonings} посетителей госпитализировано!`);
+                        }
                     }
                 }
                 
+                // Безбилетники и драки (зависит от охраны)
+                let freeloaders = 0, fights = 0;
+                if(s.pgSecurity === 1) {
+                    freeloaders = Math.floor(dailyVisitors * 0.2);
+                    fights = Math.floor(dailyVisitors * 0.05);
+                } else if(s.pgSecurity === 2) {
+                    freeloaders = Math.floor(dailyVisitors * 0.1);
+                    fights = Math.floor(dailyVisitors * 0.03);
+                } else if(s.pgSecurity >= 50) {
+                    freeloaders = 0;
+                    fights = 0;
+                }
+                
+                // Итоговый доход
+                s.pgMoney += (dailyIncome + foodIncome - foodCost);
+                s.pgVisitors += (dailyVisitors - freeloaders);
+                
+                // Строительство
+                s.pgConstruction = s.pgConstruction.filter(c => {
+                    c.days--;
+                    if(c.days <= 0) {
+                        if(c.type === 'attraction') {
+                            s.pgAttractions.push({...c.data, level:1, broken:false});
+                            showAlert(`✅ Построен "${c.data.name}"!`);
+                        } else if(c.type === 'upgrade') {
+                            const idx = s.pgAttractions.findIndex(a => a.id === c.targetId);
+                            if(idx !== -1) {
+                                s.pgAttractions[idx].level++;
+                                s.pgAttractions[idx].visitors = Math.floor(s.pgAttractions[idx].visitors * 1.5);
+                                s.pgAttractions[idx].income = Math.floor(s.pgAttractions[idx].income * 1.5);
+                                showAlert(`✅ "${s.pgAttractions[idx].name}" улучшен до Lv.${s.pgAttractions[idx].level}!`);
+                            }
+                        }
+                        return false;
+                    }
+                    return true;
+                });
+                
+                // Проверки инстанций (раз в 30 дней)
+                Object.keys(s.pgInspections).forEach(key => {
+                    s.pgInspections[key]--;                    if(s.pgInspections[key] <= 0) {
+                        const bribe = {tax:200000,fire:150000,health:180000}[key];
+                        if(s.pgBribes[key] < bribe) {
+                            const fine = bribe * 2;
+                            s.pgMoney -= fine;
+                            showAlert(`⚠️ ${key === 'tax' ? 'НАЛОГОВАЯ' : key === 'fire' ? 'ПОЖАРНЫЕ' : 'САНЭПИД'}! Штраф: ${fine.toLocaleString()}₽`);
+                        }
+                        s.pgInspections[key] = 30;
+                    }
+                });
+                
+                // Поломки аттракционов
+                s.pgAttractions.forEach(a => {
+                    if(!a.broken && Math.random() < 0.01) {
+                        a.broken = true;
+                        showAlert(`⚠️ "${a.name}" сломался! Нужен ремонт.`);
+                    }
+                });
+                
                 s.pgDays--;
-                updateParkStats();                if(s.pgDays <= 0) {
+                updateParkStats();
+                
+                if(s.pgDays <= 0) {
                     clearInterval(pgTimer);
                     const rating = s.pgVisitors > 1000000 ? '⭐⭐⭐⭐⭐' : 
                                  s.pgVisitors > 500000 ? '⭐⭐⭐⭐' : 
                                  s.pgVisitors > 200000 ? '⭐⭐⭐' : '⭐⭐';
-                    alert(`ГОД ПРОШЁЛ!\nПосетителей: ${s.pgVisitors.toLocaleString()}\nДоход: ${s.pgMoney.toLocaleString()}₽\nРейтинг: ${rating}\n\n${s.pgVisitors > 500000 ? 'Твой парк стал легендой! Отсылка к KISS Alive!' : 'Парк работает. Можно лучше...'}`);
+                    alert(`ГОД ПРОШЁЛ!\nПосетителей: ${s.pgVisitors.toLocaleString()}\nДоход: ${s.pgMoney.toLocaleString()}₽\nРейтинг: ${rating}\n\n${s.pgVisitors > 500000 ? 'Твой парк стал легендой!' : 'Парк работает. Можно лучше...'}`);
                     backToPostgame();
                 }
             }, 1000);
         };
         
         function updateParkStats() {
-            el('park-stats').innerHTML = `ДНИ: ${s.pgDays} | ДЕНЬГИ: ${Math.floor(s.pgMoney).toLocaleString()}₽ | ПОСЕТИТЕЛИ: ${s.pgVisitors.toLocaleString()} | СКАНДАЛЫ: ${s.pgScandals}`;
+            el('park-stats').innerHTML = `ДНИ: ${s.pgDays} | ДЕНЬГИ: ${Math.floor(s.pgMoney).toLocaleString()}₽ | ПОСЕТИТЕЛИ: ${s.pgVisitors.toLocaleString()}<br>Охрана: Lv.${s.pgSecurity} | Еда: ${s.pgFood > 0 ? (s.pgFoodQuality === 1 ? 'Безопасная' : 'Дешёвая') : 'Нет'} | Строительство: ${s.pgConstruction.length}`;
         }
         
         function showParkActions() {
+            let html = '<h3>🏗️ СТРОИТЕЛЬСТВО</h3>';
+            
             const attractions = [
                 {id:'coaster',name:"🎸 Гитарный Коастер", cost:50000, visitors:200, income:5000},
                 {id:'drums',name:"🥁 Барабанный Ад", cost:75000, visitors:300, income:7500},
@@ -414,81 +487,133 @@
                 {id:'stadium',name:"🏟️ Стадион Славы", cost:300000, visitors:1000, income:25000}
             ];
             
-            let html = '<h3>АТТРАКЦИОНЫ</h3>';
             attractions.forEach(a => {
-                const owned = s.pgAttractions.find(x => x.id === a.id);
-                if(owned) {
-                    html += `<div class="park-item"><strong>${owned.name}</strong><br>Посетители: ${owned.visitors}/день | Доход: ${owned.income.toLocaleString()}₽/день<br><button class="park-btn" ${s.pgMoney < Math.floor(a.cost*0.5) ? 'disabled' : ''} onclick="upgradeAttraction('${a.id}')">ГРЕЙД (+50%) — ${Math.floor(a.cost*0.5).toLocaleString()}₽</button></div>`;
+                const building = s.pgConstruction.find(c => c.type === 'attraction' && c.data.id === a.id);                const owned = s.pgAttractions.find(x => x.id === a.id);
+                
+                if(building) {
+                    html += `<div class="park-item construction">${a.name}<br>Строится... ${building.days} дней осталось</div>`;
+                } else if(owned) {
+                    if(owned.level >= 50) {
+                        html += `<div class="park-item">${owned.name} Lv.${owned.level}<br>МАКС. УРОВЕНЬ</div>`;
+                    } else {
+                        const upgradeCost = Math.floor(a.cost * (0.5 + (owned.level * 0.1)));
+                        const upgrading = s.pgConstruction.find(c => c.type === 'upgrade' && c.targetId === a.id);
+                        if(upgrading) {
+                            html += `<div class="park-item construction">${a.name} Lv.${owned.level} → ${owned.level+1}<br>Улучшается... ${upgrading.days} дней</div>`;
+                        } else {
+                            html += `<div class="park-item">${a.name} Lv.${owned.level}<br>Посетители: ${owned.visitors}/день | Доход: ${owned.income.toLocaleString()}₽/день${owned.broken ? '<br><span style="color:#ff4752">⚠️ СЛОМАН</span>' : ''}<br><button class="park-btn" ${s.pgMoney < upgradeCost || owned.broken ? 'disabled' : ''} onclick="startUpgrade('${a.id}',${upgradeCost})">ГРЕЙД (+50%) — ${upgradeCost.toLocaleString()}₽ (5 дней)</button>${owned.broken ? `<br><button class="park-btn" onclick="repairAttraction('${a.id}')">ПОЧИНИТЬ — 10000₽</button>` : ''}</div>`;
+                        }
+                    }
                 } else {
-                    html += `<div class="park-item">${a.name}<br><span style="color:#777">Стоимость: ${a.cost.toLocaleString()}₽</span><br><button class="park-btn" ${s.pgMoney < a.cost ? 'disabled' : ''} onclick="buyAttraction('${a.id}')">ПОСТРОИТЬ</button></div>`;
+                    html += `<div class="park-item">${a.name}<br><span style="color:#777">Стоимость: ${a.cost.toLocaleString()}₽ (10 дней строительства)</span><br><button class="park-btn" ${s.pgMoney < a.cost ? 'disabled' : ''} onclick="startBuild('${a.id}',${a.cost},${JSON.stringify(a).replace(/"/g,'"')})">ПОСТРОИТЬ</button></div>`;
                 }
             });
             
-            html += `<h3 style="color:#ffd700;margin-top:15px">УЛУЧШЕНИЯ</h3>`;
-            html += `<div class="park-item">Реклама (+10000 посетителей)<br><span style="color:#777">Стоимость: 50000₽</span><br><button class="park-btn" ${s.pgMoney < 50000 ? 'disabled' : ''} onclick="doUpgrade('ads')">ЗАПУСТИТЬ</button></div>`;
+            html += `<h3 style="color:#ffd700;margin-top:15px">🛡️ ОХРАНА</h3>`;
+            html += `<div class="park-item">Текущий уровень: ${s.pgSecurity}<br>${getSecurityDesc(s.pgSecurity)}<br><button class="park-btn" ${s.pgMoney < (100000 + (s.pgSecurity * 20000)) || s.pgSecurity >= 50 ? 'disabled' : ''} onclick="upgradeSecurity()">УЛУЧШИТЬ — ${(100000 + (s.pgSecurity * 20000)).toLocaleString()}₽</button></div>`;
+            
+            html += `<h3 style="color:#ffd700;margin-top:15px">🍔 ЕДА</h3>`;
+            if(s.pgFood === 0) {
+                html += `<div class="park-item">Нет точек питания<br><button class="park-btn" onclick="setupFood()">ОТКРЫТЬ ТОЧКУ ПИТАНИЯ — 50000₽</button></div>`;
+            } else {
+                html += `<div class="park-item">Качество: ${s.pgFoodQuality === 1 ? '<span class="food-safe">Безопасная</span>' : '<span class="food-cheap">Дешёвая</span>'}<br>${s.pgFoodQuality === 1 ? 'Маленький выхлоп, но безопасно' : 'Высокий выхлоп, но риск отравлений'}<br><button class="park-btn" onclick="toggleFoodQuality()">СМЕНИТЬ КАЧЕСТВО</button></div>`;
+            }
+            
+            html += `<h3 style="color:#ff4752;margin-top:15px">🏛️ ИНСТАНЦИИ</h3>`;
+            html += `<div class="park-item inspection">Налоговая: ${s.pgInspections.tax} дней<br>Взятка: ${s.pgBribes.tax.toLocaleString()}₽ / 200000₽<br><button class="park-btn" ${s.pgMoney < (200000 - s.pgBribes.tax) ? 'disabled' : ''} onclick="payBribe('tax')">ДАТЬ ВЗЯТКУ</button></div>`;
+            html += `<div class="park-item inspection">Пожарные: ${s.pgInspections.fire} дней<br>Взятка: ${s.pgBribes.fire.toLocaleString()}₽ / 150000₽<br><button class="park-btn" ${s.pgMoney < (150000 - s.pgBribes.fire) ? 'disabled' : ''} onclick="payBribe('fire')">ДАТЬ ВЗЯТКУ</button></div>`;
+            html += `<div class="park-item inspection">Санэпид: ${s.pgInspections.health} дней<br>Взятка: ${s.pgBribes.health.toLocaleString()}₽ / 180000₽<br><button class="park-btn" ${s.pgMoney < (180000 - s.pgBribes.health) ? 'disabled' : ''} onclick="payBribe('health')">ДАТЬ ВЗЯТКУ</button></div>`;
             
             el('park-actions').innerHTML = html;
             showParkAttractions();
         }
         
+        function getSecurityDesc(level) {
+            if(level === 1) return "Спит на посту. Безбилетники и драки!";
+            if(level === 2) return "Смотрит ТВ. Безбилетники реже, драки есть.";
+            if(level >= 50) return "Профессионалы! Фанаты группы! Военная связь, все виды оружия!";
+            return "Улучшается...";
+        }
+        
         function showParkAttractions() {
-            if(s.pgAttractions.length === 0) {
-                el('park-attractions').innerHTML = '<p style="color:#777;text-align:center;padding:10px">Нет аттракционов. Построй первый!</p>';
-                return;
+            if(s.pgAttractions.length === 0 && s.pgConstruction.length === 0) {
+                el('park-attractions').innerHTML = '<p style="color:#777;text-align:center;padding:10px">Нет аттракционов. Построй первый!</p>';                return;
             }
             
             let html = '<h3 style="color:#0f0;text-align:center;margin:15px 0">МОИ АТТРАКЦИОНЫ</h3>';
             s.pgAttractions.forEach(a => {
-                html += `<div class="attraction"><strong>${a.name}</strong> Lv.${a.level || 1}<br>Посетители/день: ${a.visitors}<br>Доход/день: ${a.income.toLocaleString()}₽</div>`;            });
+                html += `<div class="attraction"><strong>${a.name}</strong> Lv.${a.level}${a.broken ? ' <span style="color:#ff4752">[СЛОМАН]</span>' : ''}<br>Посетители/день: ${a.visitors}<br>Доход/день: ${a.income.toLocaleString()}₽</div>`;
+            });
             el('park-attractions').innerHTML = html;
         }
         
-        window.buyAttraction = (id) => {
-            const attractions = {
-                'coaster':{id:'coaster',name:"🎸 Гитарный Коастер", cost:50000, visitors:200, income:5000},
-                'drums':{id:'drums',name:"🥁 Барабанный Ад", cost:75000, visitors:300, income:7500},
-                'vocal':{id:'vocal',name:"🎤 Вокальная Горка", cost:60000, visitors:250, income:6000},
-                'mosh':{id:'mosh',name:"🔥 Мош-пит Вихрь", cost:100000, visitors:400, income:10000},
-                'stadium':{id:'stadium',name:"🏟️ Стадион Славы", cost:300000, visitors:1000, income:25000}
-            };
-            const a = attractions[id];
-            if(s.pgMoney < a.cost) {alert("Недостаточно денег!"); return;}
-            s.pgMoney -= a.cost;
-            s.pgAttractions.push({...a, level:1});
+        window.startBuild = (id, cost, data) => {
+            if(s.pgMoney < cost) {alert("Недостаточно денег!"); return;}
+            s.pgMoney -= cost;
+            s.pgConstruction.push({type:'attraction', days:10, data:JSON.parse(data.replace(/"/g, '"'))});
             updateParkStats();
-            showAlert(`Построен "${a.name}"!`);
+            showAlert(`Строительство "${JSON.parse(data.replace(/"/g, '"')).name}" начато! 10 дней.`);
             showParkActions();
         };
         
-        window.upgradeAttraction = (id) => {
+        window.startUpgrade = (id, cost) => {
+            if(s.pgMoney < cost) {alert("Недостаточно денег!"); return;}
+            s.pgMoney -= cost;
+            s.pgConstruction.push({type:'upgrade', days:5, targetId:id});
+            updateParkStats();
+            showAlert(`Улучшение начато! 5 дней.`);
+            showParkActions();
+        };
+        
+        window.repairAttraction = (id) => {
             const idx = s.pgAttractions.findIndex(a => a.id === id);
             if(idx === -1) return;
-            
-            const a = s.pgAttractions[idx];
-            const upgradeCost = Math.floor({
-                'coaster':50000,'drums':75000,'vocal':60000,'mosh':100000,'stadium':300000
-            }[id] * 0.5);
-            
-            if(s.pgMoney < upgradeCost) {alert("Недостаточно денег на грейд!"); return;}
-            
-            s.pgMoney -= upgradeCost;
-            a.visitors = Math.floor(a.visitors * 1.5);
-            a.income = Math.floor(a.income * 1.5);
-            a.level = (a.level || 1) + 1;
+            if(s.pgMoney < 10000) {alert("Недостаточно денег на ремонт!"); return;}
+            s.pgMoney -= 10000;
+            s.pgAttractions[idx].broken = false;
             updateParkStats();
-            showAlert(`"${a.name}" улучшен до Lv.${a.level}! +50% посетителей и дохода`);
+            showAlert(`"${s.pgAttractions[idx].name}" отремонтирован!`);
             showParkActions();
         };
         
-        window.doUpgrade = (type) => {
-            if(type === 'ads') {
-                if(s.pgMoney < 50000) {alert("Недостаточно денег!"); return;}
-                s.pgMoney -= 50000;
-                s.pgVisitors += 10000;
-                showAlert("Рекламная кампания запущена! +10000 посетителей");
-            }
+        window.upgradeSecurity = () => {
+            const cost = 100000 + (s.pgSecurity * 20000);
+            if(s.pgMoney < cost) {alert("Недостаточно денег!"); return;}
+            s.pgMoney -= cost;
+            s.pgSecurity++;
             updateParkStats();
-        };        
+            showAlert(`Охрана улучшена до Lv.${s.pgSecurity}!`);
+            showParkActions();
+        };
+        
+        window.setupFood = () => {            if(s.pgMoney < 50000) {alert("Недостаточно денег!"); return;}
+            s.pgMoney -= 50000;
+            s.pgFood = 1;
+            s.pgFoodQuality = 1; // Безопасная по умолчанию
+            updateParkStats();
+            showAlert("Точка питания открыта! Безопасная еда.");
+            showParkActions();
+        };
+        
+        window.toggleFoodQuality = () => {
+            s.pgFoodQuality = s.pgFoodQuality === 1 ? 2 : 1;
+            updateParkStats();
+            showAlert(`Качество еды изменено на ${s.pgFoodQuality === 1 ? 'БЕЗОПАСНУЮ' : 'ДЕШЁВУЮ'}!`);
+            showParkActions();
+        };
+        
+        window.payBribe = (type) => {
+            const amounts = {tax:200000,fire:150000,health:180000};
+            const needed = amounts[type] - s.pgBribes[type];
+            if(s.pgMoney < needed) {alert("Недостаточно денег!"); return;}
+            s.pgMoney -= needed;
+            s.pgBribes[type] = amounts[type];
+            s.pgInspections[type] = 30;
+            updateParkStats();
+            showAlert(`Взятка ${type === 'tax' ? 'налоговой' : type === 'fire' ? 'пожарным' : 'санэпиду'} дана!`);
+            showParkActions();
+        };
+        
         function showAlert(msg) {
             const e = document.createElement('div');
             e.className = 'event';
@@ -510,11 +635,10 @@
             if(w){el('game-over-title').innerText='РОК-ЗВЕЗДА! 🌟';el('game-over-title').style.color='#0f0';el('game-over-text').innerText=`${s.name}, ты победил!\nГруппа "${s.band}" — легенда!\nДеньги: ${Math.floor(s.m)}₽`;el('game-over').innerHTML+=`<button onclick="showVictory()" style="margin-top:15px;background:#ff4752;color:white;padding:12px 30px;font-size:18px">🚀 ПРОДОЛЖЕНИЕ</button>`;}else{el('game-over-title').innerText='ТЫ ПРОИГРАЛ';el('game-over-title').style.color='#ff4757';if(s.t>0)el('game-over-text').innerText='Тебя выгнали из квартиры...';else el('game-over-text').innerText='Время вышло! Тебя выгнали...';}
             localStorage.removeItem('okGame');
         };
-        
-        window.newGame = () => {
+                window.newGame = () => {
             if(gi)clearInterval(gi);
             if(pgTimer)clearInterval(pgTimer);
-            s={m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,bk:false,sc:false,name:"Рейнджер",band:"",metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false,pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100,pgFans:1000};
+            s={m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,bk:false,sc:false,name:"Рейнджер",band:"",metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false,pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100,pgFans:1000,pgSecurity:1,pgFood:0,pgFoodQuality:0,pgInspections:{tax:30,fire:30,health:30},pgBribes:{tax:0,fire:0,health:0},pgConstruction:[]};
             el('postgame').style.display='none';el('park-mode').style.display='none';el('party-mode').style.display='none';el('game-over').style.display='none';el('scenes').style.display='flex';el('game').style.display='none';showScene(1);localStorage.removeItem('okGame');
         };
         
@@ -537,7 +661,8 @@
         const update=()=>{if(s.t<=0){clearInterval(gi);endGame(s.m>=30000);return};s.t--;upd();save()};
         const save=()=>localStorage.setItem('okGame',JSON.stringify(s));
         const load=()=>{
-            const d=localStorage.getItem('okGame');if(d){Object.assign(s,JSON.parse(d));            if(s.bk){el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none'}
+            const d=localStorage.getItem('okGame');if(d){Object.assign(s,JSON.parse(d));
+            if(s.bk){el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none'}
             if(s.sc){el('scooter-btn').innerText='РАБОТАТЬ';el('scooter-req').style.display='none'}
             if(s.g){el('street').disabled=false;el('street').innerText='🎸 СТРИТОВАТЬ (+10₽)';el('guitar-btn').disabled=true;if(!s.metFufloMusicians)el('apartment-item').style.display='block';}
             if(s.metFufloMusicians){el('bass-item').style.display='block';el('drums-item').style.display='block';el('fuflo-concert-item').style.display='block';}
