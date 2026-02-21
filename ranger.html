@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Окей: Рейнджер Страж</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;background:#111;color:#0f0;line-height:1.5;padding-bottom:100px}#scenes{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;background:rgba(0,0,0,0.95);z-index:100}button{background:#0f0;color:#000;border:none;padding:8px 15px;font-family:'Courier New',monospace;margin:5px;cursor:pointer;border-radius:4px;font-size:14px;transition:all 0.2s}button:hover{background:#0d0;transform:scale(1.02)}button.no{background:#f44}button:disabled{opacity:0.3;cursor:not-allowed;background:#444;color:#666}#game{display:none;max-width:650px;margin:10px auto;padding:0 8px}#stats{background:#000;border:1px solid #0f0;border-radius:6px;padding:10px;margin:8px 0;text-align:center;font-size:15px}#timer{color:#ff4752;font-weight:bold;font-size:18px;margin:4px 0}#main{margin:10px 0}#jobs,#upgrades,#concerts{background:#1a1a1a;border-radius:6px;padding:8px;margin:10px 0;border:1px solid #333}h3{color:#0f0;text-align:center;margin:6px 0;font-size:16px}.item{display:flex;justify-content:space-between;align-items:center;background:#222;padding:6px;margin:4px 0;border-radius:4px;font-size:13px}.hint{font-size:11px;color:#777;margin-top:2px;text-align:right}.req{font-size:10px;color:#f55;margin-top:1px}.hidden{display:none}.card{background:linear-gradient(120deg,#667eea,#764ba2);padding:12px;border-radius:10px;max-width:300px;margin:12px auto;text-align:center}.qr{width:80px;height:80px;background:#fff;margin:8px auto;border:2px solid #0f0}.event{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#ff4757;color:white;padding:15px;border-radius:10px;z-index:200;max-width:80%;text-align:center;font-weight:bold;box-shadow:0 0 20px rgba(255,0,0,0.7);animation:shake 0.5s}@keyframes shake{0%,100%{transform:translateX(-50%) rotate(0deg)}25%{transform:translateX(-52%) rotate(-2deg)}75%{transform:translateX(-48%) rotate(2deg)}}#game-over{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:300;display:none}#game-over h2{font-size:32px;margin-bottom:20px;color:#ff4757}#game-over p{font-size:18px;margin:10px 0}#game-over button{padding:12px 30px;font-size:18px;margin:10px}.goal{background:#2a1a3a;border-left:3px solid #9d4edd;padding:8px;margin:8px 0;border-radius:0 4px 4px 0;font-size:14px}#name-input{background:#222;color:#0f0;border:1px solid #0f0;padding:8px;margin:10px 0;text-align:center;font-family:'Courier New',monospace;font-size:16px;width:80%}#band-input{background:#222;color:#0f0;border:1px solid #ff4752;padding:8px;margin:10px 0;text-align:center;font-family:'Courier New',monospace;font-size:16px;width:80%}.postgame{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:400;display:none}.postgame h2{font-size:36px;margin:15px 0;color:#ff4752}#postgame-text{font-size:18px;margin:10px 0;line-height:1.6}.postgame-btn{padding:12px 35px;font-size:18px;margin:8px;background:#ff4752;color:white;border:none;border-radius:6px;cursor:pointer;transition:all 0.2s}.postgame-btn:hover{background:#ff6b76;transform:scale(1.03)}.postgame-btn.park{background:#ffd700;color:#000}.postgame-btn.park:hover{background:#ffe033}#park-mode,#party-mode{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;flex-direction:column;padding:20px;z-index:500;overflow-y:auto}#park-stats,#party-stats{background:#111;border:1px solid #ffd700;padding:10px;margin-bottom:15px;text-align:center;font-size:16px}.park-item,.party-item{background:#1a1a2a;padding:10px;margin:8px 0;border-radius:4px}.park-btn,.party-btn{background:#ffd700;color:#000;width:100%;padding:8px;margin:5px 0;font-family:'Courier New',monospace;font-size:14px;border:none;border-radius:4px;cursor:pointer}.park-btn:hover,.party-btn:hover{background:#ffe033}.scandal{color:#ff4752;font-weight:bold}.attraction{border-left:3px solid #0f0;padding-left:8px;margin:5px 0}
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;background:#111;color:#0f0;line-height:1.5;padding-bottom:100px}#scenes{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;background:rgba(0,0,0,0.95);z-index:100}button{background:#0f0;color:#000;border:none;padding:8px 15px;font-family:'Courier New',monospace;margin:5px;cursor:pointer;border-radius:4px;font-size:14px;transition:all 0.2s}button:hover{background:#0d0;transform:scale(1.02)}button.no{background:#f44}button:disabled{opacity:0.3;cursor:not-allowed;background:#444;color:#666}#game{display:none;max-width:650px;margin:10px auto;padding:0 8px}#stats{background:#000;border:1px solid #0f0;border-radius:6px;padding:10px;margin:8px 0;text-align:center;font-size:15px}#timer{color:#ff4752;font-weight:bold;font-size:18px;margin:4px 0}#main{margin:10px 0}#jobs,#upgrades,#concerts{background:#1a1a1a;border-radius:6px;padding:8px;margin:10px 0;border:1px solid #333}h3{color:#0f0;text-align:center;margin:6px 0;font-size:16px}.item{display:flex;justify-content:space-between;align-items:center;background:#222;padding:6px;margin:4px 0;border-radius:4px;font-size:13px}.hint{font-size:11px;color:#777;margin-top:2px;text-align:right}.req{font-size:10px;color:#f55;margin-top:1px}.hidden{display:none}.card{background:linear-gradient(120deg,#667eea,#764ba2);padding:12px;border-radius:10px;max-width:300px;margin:12px auto;text-align:center}.qr{width:80px;height:80px;background:#fff;margin:8px auto;border:2px solid #0f0}.event{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#ff4757;color:white;padding:15px;border-radius:10px;z-index:200;max-width:80%;text-align:center;font-weight:bold;box-shadow:0 0 20px rgba(255,0,0,0.7);animation:shake 0.5s}@keyframes shake{0%,100%{transform:translateX(-50%) rotate(0deg)}25%{transform:translateX(-52%) rotate(-2deg)}75%{transform:translateX(-48%) rotate(2deg)}}#game-over{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:300;display:none}#game-over h2{font-size:32px;margin-bottom:20px;color:#ff4757}#game-over p{font-size:18px;margin:10px 0}#game-over button{padding:12px 30px;font-size:18px;margin:10px}.goal{background:#2a1a3a;border-left:3px solid #9d4edd;padding:8px;margin:8px 0;border-radius:0 4px 4px 0;font-size:14px}#name-input{background:#222;color:#0f0;border:1px solid #0f0;padding:8px;margin:10px 0;text-align:center;font-family:'Courier New',monospace;font-size:16px;width:80%}#band-input{background:#222;color:#0f0;border:1px solid #ff4752;padding:8px;margin:10px 0;text-align:center;font-family:'Courier New',monospace;font-size:16px;width:80%}.postgame{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:400;display:none}.postgame h2{font-size:36px;margin:15px 0;color:#ff4752}#postgame-text{font-size:18px;margin:10px 0;line-height:1.6}.postgame-btn{padding:12px 35px;font-size:18px;margin:8px;background:#ff4752;color:white;border:none;border-radius:6px;cursor:pointer;transition:all 0.2s}.postgame-btn:hover{background:#ff6b76;transform:scale(1.03)}.postgame-btn.park{background:#ffd700;color:#000}.postgame-btn.park:hover{background:#ffe033}#park-mode,#party-mode{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:none;flex-direction:column;padding:20px;z-index:500;overflow-y:auto}#park-stats,#party-stats{background:#111;border:1px solid #ffd700;padding:10px;margin-bottom:15px;text-align:center;font-size:16px}.park-item,.party-item{background:#1a1a2a;padding:10px;margin:8px 0;border-radius:4px}.park-btn,.party-btn{background:#ffd700;color:#000;width:100%;padding:8px;margin:5px 0;font-family:'Courier New',monospace;font-size:14px;border:none;border-radius:4px;cursor:pointer}.park-btn:hover,.party-btn:hover{background:#ffe033}.scandal{color:#ff4752;font-weight:bold}.attraction{border-left:3px solid #0f0;padding-left:8px;margin:5px 0}.fans{color:#4dff4d;font-weight:bold}.newspaper{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:20px;border-radius:8px;z-index:600;max-width:80%;text-align:center;font-family:'Courier New',monospace;font-size:18px;border:3px double #000;box-shadow:0 0 20px rgba(255,255,255,0.8)}.newspaper h3{color:#ff4752;font-size:24px;margin-bottom:10px}.fans-change{font-weight:bold;margin-top:5px}.positive{color:#4dff4d}.negative{color:#ff4752}
     </style>
 </head>
 <body>
@@ -82,7 +82,7 @@
             metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,
             streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false,
             // Пост-игра
-            pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100
+            pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100,pgFans:1000
         };
         let gi = null, pgTimer = null;
         const el = id => document.getElementById(id);
@@ -224,6 +224,7 @@
             s.pg = true;
             s.pgMoney = s.m;
             s.pgDays = 365;
+            s.pgFans = 10000;
             el('postgame-text').innerHTML = `Поздравляю, ${s.name}!<br>Твоя группа "${s.band}" — ЛЕГЕНДА!<br>Деньги: ${Math.floor(s.m)}₽<br><br>Что дальше? У тебя целый ГОД (365 дней),<br>чтобы построить империю!`;
             el('postgame').style.display='flex';
         };
@@ -235,53 +236,125 @@
             s.pgDays = 365;
             s.pgScandals = 0;
             s.pgReputation = 100;
+            s.pgFans = 10000;
             updatePartyStats();
             showPartyActions();
             
             if(pgTimer) clearInterval(pgTimer);
             pgTimer = setInterval(() => {
                 s.pgDays--;
-                updatePartyStats();
-                if(s.pgDays <= 0 || s.pgReputation <= 0) {
-                    clearInterval(pgTimer);                    alert(`ГОД ПРОШЁЛ!\nРепутация: ${s.pgReputation}\nСкандалов: ${s.pgScandals}\n\n${s.pgReputation > 50 ? 'Ты стал культовой фигурой рок-сцены!' : 'Слишком много скандалов — тебя забанили во всех шоу!'}`);
+                updatePartyStats();                if(s.pgDays <= 0 || s.pgReputation <= 0) {
+                    clearInterval(pgTimer);
+                    const msg = s.pgReputation > 70 ? `ЛЕГЕНДА! ${s.pgFans.toLocaleString()} фанатов! Тебя приглашают на главную сцену Вселенной!` : 
+                                s.pgReputation > 40 ? `Неплохо! ${s.pgFans.toLocaleString()} фанатов. Можно продолжать творить.` : 
+                                `ПРОВАЛ! Скандалы убили карьеру. Фанатов: ${s.pgFans.toLocaleString()}.`;
+                    alert(`ГОД ПРОШЁЛ!\nРепутация: ${s.pgReputation}\nФанаты: ${s.pgFans.toLocaleString()}\n\n${msg}`);
                     backToPostgame();
                 }
             }, 1000);
         };
         
         function updatePartyStats() {
-            el('party-stats').innerHTML = `ДНИ: ${s.pgDays} | РЕПУТАЦИЯ: ${s.pgReputation} | СКАНДАЛЫ: ${s.pgScandals}`;
+            el('party-stats').innerHTML = `ДНИ: ${s.pgDays} | РЕПУТАЦИЯ: ${s.pgReputation} | ФАНЫ: ${s.pgFans.toLocaleString()} | СКАНДАЛЫ: ${s.pgScandals}`;
         }
         
         function showPartyActions() {
             const events = [
-                {name:"🎸 Джем с музыкантами", desc:"+10 репутации, -1 день", act:()=>{s.pgReputation+=10;s.pgDays--;if(s.pgReputation>100)s.pgReputation=100;}},
-                {name:"🍾 Вечеринка до утра", desc:"-20 репутации, +3 скандала, -1 день", act:()=>{s.pgReputation-=20;s.pgScandals+=3;s.pgDays--;}},
-                {name:"📸 Фотосессия для журнала", desc:"+15 репутации, -1 день", act:()=>{s.pgReputation+=15;s.pgDays--;if(s.pgReputation>100)s.pgReputation=100;}},
-                {name:"🤬 Скандал с журналистом", desc:"-30 репутации, +5 скандалов, -1 день", act:()=>{s.pgReputation-=30;s.pgScandals+=5;s.pgDays--;}},
-                {name:"🤝 Благотворительность", desc:"+25 репутации, -5000₽, -1 день", act:()=>{if(s.pgMoney>=5000){s.pgMoney-=5000;s.pgReputation+=25;s.pgDays--;if(s.pgReputation>100)s.pgReputation=100;}else{alert("Нет денег!")}}},
-                {name:"📺 Эфир на радио", desc:"+20 репутации, -1 день", act:()=>{s.pgReputation+=20;s.pgDays--;if(s.pgReputation>100)s.pgReputation=100;}}
+                {name:"🎸 Джем с музыкантами", desc:"Творческий вечер", choices:[
+                    {text:"Импровизировать", rep:+15, fans:+500, scandal:0, headline:""},
+                    {text:"Играть хиты", rep:+10, fans:+300, scandal:0, headline:""},
+                    {text:"Напиться и забыть текст", rep:-10, fans:-200, scandal:1, headline:"ЗВЕЗДА ЗАБЫЛ ТЕКСТ НА СЦЕНЕ!"}
+                ]},
+                {name:"🍾 Вечеринка в отеле", desc:"Роскошь или хаос?", choices:[
+                    {text:"Тихо посидеть с друзьями", rep:+5, fans:+100, scandal:0, headline:""},
+                    {text:"Устроить бассейн-пати", rep:+10, fans:+800, scandal:1, headline:"ЗВЕЗДА УСТРОИЛ БЕШЕНУЮ ВЕЧЕРИНКУ В ОТЕЛЕ!"},
+                    {text:"Разнести номер", rep:-25, fans:-1000, scandal:3, headline:"ПОЛИЦИЯ ВЫЗВАНА В ОТЕЛЬ ИЗ-ЗА ЗВЕЗДЫ!"}
+                ]},
+                {name:"📸 Фотосессия", desc:"Обложка журнала", choices:[
+                    {text:"Классика", rep:+12, fans:+400, scandal:0, headline:""},
+                    {text:"Провокация", rep:-5, fans:+1500, scandal:2, headline:"СКАНДАЛЬНАЯ ФОТОСЕССИЯ ВЗОРВАЛА СЕТЬ!"},
+                    {text:"Благотворительность", rep:+20, fans:+600, scandal:0, headline:"ЗВЕЗДА ПОМОГАЕТ ДЕТЯМ — СЛЕЗЫ НА СЪЁМКЕ!"}
+                ]},
+                {name:"📺 Эфир на ТВ", desc:"Прямой эфир — риск!", choices:[
+                    {text:"Быть вежливым", rep:+8, fans:+200, scandal:0, headline:""},
+                    {text:"Пошутить про политику", rep:-15, fans:+2000, scandal:4, headline:"ЗВЕЗДА УВОЛЕНА С ТВ ЗА ПОЛИТИЧЕСКИЕ ШУТКИ!"},
+                    {text:"Рассказать личную историю", rep:+18, fans:+1200, scandal:0, headline:"ЗВЕЗДА РАСКРЫЛА СЕКРЕТ — ФАНЫ В СЛЕЗАХ!"}
+                ]},
+                {name:"🤝 Коллаборация", desc:"С кем записать трек?", choices:[
+                    {text:"С молодым артистом", rep:+10, fans:+700, scandal:0, headline:""},
+                    {text:"С рэпером", rep:+5, fans:+1500, scandal:1, headline:"НЕОЖИДАННЫЙ ДУЭТ ВЗОРВАЛ ЧАРТЫ!"},
+                    {text:"С конкурентом", rep:+25, fans:+2000, scandal:0, headline:"БЫВШИЕ ВРАГИ СЫГРАЛИ ВМЕСТЕ — ИСТОРИЯ ПОМИРЕНИЯ!"}
+                ]}
             ];
             
             let html = '';
             events.forEach(e => {
-                html += `<div class="party-item">${e.name}<br><span style="color:#777;font-size:12px">${e.desc}</span><br><button class="party-btn" onclick="partyAction(${JSON.stringify(e).replace(/"/g,'"')})">ВЫБРАТЬ</button></div>`;
+                html += `<div class="party-item"><strong>${e.name}</strong><br><span style="color:#777">${e.desc}</span><br>`;
+                e.choices.forEach((c,i) => {
+                    html += `<button class="party-btn" onclick="partyChoice(${JSON.stringify(c).replace(/"/g,'"')})">${c.text}</button>`;
+                });                html += `</div>`;
             });
             el('party-actions').innerHTML = html;
         }
         
-        window.partyAction = (e) => {
-            eval(`(${e.act})()`);
+        window.partyChoice = (c) => {
+            // Парсим строку обратно в объект
+            let choice;
+            try {
+                choice = JSON.parse(c.replace(/"/g, '"'));
+            } catch(e) {
+                // Fallback для простых случаев
+                eval(`choice = ${c}`);
+            }
+            
+            s.pgReputation += choice.rep;
+            s.pgFans += choice.fans;
+            s.pgScandals += choice.scandal;
+            s.pgDays--;
+            
             if(s.pgReputation < 0) s.pgReputation = 0;
+            if(s.pgFans < 0) s.pgFans = 0;
+            
+            let msg = `РЕЗУЛЬТАТ:\nРепутация ${choice.rep >= 0 ? '+' : ''}${choice.rep}\nФаны ${choice.fans >= 0 ? '+' : ''}${choice.fans}`;
+            
+            if(choice.scandal > 0) {
+                showNewspaper(choice.headline, choice.fans);
+                msg += `\nСкандалов +${choice.scandal}`;
+            }
+            
+            alert(msg);
             updatePartyStats();
+            
             if(s.pgDays <= 0 || s.pgReputation <= 0) {
                 clearInterval(pgTimer);
-                alert(`ГОД ПРОШЁЛ!\nРепутация: ${s.pgReputation}\nСкандалов: ${s.pgScandals}\n\n${s.pgReputation > 50 ? 'Ты стал культовой фигурой рок-сцены!' : 'Слишком много скандалов — тебя забанили во всех шоу!'}`);
+                const msg = s.pgReputation > 70 ? `ЛЕГЕНДА! ${s.pgFans.toLocaleString()} фанатов!` : 
+                            s.pgReputation > 40 ? `Неплохо! ${s.pgFans.toLocaleString()} фанатов.` : 
+                            `ПРОВАЛ! Скандалы убили карьеру.`;
+                alert(`ГОД ПРОШЁЛ!\nРепутация: ${s.pgReputation}\nФанаты: ${s.pgFans.toLocaleString()}\n\n${msg}`);
                 backToPostgame();
                 return;
             }
+            
             showPartyActions();
         };
+        
+        function showNewspaper(headline, fansChange) {
+            const div = document.createElement('div');
+            div.className = 'newspaper';
+            div.innerHTML = `                <h3>🎸 РОК-ГАЗЕТА 🎸</h3>
+                <p style="font-size:20px;font-weight:bold">${headline}</p>
+                <p class="fans-change ${fansChange >= 0 ? 'positive' : 'negative'}">
+                    ${fansChange >= 0 ? '↑ +' : '↓ '} ${Math.abs(fansChange).toLocaleString()} ФАНОВ
+                </p>
+                <p style="margin-top:10px;font-style:italic">Реакция фанатов: ${fansChange >= 0 ? '«ЭТО РОК-Н-РОЛЛ!»' : '«РАЗОЧАРОВАНЫ...»'}</p>
+            `;
+            document.body.appendChild(div);
+            setTimeout(() => {
+                div.style.opacity = '0';
+                div.style.transition = 'opacity 0.5s';
+                setTimeout(() => div.remove(), 500);
+            }, 3000);
+        }
         
         // ============ РЕЖИМ "ПАРК АТТРАКЦИОНОВ" ============
         window.startParkMode = () => {
@@ -292,7 +365,8 @@
             s.pgAttractions = [];
             updateParkStats();
             showParkActions();
-                        if(pgTimer) clearInterval(pgTimer);
+            
+            if(pgTimer) clearInterval(pgTimer);
             pgTimer = setInterval(() => {
                 // Ежедневный доход и посетители
                 let dailyIncome = 0, dailyVisitors = 0;
@@ -303,24 +377,25 @@
                 s.pgMoney += dailyIncome;
                 s.pgVisitors += dailyVisitors;
                 
-                // Случайное событие раз в 3 дня
-                if(Math.random() < 0.05) {
+                // Случайное событие
+                if(Math.random() < 0.03) {
                     if(Math.random() < 0.7) {
-                        const bonus = Math.floor(dailyIncome * 0.3);
+                        const bonus = Math.floor(dailyIncome * 0.4);
                         s.pgMoney += bonus;
-                        showAlert(`Удача! Богатый фанат оставил чаевые: +${bonus}₽`);
+                        showAlert(`Удача! Тургруппа из Японии: +${bonus}₽`);
                     } else {
                         s.pgScandals++;
-                        showAlert(`Скандал! Аттракцион сломался — посетители недовольны!`);
+                        showAlert(`⚠️ Скандал! Аттракцион "${s.pgAttractions[Math.floor(Math.random()*s.pgAttractions.length)].name}" сломался`);
                     }
                 }
                 
                 s.pgDays--;
-                updateParkStats();
-                if(s.pgDays <= 0) {
+                updateParkStats();                if(s.pgDays <= 0) {
                     clearInterval(pgTimer);
-                    const total = s.pgVisitors + s.pgMoney;
-                    alert(`ГОД ПРОШЁЛ!\nПосетителей: ${s.pgVisitors.toLocaleString()}\nДоход: ${s.pgMoney.toLocaleString()}₽\n\n${s.pgVisitors > 500000 ? 'Твой парк стал легендой! Отсылка к KISS Alive!' : 'Парк работает, но не взлетел...'}`);
+                    const rating = s.pgVisitors > 1000000 ? '⭐⭐⭐⭐⭐' : 
+                                 s.pgVisitors > 500000 ? '⭐⭐⭐⭐' : 
+                                 s.pgVisitors > 200000 ? '⭐⭐⭐' : '⭐⭐';
+                    alert(`ГОД ПРОШЁЛ!\nПосетителей: ${s.pgVisitors.toLocaleString()}\nДоход: ${s.pgMoney.toLocaleString()}₽\nРейтинг: ${rating}\n\n${s.pgVisitors > 500000 ? 'Твой парк стал легендой! Отсылка к KISS Alive!' : 'Парк работает. Можно лучше...'}`);
                     backToPostgame();
                 }
             }, 1000);
@@ -332,20 +407,25 @@
         
         function showParkActions() {
             const attractions = [
-                {name:"🎸 Гитарный Коастер", cost:50000, visitors:200, income:5000},
-                {name:"🥁 Барабанный Ад", cost:75000, visitors:300, income:7500},
-                {name:"🎤 Вокальная Горка", cost:60000, visitors:250, income:6000},
-                {name:"🔥 Мош-пит Вихрь", cost:100000, visitors:400, income:10000},
-                {name:"🏟️ Стадион Славы", cost:300000, visitors:1000, income:25000}
+                {id:'coaster',name:"🎸 Гитарный Коастер", cost:50000, visitors:200, income:5000},
+                {id:'drums',name:"🥁 Барабанный Ад", cost:75000, visitors:300, income:7500},
+                {id:'vocal',name:"🎤 Вокальная Горка", cost:60000, visitors:250, income:6000},
+                {id:'mosh',name:"🔥 Мош-пит Вихрь", cost:100000, visitors:400, income:10000},
+                {id:'stadium',name:"🏟️ Стадион Славы", cost:300000, visitors:1000, income:25000}
             ];
             
-            let html = '<h3>ПОСТРОИТЬ АТТРАКЦИОН</h3>';
-            attractions.forEach((a,i) => {
-                html += `<div class="park-item">${a.name}<br><span style="color:#777;font-size:12px">Стоимость: ${a.cost.toLocaleString()}₽ | +${a.visitors} посетителей/день</span><br><button class="park-btn" ${s.pgMoney < a.cost ? 'disabled' : ''} onclick="buyAttraction(${i})">ПОСТРОИТЬ</button></div>`;            });
+            let html = '<h3>АТТРАКЦИОНЫ</h3>';
+            attractions.forEach(a => {
+                const owned = s.pgAttractions.find(x => x.id === a.id);
+                if(owned) {
+                    html += `<div class="park-item"><strong>${owned.name}</strong><br>Посетители: ${owned.visitors}/день | Доход: ${owned.income.toLocaleString()}₽/день<br><button class="park-btn" ${s.pgMoney < Math.floor(a.cost*0.5) ? 'disabled' : ''} onclick="upgradeAttraction('${a.id}')">ГРЕЙД (+50%) — ${Math.floor(a.cost*0.5).toLocaleString()}₽</button></div>`;
+                } else {
+                    html += `<div class="park-item">${a.name}<br><span style="color:#777">Стоимость: ${a.cost.toLocaleString()}₽</span><br><button class="park-btn" ${s.pgMoney < a.cost ? 'disabled' : ''} onclick="buyAttraction('${a.id}')">ПОСТРОИТЬ</button></div>`;
+                }
+            });
             
             html += `<h3 style="color:#ffd700;margin-top:15px">УЛУЧШЕНИЯ</h3>`;
-            html += `<div class="park-item">Реклама (+5000 посетителей)<br><span style="color:#777;font-size:12px">Стоимость: 20000₽</span><br><button class="park-btn" ${s.pgMoney < 20000 ? 'disabled' : ''} onclick="doUpgrade('ads')">ЗАПУСТИТЬ</button></div>`;
-            html += `<div class="park-item">Безопасность (-скандалы)<br><span style="color:#777;font-size:12px">Стоимость: 30000₽</span><br><button class="park-btn" ${s.pgMoney < 30000 ? 'disabled' : ''} onclick="doUpgrade('safety')">УСТАНОВИТЬ</button></div>`;
+            html += `<div class="park-item">Реклама (+10000 посетителей)<br><span style="color:#777">Стоимость: 50000₽</span><br><button class="park-btn" ${s.pgMoney < 50000 ? 'disabled' : ''} onclick="doUpgrade('ads')">ЗАПУСТИТЬ</button></div>`;
             
             el('park-actions').innerHTML = html;
             showParkAttractions();
@@ -358,43 +438,57 @@
             }
             
             let html = '<h3 style="color:#0f0;text-align:center;margin:15px 0">МОИ АТТРАКЦИОНЫ</h3>';
-            s.pgAttractions.forEach((a,i) => {
-                html += `<div class="attraction"><strong>${a.name}</strong><br>Посетителей/день: ${a.visitors}<br>Доход/день: ${a.income.toLocaleString()}₽</div>`;
-            });
+            s.pgAttractions.forEach(a => {
+                html += `<div class="attraction"><strong>${a.name}</strong> Lv.${a.level || 1}<br>Посетители/день: ${a.visitors}<br>Доход/день: ${a.income.toLocaleString()}₽</div>`;            });
             el('park-attractions').innerHTML = html;
         }
         
-        window.buyAttraction = (idx) => {
-            const attractions = [
-                {name:"🎸 Гитарный Коастер", cost:50000, visitors:200, income:5000},
-                {name:"🥁 Барабанный Ад", cost:75000, visitors:300, income:7500},
-                {name:"🎤 Вокальная Горка", cost:60000, visitors:250, income:6000},
-                {name:"🔥 Мош-пит Вихрь", cost:100000, visitors:400, income:10000},
-                {name:"🏟️ Стадион Славы", cost:300000, visitors:1000, income:25000}
-            ];
-            const a = attractions[idx];
+        window.buyAttraction = (id) => {
+            const attractions = {
+                'coaster':{id:'coaster',name:"🎸 Гитарный Коастер", cost:50000, visitors:200, income:5000},
+                'drums':{id:'drums',name:"🥁 Барабанный Ад", cost:75000, visitors:300, income:7500},
+                'vocal':{id:'vocal',name:"🎤 Вокальная Горка", cost:60000, visitors:250, income:6000},
+                'mosh':{id:'mosh',name:"🔥 Мош-пит Вихрь", cost:100000, visitors:400, income:10000},
+                'stadium':{id:'stadium',name:"🏟️ Стадион Славы", cost:300000, visitors:1000, income:25000}
+            };
+            const a = attractions[id];
             if(s.pgMoney < a.cost) {alert("Недостаточно денег!"); return;}
             s.pgMoney -= a.cost;
-            s.pgAttractions.push({...a});
+            s.pgAttractions.push({...a, level:1});
             updateParkStats();
             showAlert(`Построен "${a.name}"!`);
             showParkActions();
         };
         
-        window.doUpgrade = (type) => {
-            if(type === 'ads') {
-                if(s.pgMoney < 20000) {alert("Недостаточно денег!"); return;}
-                s.pgMoney -= 20000;
-                s.pgVisitors += 5000;
-                showAlert("Рекламная кампания запущена! +5000 посетителей");
-            } else if(type === 'safety') {
-                if(s.pgMoney < 30000) {alert("Недостаточно денег!"); return;}
-                s.pgMoney -= 30000;
-                s.pgScandals = Math.max(0, s.pgScandals - 3);                showAlert("Система безопасности установлена! Скандалы снижены");
-            }
+        window.upgradeAttraction = (id) => {
+            const idx = s.pgAttractions.findIndex(a => a.id === id);
+            if(idx === -1) return;
+            
+            const a = s.pgAttractions[idx];
+            const upgradeCost = Math.floor({
+                'coaster':50000,'drums':75000,'vocal':60000,'mosh':100000,'stadium':300000
+            }[id] * 0.5);
+            
+            if(s.pgMoney < upgradeCost) {alert("Недостаточно денег на грейд!"); return;}
+            
+            s.pgMoney -= upgradeCost;
+            a.visitors = Math.floor(a.visitors * 1.5);
+            a.income = Math.floor(a.income * 1.5);
+            a.level = (a.level || 1) + 1;
             updateParkStats();
+            showAlert(`"${a.name}" улучшен до Lv.${a.level}! +50% посетителей и дохода`);
+            showParkActions();
         };
         
+        window.doUpgrade = (type) => {
+            if(type === 'ads') {
+                if(s.pgMoney < 50000) {alert("Недостаточно денег!"); return;}
+                s.pgMoney -= 50000;
+                s.pgVisitors += 10000;
+                showAlert("Рекламная кампания запущена! +10000 посетителей");
+            }
+            updateParkStats();
+        };        
         function showAlert(msg) {
             const e = document.createElement('div');
             e.className = 'event';
@@ -420,7 +514,7 @@
         window.newGame = () => {
             if(gi)clearInterval(gi);
             if(pgTimer)clearInterval(pgTimer);
-            s={m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,bk:false,sc:false,name:"Рейнджер",band:"",metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false,pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100};
+            s={m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,bk:false,sc:false,name:"Рейнджер",band:"",metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false,pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100,pgFans:1000};
             el('postgame').style.display='none';el('park-mode').style.display='none';el('party-mode').style.display='none';el('game-over').style.display='none';el('scenes').style.display='flex';el('game').style.display='none';showScene(1);localStorage.removeItem('okGame');
         };
         
@@ -439,11 +533,11 @@
             if(s.metFufloMusicians) el('apartment-hint').innerText=`Нужна фуфло-гитара | +${Math.floor(300*mult)}₽ | 1ч (x${mult})`;
             if(s.metFufloOrg) el('fuflo-hint').innerText=`Нужны: фуфло-гитара, бас, ударные | +${Math.floor(8000*mult)}₽ | 4ч (x${mult})`;
         };
-                const update=()=>{if(s.t<=0){clearInterval(gi);endGame(s.m>=30000);return};s.t--;upd();save()};
+        
+        const update=()=>{if(s.t<=0){clearInterval(gi);endGame(s.m>=30000);return};s.t--;upd();save()};
         const save=()=>localStorage.setItem('okGame',JSON.stringify(s));
         const load=()=>{
-            const d=localStorage.getItem('okGame');if(d){Object.assign(s,JSON.parse(d));
-            if(s.bk){el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none'}
+            const d=localStorage.getItem('okGame');if(d){Object.assign(s,JSON.parse(d));            if(s.bk){el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none'}
             if(s.sc){el('scooter-btn').innerText='РАБОТАТЬ';el('scooter-req').style.display='none'}
             if(s.g){el('street').disabled=false;el('street').innerText='🎸 СТРИТОВАТЬ (+10₽)';el('guitar-btn').disabled=true;if(!s.metFufloMusicians)el('apartment-item').style.display='block';}
             if(s.metFufloMusicians){el('bass-item').style.display='block';el('drums-item').style.display='block';el('fuflo-concert-item').style.display='block';}
