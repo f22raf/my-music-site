@@ -231,7 +231,7 @@
             el('postgame').style.display='flex';
         };
         
-        // ============ РЕЖИМ "ТУСИТЬ" (УЛУЧШЕННЫЙ) ============
+        // ============ РЕЖИМ "ТУСИТЬ" (ИСПРАВЛЕННЫЙ) ============
         window.startPartyMode = () => {
             el('postgame').style.display='none';
             el('party-mode').style.display='flex';
@@ -262,50 +262,86 @@
         
         function showPartyActions() {
             const events = [
-                {name:"🎸 Джем с музыкантами", desc:"Творческий вечер", choices:[
+                {name:"🎸 Джем с музыкантами", desc:"Творческий вечер", id:0},
+                {name:"🍾 Вечеринка в отеле", desc:"Роскошь или хаос?", id:1},
+                {name:"📸 Фотосессия", desc:"Обложка журнала", id:2},
+                {name:"📺 Эфир на ТВ", desc:"Прямой эфир — риск!", id:3},
+                {name:"🤝 Коллаборация", desc:"С кем записать трек?", id:4}
+            ];
+            
+            let html = '';
+            events.forEach(e => {
+                html += `<div class="party-item"><strong>${e.name}</strong><br><span style="color:#777">${e.desc}</span><br><button class="party-btn" onclick="showPartyChoices(${e.id})">ВЫБРАТЬ</button></div>`;
+            });
+            el('party-actions').innerHTML = html;
+        }
+        
+        window.showPartyChoices = (eventId) => {
+            const events = [
+                {name:"🎸 Джем с музыкантами", choices:[
                     {text:"Импровизировать", rep:+15, fans:+500, scandal:0, headline:""},
                     {text:"Играть хиты", rep:+10, fans:+300, scandal:0, headline:""},
                     {text:"Напиться и забыть текст", rep:-10, fans:-200, scandal:1, headline:"ЗВЕЗДА ЗАБЫЛ ТЕКСТ НА СЦЕНЕ!"}
                 ]},
-                {name:"🍾 Вечеринка в отеле", desc:"Роскошь или хаос?", choices:[
+                {name:"🍾 Вечеринка в отеле", choices:[
                     {text:"Тихо посидеть с друзьями", rep:+5, fans:+100, scandal:0, headline:""},
                     {text:"Устроить бассейн-пати", rep:+10, fans:+800, scandal:1, headline:"ЗВЕЗДА УСТРОИЛ БЕШЕНУЮ ВЕЧЕРИНКУ В ОТЕЛЕ!"},
                     {text:"Разнести номер", rep:-25, fans:-1000, scandal:3, headline:"ПОЛИЦИЯ ВЫЗВАНА В ОТЕЛЬ ИЗ-ЗА ЗВЕЗДЫ!"}
                 ]},
-                {name:"📸 Фотосессия", desc:"Обложка журнала", choices:[
+                {name:"📸 Фотосессия", choices:[
                     {text:"Классика", rep:+12, fans:+400, scandal:0, headline:""},
                     {text:"Провокация", rep:-5, fans:+1500, scandal:2, headline:"СКАНДАЛЬНАЯ ФОТОСЕССИЯ ВЗОРВАЛА СЕТЬ!"},
                     {text:"Благотворительность", rep:+20, fans:+600, scandal:0, headline:"ЗВЕЗДА ПОМОГАЕТ ДЕТЯМ — СЛЕЗЫ НА СЪЁМКЕ!"}
-                ]},
-                {name:"📺 Эфир на ТВ", desc:"Прямой эфир — риск!", choices:[
+                ]},                {name:"📺 Эфир на ТВ", choices:[
                     {text:"Быть вежливым", rep:+8, fans:+200, scandal:0, headline:""},
                     {text:"Пошутить про политику", rep:-15, fans:+2000, scandal:4, headline:"ЗВЕЗДА УВОЛЕНА С ТВ ЗА ПОЛИТИЧЕСКИЕ ШУТКИ!"},
                     {text:"Рассказать личную историю", rep:+18, fans:+1200, scandal:0, headline:"ЗВЕЗДА РАСКРЫЛА СЕКРЕТ — ФАНЫ В СЛЕЗАХ!"}
                 ]},
-                {name:"🤝 Коллаборация", desc:"С кем записать трек?", choices:[
+                {name:"🤝 Коллаборация", choices:[
                     {text:"С молодым артистом", rep:+10, fans:+700, scandal:0, headline:""},
                     {text:"С рэпером", rep:+5, fans:+1500, scandal:1, headline:"НЕОЖИДАННЫЙ ДУЭТ ВЗОРВАЛ ЧАРТЫ!"},
                     {text:"С конкурентом", rep:+25, fans:+2000, scandal:0, headline:"БЫВШИЕ ВРАГИ СЫГРАЛИ ВМЕСТЕ — ИСТОРИЯ ПОМИРЕНИЯ!"}
                 ]}
             ];
             
-            let html = '';
-            events.forEach(e => {
-                html += `<div class="party-item"><strong>${e.name}</strong><br><span style="color:#777">${e.desc}</span><br>`;
-                e.choices.forEach((c,i) => {                    html += `<button class="party-btn" onclick="partyChoice(${JSON.stringify(c).replace(/"/g,'"')})">${c.text}</button>`;
-                });
-                html += `</div>`;
+            const event = events[eventId];
+            let html = `<div class="party-item"><strong>${event.name}</strong><br>`;
+            event.choices.forEach((choice, idx) => {
+                html += `<button class="party-btn" onclick="applyPartyChoice(${eventId},${idx})">${choice.text}</button>`;
             });
+            html += `<br><button class="party-btn" style="background:#666" onclick="showPartyActions()">← НАЗАД</button></div>`;
             el('party-actions').innerHTML = html;
-        }
+        };
         
-        window.partyChoice = (c) => {
-            let choice;
-            try {
-                choice = JSON.parse(c.replace(/"/g, '"'));
-            } catch(e) {
-                eval(`choice = ${c}`);
-            }
+        window.applyPartyChoice = (eventId, choiceIdx) => {
+            const events = [
+                {name:"🎸 Джем с музыкантами", choices:[
+                    {text:"Импровизировать", rep:+15, fans:+500, scandal:0, headline:""},
+                    {text:"Играть хиты", rep:+10, fans:+300, scandal:0, headline:""},
+                    {text:"Напиться и забыть текст", rep:-10, fans:-200, scandal:1, headline:"ЗВЕЗДА ЗАБЫЛ ТЕКСТ НА СЦЕНЕ!"}
+                ]},
+                {name:"🍾 Вечеринка в отеле", choices:[
+                    {text:"Тихо посидеть с друзьями", rep:+5, fans:+100, scandal:0, headline:""},
+                    {text:"Устроить бассейн-пати", rep:+10, fans:+800, scandal:1, headline:"ЗВЕЗДА УСТРОИЛ БЕШЕНУЮ ВЕЧЕРИНКУ В ОТЕЛЕ!"},
+                    {text:"Разнести номер", rep:-25, fans:-1000, scandal:3, headline:"ПОЛИЦИЯ ВЫЗВАНА В ОТЕЛЬ ИЗ-ЗА ЗВЕЗДЫ!"}
+                ]},
+                {name:"📸 Фотосессия", choices:[
+                    {text:"Классика", rep:+12, fans:+400, scandal:0, headline:""},
+                    {text:"Провокация", rep:-5, fans:+1500, scandal:2, headline:"СКАНДАЛЬНАЯ ФОТОСЕССИЯ ВЗОРВАЛА СЕТЬ!"},
+                    {text:"Благотворительность", rep:+20, fans:+600, scandal:0, headline:"ЗВЕЗДА ПОМОГАЕТ ДЕТЯМ — СЛЕЗЫ НА СЪЁМКЕ!"}
+                ]},
+                {name:"📺 Эфир на ТВ", choices:[
+                    {text:"Быть вежливым", rep:+8, fans:+200, scandal:0, headline:""},
+                    {text:"Пошутить про политику", rep:-15, fans:+2000, scandal:4, headline:"ЗВЕЗДА УВОЛЕНА С ТВ ЗА ПОЛИТИЧЕСКИЕ ШУТКИ!"},
+                    {text:"Рассказать личную историю", rep:+18, fans:+1200, scandal:0, headline:"ЗВЕЗДА РАСКРЫЛА СЕКРЕТ — ФАНЫ В СЛЕЗАХ!"}
+                ]},
+                {name:"🤝 Коллаборация", choices:[
+                    {text:"С молодым артистом", rep:+10, fans:+700, scandal:0, headline:""},
+                    {text:"С рэпером", rep:+5, fans:+1500, scandal:1, headline:"НЕОЖИДАННЫЙ ДУЭТ ВЗОРВАЛ ЧАРТЫ!"},
+                    {text:"С конкурентом", rep:+25, fans:+2000, scandal:0, headline:"БЫВШИЕ ВРАГИ СЫГРАЛИ ВМЕСТЕ — ИСТОРИЯ ПОМИРЕНИЯ!"}
+                ]}
+            ];
+                        const choice = events[eventId].choices[choiceIdx];
             
             s.pgReputation += choice.rep;
             s.pgFans += choice.fans;
@@ -341,7 +377,8 @@
         function showNewspaper(headline, fansChange) {
             const div = document.createElement('div');
             div.className = 'newspaper';
-            div.innerHTML = `                <h3>🎸 РОК-ГАЗЕТА 🎸</h3>
+            div.innerHTML = `
+                <h3>🎸 РОК-ГАЗЕТА 🎸</h3>
                 <p style="font-size:20px;font-weight:bold">${headline}</p>
                 <p class="fans-change ${fansChange >= 0 ? 'positive' : 'negative'}">
                     ${fansChange >= 0 ? '↑ +' : '↓ '} ${Math.abs(fansChange).toLocaleString()} ФАНОВ
@@ -353,10 +390,9 @@
                 div.style.opacity = '0';
                 div.style.transition = 'opacity 0.5s';
                 setTimeout(() => div.remove(), 500);
-            }, 3000);
-        }
+            }, 3000);        }
         
-        // ============ РЕЖИМ "ПАРК АТТРАКЦИОНОВ" (ПОЛНАЯ ПЕРЕРАБОТКА) ============
+        // ============ РЕЖИМ "ПАРК АТТРАКЦИОНОВ" (ИСПРАВЛЕННЫЙ) ============
         window.startParkMode = () => {
             el('postgame').style.display='none';
             el('park-mode').style.display='flex';
@@ -390,7 +426,8 @@
                     if(s.pgFoodQuality === 1) { // Безопасная
                         foodIncome = foodVisitors * 500;
                         foodCost = foodVisitors * 450;
-                    } else if(s.pgFoodQuality === 2) { // Дешёвая                        foodIncome = foodVisitors * 500;
+                    } else if(s.pgFoodQuality === 2) { // Дешёвая
+                        foodIncome = foodVisitors * 500;
                         foodCost = foodVisitors * 200;
                         if(Math.random() < 0.05 && s.pgBribes.health < 100000) {
                             foodPoisonings = Math.floor(foodVisitors * 0.1);
@@ -402,8 +439,7 @@
                 // Безбилетники и драки (зависит от охраны)
                 let freeloaders = 0, fights = 0;
                 if(s.pgSecurity === 1) {
-                    freeloaders = Math.floor(dailyVisitors * 0.2);
-                    fights = Math.floor(dailyVisitors * 0.05);
+                    freeloaders = Math.floor(dailyVisitors * 0.2);                    fights = Math.floor(dailyVisitors * 0.05);
                 } else if(s.pgSecurity === 2) {
                     freeloaders = Math.floor(dailyVisitors * 0.1);
                     fights = Math.floor(dailyVisitors * 0.03);
@@ -439,7 +475,8 @@
                 
                 // Проверки инстанций (раз в 30 дней)
                 Object.keys(s.pgInspections).forEach(key => {
-                    s.pgInspections[key]--;                    if(s.pgInspections[key] <= 0) {
+                    s.pgInspections[key]--;
+                    if(s.pgInspections[key] <= 0) {
                         const bribe = {tax:200000,fire:150000,health:180000}[key];
                         if(s.pgBribes[key] < bribe) {
                             const fine = bribe * 2;
@@ -451,8 +488,7 @@
                 });
                 
                 // Поломки аттракционов
-                s.pgAttractions.forEach(a => {
-                    if(!a.broken && Math.random() < 0.01) {
+                s.pgAttractions.forEach(a => {                    if(!a.broken && Math.random() < 0.01) {
                         a.broken = true;
                         showAlert(`⚠️ "${a.name}" сломался! Нужен ремонт.`);
                     }
@@ -488,7 +524,8 @@
             ];
             
             attractions.forEach(a => {
-                const building = s.pgConstruction.find(c => c.type === 'attraction' && c.data.id === a.id);                const owned = s.pgAttractions.find(x => x.id === a.id);
+                const building = s.pgConstruction.find(c => c.type === 'attraction' && c.data.id === a.id);
+                const owned = s.pgAttractions.find(x => x.id === a.id);
                 
                 if(building) {
                     html += `<div class="park-item construction">${a.name}<br>Строится... ${building.days} дней осталось</div>`;
@@ -500,12 +537,11 @@
                         const upgrading = s.pgConstruction.find(c => c.type === 'upgrade' && c.targetId === a.id);
                         if(upgrading) {
                             html += `<div class="park-item construction">${a.name} Lv.${owned.level} → ${owned.level+1}<br>Улучшается... ${upgrading.days} дней</div>`;
-                        } else {
-                            html += `<div class="park-item">${a.name} Lv.${owned.level}<br>Посетители: ${owned.visitors}/день | Доход: ${owned.income.toLocaleString()}₽/день${owned.broken ? '<br><span style="color:#ff4752">⚠️ СЛОМАН</span>' : ''}<br><button class="park-btn" ${s.pgMoney < upgradeCost || owned.broken ? 'disabled' : ''} onclick="startUpgrade('${a.id}',${upgradeCost})">ГРЕЙД (+50%) — ${upgradeCost.toLocaleString()}₽ (5 дней)</button>${owned.broken ? `<br><button class="park-btn" onclick="repairAttraction('${a.id}')">ПОЧИНИТЬ — 10000₽</button>` : ''}</div>`;
+                        } else {                            html += `<div class="park-item">${a.name} Lv.${owned.level}<br>Посетители: ${owned.visitors}/день | Доход: ${owned.income.toLocaleString()}₽/день${owned.broken ? '<br><span style="color:#ff4752">⚠️ СЛОМАН</span>' : ''}<br><button class="park-btn" ${s.pgMoney < upgradeCost || owned.broken ? 'disabled' : ''} onclick="startUpgrade('${a.id}',${upgradeCost})">ГРЕЙД (+50%) — ${upgradeCost.toLocaleString()}₽ (5 дней)</button>${owned.broken ? `<br><button class="park-btn" onclick="repairAttraction('${a.id}')">ПОЧИНИТЬ — 10000₽</button>` : ''}</div>`;
                         }
                     }
                 } else {
-                    html += `<div class="park-item">${a.name}<br><span style="color:#777">Стоимость: ${a.cost.toLocaleString()}₽ (10 дней строительства)</span><br><button class="park-btn" ${s.pgMoney < a.cost ? 'disabled' : ''} onclick="startBuild('${a.id}',${a.cost},${JSON.stringify(a).replace(/"/g,'"')})">ПОСТРОИТЬ</button></div>`;
+                    html += `<div class="park-item">${a.name}<br><span style="color:#777">Стоимость: ${a.cost.toLocaleString()}₽ (10 дней строительства)</span><br><button class="park-btn" ${s.pgMoney < a.cost ? 'disabled' : ''} onclick="startBuild('${a.id}','${a.name}',${a.cost},${a.visitors},${a.income})">ПОСТРОИТЬ</button></div>`;
                 }
             });
             
@@ -537,7 +573,8 @@
         
         function showParkAttractions() {
             if(s.pgAttractions.length === 0 && s.pgConstruction.length === 0) {
-                el('park-attractions').innerHTML = '<p style="color:#777;text-align:center;padding:10px">Нет аттракционов. Построй первый!</p>';                return;
+                el('park-attractions').innerHTML = '<p style="color:#777;text-align:center;padding:10px">Нет аттракционов. Построй первый!</p>';
+                return;
             }
             
             let html = '<h3 style="color:#0f0;text-align:center;margin:15px 0">МОИ АТТРАКЦИОНЫ</h3>';
@@ -547,12 +584,15 @@
             el('park-attractions').innerHTML = html;
         }
         
-        window.startBuild = (id, cost, data) => {
+        window.startBuild = (id, name, cost, visitors, income) => {
             if(s.pgMoney < cost) {alert("Недостаточно денег!"); return;}
-            s.pgMoney -= cost;
-            s.pgConstruction.push({type:'attraction', days:10, data:JSON.parse(data.replace(/"/g, '"'))});
+            s.pgMoney -= cost;            s.pgConstruction.push({
+                type:'attraction', 
+                days:10, 
+                data:{id:id, name:name, visitors:visitors, income:income}
+            });
             updateParkStats();
-            showAlert(`Строительство "${JSON.parse(data.replace(/"/g, '"')).name}" начато! 10 дней.`);
+            showAlert(`Строительство "${name}" начато! 10 дней.`);
             showParkActions();
         };
         
@@ -586,7 +626,8 @@
             showParkActions();
         };
         
-        window.setupFood = () => {            if(s.pgMoney < 50000) {alert("Недостаточно денег!"); return;}
+        window.setupFood = () => {
+            if(s.pgMoney < 50000) {alert("Недостаточно денег!"); return;}
             s.pgMoney -= 50000;
             s.pgFood = 1;
             s.pgFoodQuality = 1; // Безопасная по умолчанию
@@ -594,8 +635,7 @@
             showAlert("Точка питания открыта! Безопасная еда.");
             showParkActions();
         };
-        
-        window.toggleFoodQuality = () => {
+                window.toggleFoodQuality = () => {
             s.pgFoodQuality = s.pgFoodQuality === 1 ? 2 : 1;
             updateParkStats();
             showAlert(`Качество еды изменено на ${s.pgFoodQuality === 1 ? 'БЕЗОПАСНУЮ' : 'ДЕШЁВУЮ'}!`);
@@ -635,7 +675,8 @@
             if(w){el('game-over-title').innerText='РОК-ЗВЕЗДА! 🌟';el('game-over-title').style.color='#0f0';el('game-over-text').innerText=`${s.name}, ты победил!\nГруппа "${s.band}" — легенда!\nДеньги: ${Math.floor(s.m)}₽`;el('game-over').innerHTML+=`<button onclick="showVictory()" style="margin-top:15px;background:#ff4752;color:white;padding:12px 30px;font-size:18px">🚀 ПРОДОЛЖЕНИЕ</button>`;}else{el('game-over-title').innerText='ТЫ ПРОИГРАЛ';el('game-over-title').style.color='#ff4757';if(s.t>0)el('game-over-text').innerText='Тебя выгнали из квартиры...';else el('game-over-text').innerText='Время вышло! Тебя выгнали...';}
             localStorage.removeItem('okGame');
         };
-                window.newGame = () => {
+        
+        window.newGame = () => {
             if(gi)clearInterval(gi);
             if(pgTimer)clearInterval(pgTimer);
             s={m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,bk:false,sc:false,name:"Рейнджер",band:"",metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false,pg:false,pgDays:365,pgMoney:0,pgVisitors:0,pgAttractions:[],pgScandals:0,pgReputation:100,pgFans:1000,pgSecurity:1,pgFood:0,pgFoodQuality:0,pgInspections:{tax:30,fire:30,health:30},pgBribes:{tax:0,fire:0,health:0},pgConstruction:[]};
@@ -643,8 +684,7 @@
         };
         
         const upd=()=>{
-            el('m').innerText=Math.floor(s.m);
-            const d=Math.floor(s.t/86400),h=Math.floor((s.t%86400)/3600);el('timer').innerText=`ВРЕМЯ: ${d}д ${h}ч`;
+            el('m').innerText=Math.floor(s.m);            const d=Math.floor(s.t/86400),h=Math.floor((s.t%86400)/3600);el('timer').innerText=`ВРЕМЯ: ${d}д ${h}ч`;
             if(s.m>=500000)s.st='РОК-ЗВЕЗДА 🌟';else if(s.m>=100000)s.st='ХЕДЛАЙНЕР 🎸';else if(s.m>=30000)s.st='ПРОФЕССИОНАЛ 🎤';else if(s.m>=10000)s.st='МУЗЫКАНТ 🎼';else if(s.m>=1000)s.st='УЛИЧНЫЙ 🎧';else s.st='БОМЖ';el('st').innerText=s.name;
             if(s.m>=30000&&!document.getElementById('goal-text').innerHTML.includes('✅')){document.getElementById('goal-text').innerHTML='✅ Аренда оплачена!<br>🎯 Цель: 500 000₽ - СУПЕР КОНЦЕРТ!';document.getElementById('goal-text').style.borderColor='#0f0';}
             el('bike-btn').disabled=s.bk&&s.t<1800;el('scooter-btn').disabled=s.sc&&s.t<1800;el('guitar-btn').disabled=s.g||s.m<500;
