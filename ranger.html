@@ -390,7 +390,7 @@
                 div.style.opacity = '0';
                 div.style.transition = 'opacity 0.5s';
                 setTimeout(() => div.remove(), 500);
-            }, 6000); // Увеличил до 6 секунд!        }
+            }, 6000); // 6 секунд на чтение!        }
         
         // ============ РЕЖИМ "ПАРК АТТРАКЦИОНОВ" (ИСПРАВЛЕННЫЙ) ============
         window.startParkMode = () => {
@@ -524,7 +524,7 @@
             ];
             
             attractions.forEach(a => {
-                const building = s.pgConstruction.find(c => c.type === 'attraction' && c.data.id === a.id);
+                const building = s.pgConstruction.find(c => c.type === 'attraction' && c.data && c.data.id === a.id);
                 const owned = s.pgAttractions.find(x => x.id === a.id);
                 
                 if(building) {
@@ -586,10 +586,11 @@
         
         window.startBuild = (id, name, cost, visitors, income) => {
             if(s.pgMoney < cost) {alert("Недостаточно денег!"); return;}
-            s.pgMoney -= cost;            s.pgConstruction.push({
+            s.pgMoney -= cost;            // ИСПРАВЛЕНО: правильная структура объекта
+            s.pgConstruction.push({
                 type:'attraction', 
                 days:10, 
-                {id:id, name:name, visitors:visitors, income:income}
+                data: {id:id, name:name, visitors:visitors, income:income}
             });
             updateParkStats();
             showAlert(`Строительство "${name}" начато! 10 дней.`);
@@ -634,8 +635,8 @@
             updateParkStats();
             showAlert("Точка питания открыта! Безопасная еда.");
             showParkActions();
-        };
-                window.toggleFoodQuality = () => {
+        };        
+        window.toggleFoodQuality = () => {
             s.pgFoodQuality = s.pgFoodQuality === 1 ? 2 : 1;
             updateParkStats();
             showAlert(`Качество еды изменено на ${s.pgFoodQuality === 1 ? 'БЕЗОПАСНУЮ' : 'ДЕШЁВУЮ'}!`);
@@ -672,7 +673,7 @@
         window.endGame = w => {
             if(gi)clearInterval(gi);
             el('game').style.display='none';el('scenes').style.display='none';el('game-over').style.display='flex';
-            if(w){el('game-over-title').innerText='РОК-ЗВЕЗДА! 🌟';el('game-over-title').style.color='#0f0';el('game-over-text').innerText=`${s.name}, ты победил!\nГруппа "${s.band}" — легенда!\nДеньги: ${Math.floor(s.m)}₽`;el('game-over').innerHTML+=`<button onclick="showVictory()" style="margin-top:15px;background:#ff4752;color:white;padding:12px 30px;font-size:18px">🚀 ПРОДОЛЖЕНИЕ</button>`;}else{el('game-over-title').innerText='ТЫ ПРОИГРАЛ';el('game-over-title').style.color='#ff4757';if(s.t>0)el('game-over-text').innerText='Тебя выгнали из квартиры...';else el('game-over-text').innerText='Время вышло! Тебя выгнали...';}
+            if(w){el('game-over-title').innerText='РОК-ЗВЕЗДА! 🌟';el('game-over-title').style.color:'#0f0';el('game-over-text').innerText=`${s.name}, ты победил!\nГруппа "${s.band}" — легенда!\nДеньги: ${Math.floor(s.m)}₽`;el('game-over').innerHTML+=`<button onclick="showVictory()" style="margin-top:15px;background:#ff4752;color:white;padding:12px 30px;font-size:18px">🚀 ПРОДОЛЖЕНИЕ</button>`;}else{el('game-over-title').innerText='ТЫ ПРОИГРАЛ';el('game-over-title').style.color:'#ff4757';if(s.t>0)el('game-over-text').innerText='Тебя выгнали из квартиры...';else el('game-over-text').innerText='Время вышло! Тебя выгнали...';}
             localStorage.removeItem('okGame');
         };
         
@@ -683,8 +684,8 @@
             el('postgame').style.display='none';el('park-mode').style.display='none';el('party-mode').style.display='none';el('game-over').style.display='none';el('scenes').style.display='flex';el('game').style.display='none';showScene(1);localStorage.removeItem('okGame');
         };
         
-        const upd=()=>{
-            el('m').innerText=Math.floor(s.m);            const d=Math.floor(s.t/86400),h=Math.floor((s.t%86400)/3600);el('timer').innerText=`ВРЕМЯ: ${d}д ${h}ч`;
+        const upd=()=>{            el('m').innerText=Math.floor(s.m);
+            const d=Math.floor(s.t/86400),h=Math.floor((s.t%86400)/3600);el('timer').innerText=`ВРЕМЯ: ${d}д ${h}ч`;
             if(s.m>=500000)s.st='РОК-ЗВЕЗДА 🌟';else if(s.m>=100000)s.st='ХЕДЛАЙНЕР 🎸';else if(s.m>=30000)s.st='ПРОФЕССИОНАЛ 🎤';else if(s.m>=10000)s.st='МУЗЫКАНТ 🎼';else if(s.m>=1000)s.st='УЛИЧНЫЙ 🎧';else s.st='БОМЖ';el('st').innerText=s.name;
             if(s.m>=30000&&!document.getElementById('goal-text').innerHTML.includes('✅')){document.getElementById('goal-text').innerHTML='✅ Аренда оплачена!<br>🎯 Цель: 500 000₽ - СУПЕР КОНЦЕРТ!';document.getElementById('goal-text').style.borderColor='#0f0';}
             el('bike-btn').disabled=s.bk&&s.t<1800;el('scooter-btn').disabled=s.sc&&s.t<1800;el('guitar-btn').disabled=s.g||s.m<500;
