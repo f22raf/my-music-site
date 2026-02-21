@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Окей: Рейнджер Страж</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;background:#111;color:#0f0;line-height:1.5;padding-bottom:100px}#scenes{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;background:rgba(0,0,0,0.95);z-index:100}button{background:#0f0;color:#000;border:none;padding:8px 15px;font-family:'Courier New',monospace;margin:5px;cursor:pointer;border-radius:4px;font-size:14px;transition:all 0.2s}button:hover{background:#0d0;transform:scale(1.02)}button.no{background:#f44}button:disabled{opacity:0.3;cursor:not-allowed;background:#444;color:#666}#game{display:none;max-width:650px;margin:10px auto;padding:0 8px}#stats{background:#000;border:1px solid #0f0;border-radius:6px;padding:10px;margin:8px 0;text-align:center;font-size:15px}#timer{color:#ff4752;font-weight:bold;font-size:18px;margin:4px 0}#main{margin:10px 0}#jobs,#upgrades,#concerts{background:#1a1a1a;border-radius:6px;padding:8px;margin:10px 0;border:1px solid #333}h3{color:#0f0;text-align:center;margin:6px 0;font-size:16px}.item{display:flex;justify-content:space-between;align-items:center;background:#222;padding:6px;margin:4px 0;border-radius:4px;font-size:13px}.hint{font-size:11px;color:#777;margin-top:2px;text-align:right}.req{font-size:10px;color:#f55;margin-top:1px}.hidden{display:none}.card{background:linear-gradient(120deg,#667eea,#764ba2);padding:12px;border-radius:10px;max-width:300px;margin:12px auto;text-align:center}.qr{width:80px;height:80px;background:#fff;margin:8px auto;border:2px solid #0f0}.event{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#ff4757;color:white;padding:15px;border-radius:10px;z-index:200;max-width:80%;text-align:center;font-weight:bold;box-shadow:0 0 20px rgba(255,0,0,0.7);animation:shake 0.5s}@keyframes shake{0%,100%{transform:translateX(-50%) rotate(0deg)}25%{transform:translateX(-52%) rotate(-2deg)}75%{transform:translateX(-48%) rotate(2deg)}}#game-over{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:300;display:none}#game-over h2{font-size:32px;margin-bottom:20px;color:#ff4757}#game-over p{font-size:18px;margin:10px 0}#game-over button{padding:12px 30px;font-size:18px;margin:10px}.goal{background:#2a1a3a;border-left:3px solid #9d4edd;padding:8px;margin:8px 0;border-radius:0 4px 4px 0;font-size:14px}
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Courier New',monospace;background:#111;color:#0f0;line-height:1.5;padding-bottom:100px}#scenes{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;background:rgba(0,0,0,0.95);z-index:100}button{background:#0f0;color:#000;border:none;padding:8px 15px;font-family:'Courier New',monospace;margin:5px;cursor:pointer;border-radius:4px;font-size:14px;transition:all 0.2s}button:hover{background:#0d0;transform:scale(1.02)}button.no{background:#f44}button:disabled{opacity:0.3;cursor:not-allowed;background:#444;color:#666}#game{display:none;max-width:650px;margin:10px auto;padding:0 8px}#stats{background:#000;border:1px solid #0f0;border-radius:6px;padding:10px;margin:8px 0;text-align:center;font-size:15px}#timer{color:#ff4752;font-weight:bold;font-size:18px;margin:4px 0}#main{margin:10px 0}#jobs,#upgrades,#concerts{background:#1a1a1a;border-radius:6px;padding:8px;margin:10px 0;border:1px solid #333}h3{color:#0f0;text-align:center;margin:6px 0;font-size:16px}.item{display:flex;justify-content:space-between;align-items:center;background:#222;padding:6px;margin:4px 0;border-radius:4px;font-size:13px}.hint{font-size:11px;color:#777;margin-top:2px;text-align:right}.req{font-size:10px;color:#f55;margin-top:1px}.hidden{display:none}.card{background:linear-gradient(120deg,#667eea,#764ba2);padding:12px;border-radius:10px;max-width:300px;margin:12px auto;text-align:center}.qr{width:80px;height:80px;background:#fff;margin:8px auto;border:2px solid #0f0}.event{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#ff4757;color:white;padding:15px;border-radius:10px;z-index:200;max-width:80%;text-align:center;font-weight:bold;box-shadow:0 0 20px rgba(255,0,0,0.7);animation:shake 0.5s}@keyframes shake{0%,100%{transform:translateX(-50%) rotate(0deg)}25%{transform:translateX(-52%) rotate(-2deg)}75%{transform:translateX(-48%) rotate(2deg)}}#game-over{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:300;display:none}#game-over h2{font-size:32px;margin-bottom:20px;color:#ff4757}#game-over p{font-size:18px;margin:10px 0}#game-over button{padding:12px 30px;font-size:18px;margin:10px}.goal{background:#2a1a3a;border-left:3px solid #9d4edd;padding:8px;margin:8px 0;border-radius:0 4px 4px 0;font-size:14px}#name-input{background:#222;color:#0f0;border:1px solid #0f0;padding:8px;margin:10px 0;text-align:center;font-family:'Courier New',monospace;font-size:16px;width:80%}#band-input{background:#222;color:#0f0;border:1px solid #ff4752;padding:8px;margin:10px 0;text-align:center;font-family:'Courier New',monospace;font-size:16px;width:80%}.postgame{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#0f0,#000);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;z-index:400;display:none}.postgame h2{font-size:40px;margin:20px 0;color:#ff4752;text-shadow:0 0 15px rgba(255,71,82,0.8);animation:pulse 1.5s infinite}.postgame p{font-size:20px;margin:15px 0}.postgame-btn{padding:15px 40px;font-size:20px;margin:10px;background:#ff4752;color:white;border:none;border-radius:8px;cursor:pointer;transition:all 0.3s}.postgame-btn:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(255,71,82,0.7)}.postgame-btn.park{background:#ffd700;color:#000}.postgame-btn.park:hover{box-shadow:0 0 20px rgba(255,215,0,0.7)}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
     </style>
 </head>
 <body>
     <div id="scenes">
         <div id="s1"><p>...голова раскалывается...</p><p>Ты просыпаешься на грязном диване. Телефон: 14 февраля 2026.</p><p>ЧЕРЕЗ 30 ДНЕЙ НУЖНО 30 000₽ НА АРЕНДУ. В кармане — 0₽.</p><button onclick="showScene(2)">ВСТАТЬ</button></div>
-        <div id="s2" class="hidden"><p>Натягиваешь грязные джинсы. Из кармана выпадает карточка:</p><p>"ОКЕЙ: РЕЙНДЖЕР СТРАЖ"</p><p>На обороте — QR-код.</p><button class="no" onclick="endGame(false)">НЕ СКАНИРОВАТЬ</button><button onclick="showScene(3)">СКАНИРОВАТЬ</button></div>
+        <div id="s2" class="hidden"><p>Натягиваешь грязные джинсы. Вспоминаешь своё имя...</p><input type="text" id="name-input" placeholder="Как тебя зовут?" value="Рейнджер"><button onclick="setName()">ПОДТВЕРДИТЬ</button></div>
         <div id="s3" class="hidden"><div class="card"><div>ОКЕЙ</div><div>РЕЙНДЖЕР СТРАЖ</div><div>🎸</div></div><div class="qr"></div><p>Подключиться к системе?</p><button onclick="startGame()">ДА, НАЧАТЬ</button></div>
     </div>
 
@@ -47,19 +47,25 @@
 
     <div id="game-over">
         <h2 id="game-over-title">ТЫ ПРОИГРАЛ</h2>
-        <p id="game-over-text">Тебя выгнали из квартиры. Ты живёшь на улице...</p>
-        <button onclick="newGame()">🎮 НОВАЯ ИГРА</button>
+        <p id="game-over-text">Тебя выгнали из квартиры. Ты живёшь на улице...</p>        <button onclick="newGame()">🎮 НОВАЯ ИГРА</button>
         <button onclick="location.href='https://f22raf.github.io/my-music-site/'">🎵 САЙТ ГРУППЫ ОКЕЙ</button>
+    </div>
+
+    <div id="postgame" class="postgame">
+        <h2>РОК-ЗВЕЗДА! 🌟</h2>
+        <p id="postgame-text">Ты достиг легендарного статуса!</p>
+        <button class="postgame-btn" onclick="startPartyMode()">🍾 ТУСИТЬ</button>
+        <button class="postgame-btn park" onclick="startParkMode()">🎢 ПАРК АТТРАКЦИОНОВ</button>
+        <button class="postgame-btn" style="background:#666;margin-top:20px" onclick="newGame()">🔄 НОВАЯ ИГРА</button>
     </div>
 
     <script>
         // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
         let s = {
             m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,
-            bk:false,sc:false,
+            bk:false,sc:false,name:"Рейнджер",band:"",
             metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,
-            streetClicks:0,streetRisk:0,
-            highestConcert:0
+            streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false
         };
         let gi = null;
         const el = id => document.getElementById(id);
@@ -70,11 +76,18 @@
             el('s'+n).classList.remove('hidden');
         };
         
+        window.setName = () => {
+            const name = el('name-input').value.trim() || "Рейнджер";
+            s.name = name;
+            showScene(3);
+        };
+        
         window.startGame = () => {
             el('scenes').style.display = 'none';
             el('game').style.display = 'block';
             load();
             gi = setInterval(update, 1000);
+            el('st').innerText = s.name;
         };
         
         window.doJob = t => {
@@ -83,8 +96,7 @@
                 case'walk':if(s.t<600)return alert('Недостаточно времени!');s.m+=50;s.t-=600;break;
                 case'bike':if(!s.bk){if(s.m<100)return alert('Нет денег на аренду!');s.m-=100;s.bk=true;el('bike-btn').innerText='РАБОТАТЬ';el('bike-req').style.display='none';return}if(s.t<1800)return alert('Недостаточно времени!');s.m+=200;s.t-=1800;break;
                 case'scooter':if(!s.sc){if(s.m<200)return alert('Нет денег на аренду!');s.m-=200;s.sc=true;el('scooter-btn').innerText='РАБОТАТЬ';el('scooter-req').style.display='none';return}if(s.t<1800)return alert('Недостаточно времени!');s.m+=400;s.t-=1800;break;
-            }
-            save();upd();
+            }            save();upd();
         };
         
         window.streetClick = () => {
@@ -125,9 +137,17 @@
                 case'fuflo':
                     if(!s.g||!s.b||!s.d)return alert('Нужны все фуфло-инструменты!');
                     if(s.t<14400)return alert('Недостаточно времени!');
-                    payout = Math.floor(8000 * mult);
+                    
+                    // ВВОД НАЗВАНИЯ ГРУППЫ ПРИ ПЕРВОМ ФУФЛО-КОНЦЕРТЕ
+                    if(!s.bandNamed){
+                        const band = prompt(`Организатор спрашивает:\n"Как называется ваша группа?"\n\n(Совет: назови как-нибудь эпично!)`, "ФУФЛО");
+                        s.band = band && band.trim() ? band.trim() : "ФУФЛО-ГРУППА";
+                        s.bandNamed = true;
+                        alert(`"${s.band}" — звучит мощно!`);
+                    }
+                                        payout = Math.floor(8000 * mult);
                     timeCost = 14400;
-                    alertMsg = `🎪 ФУФЛО-КОНЦЕРТ!\n+${payout}₽ (x${mult})\n`;
+                    alertMsg = `🎪 ФУФЛО-КОНЦЕРТ "${s.band}"!\n+${payout}₽ (x${mult})\n`;
                     if(!s.metFufloOrg){
                         alertMsg += 'Познакомился с настоящими музыкантами и организатором!';
                         s.metFufloOrg=true;
@@ -143,7 +163,7 @@
                     if(s.t<28800)return alert('Недостаточно времени!');
                     payout = 50000;
                     timeCost = 28800;
-                    alertMsg = `🌟 НАСТОЯЩИЙ КОНЦЕРТ!\n+50000₽\n`;
+                    alertMsg = `🌟 НАСТОЯЩИЙ КОНЦЕРТ "${s.band}"!\n+50000₽\n`;
                     if(!s.metProducer){
                         alertMsg += 'Познакомился с крутым продюсером и ТВ-каналами!\nТеперь ты ХЕДЛАЙНЕР!';
                         s.metProducer=true;
@@ -157,9 +177,9 @@
                     if(s.t<43200)return alert('Недостаточно времени!');
                     payout = 500000;
                     timeCost = 43200;
-                    alertMsg = `🔥 СУПЕР ПИЗДАТЫЙ КОНЦЕРТ!\n+500000₽\nТы ЗВЕЗДА! Контракты с брендами, гастроли по миру!`;
+                    alertMsg = `🔥 СУПЕР ПИЗДАТЫЙ КОНЦЕРТ "${s.band}"!\n+500000₽\nТы ЗВЕЗДА! Контракты с брендами, гастроли по миру!`;
                     if(s.highestConcert < 4) s.highestConcert = 4;
-                    setTimeout(()=>endGame(true),500);
+                    setTimeout(()=>showVictory(),500);
                     break;
             }
             s.m += payout; s.t -= timeCost; alert(alertMsg); save(); upd();
@@ -174,32 +194,56 @@
                 case'bass':if(s.b)return alert('Уже есть!');s.b=true;break;
                 case'drums':if(s.d)return alert('Уже есть!');s.d=true;break;
                 case'realGuitar':if(s.rg)return alert('Уже есть!');s.rg=true;break;
-                case'realBass':if(s.rb)return alert('Уже есть!');s.rb=true;break;
-                case'realDrums':if(s.rd)return alert('Уже есть!');s.rd=true;break;
+                case'realBass':if(s.rb)return alert('Уже есть!');s.rb=true;break;                case'realDrums':if(s.rd)return alert('Уже есть!');s.rd=true;break;
             }
             s.m-=prices[i];save();upd();
             if(s.g&&s.b&&s.d)el('fuflo-concert-item').querySelector('button').disabled=false;
             if(s.rg&&s.rb&&s.rd)el('real-concert-item').querySelector('button').disabled=false;
         };
         
+        window.showVictory = () => {
+            if(gi)clearInterval(gi);
+            el('game').style.display='none';
+            el('postgame-text').innerHTML = `Поздравляю, ${s.name}!<br>Твоя группа "${s.band}" — ЛЕГЕНДА!<br>Деньги: ${Math.floor(s.m)}₽`;
+            el('postgame').style.display='flex';
+        };
+        
+        window.startPartyMode = () => {
+            let scandals = 0;
+            const events = [
+                "Ты устроил вечеринку с музыкантами! +10к фоловеров",
+                "Афтепати с шампанским в бассейне! Вирусное видео!",
+                "Драка с рэпером на сцене... Скандал в прессе!",
+                "Радиошоу 'Рок-ночь' — все в восторге!",
+                "Пьяный баттл с барабанщиком... Теперь ты мем!"
+            ];
+            const event = events[Math.floor(Math.random()*events.length)];
+            if(event.includes('Скандал') || event.includes('мем')) scandals++;
+            
+            alert(`🍾 ТУСОВКА ${s.name}!\n\n${event}\n\nСкандалов: ${scandals}\n\nТы прожил ночь как настоящая рок-звезда!`);
+        };
+        
+        window.startParkMode = () => {
+            alert(`🎢 ${s.name} LAND — парк аттракционов!\n\nОткрыт аттракцион "Гитарный Коастер"!\nПосетители: 10 000 в день\nДоход: 500 000₽/день\n\nОтсылка к легендарному парку KISS Alive!\n\nТвоя империя развлечений растёт!`);
+        };
+        
         window.endGame = w => {
             if(gi)clearInterval(gi);
             el('game').style.display='none';el('scenes').style.display='none';el('game-over').style.display='flex';
-            if(w){el('game-over-title').innerText='РОК-ЗВЕЗДА! 🌟';el('game-over-title').style.color='#0f0';el('game-over-text').innerText=`ТЫ СТАЛ ЛЕГЕНДОЙ!\nЗаработал ${Math.floor(s.m)}₽!\nКонтракты с брендами, гастроли по миру!\nГруппа ОКЕЙ приглашает тебя на гастроли!`;}else{el('game-over-title').innerText='ТЫ ПРОИГРАЛ';el('game-over-title').style.color='#ff4757';if(s.t>0)el('game-over-text').innerText='Тебя выгнали из квартиры...';else el('game-over-text').innerText='Время вышло! Тебя выгнали...';}
+            if(w){el('game-over-title').innerText='РОК-ЗВЕЗДА! 🌟';el('game-over-title').style.color='#0f0';el('game-over-text').innerText=`${s.name}, ты победил!\nГруппа "${s.band}" — легенда!\nДеньги: ${Math.floor(s.m)}₽`;el('game-over').innerHTML+=`<button onclick="showVictory()" style="margin-top:15px;background:#ff4752;color:white;padding:12px 30px;font-size:18px">🚀 ПРОДОЛЖЕНИЕ</button>`;}else{el('game-over-title').innerText='ТЫ ПРОИГРАЛ';el('game-over-title').style.color='#ff4757';if(s.t>0)el('game-over-text').innerText='Тебя выгнали из квартиры...';else el('game-over-text').innerText='Время вышло! Тебя выгнали...';}
             localStorage.removeItem('okGame');
         };
         
         window.newGame = () => {
             if(gi)clearInterval(gi);
-            s={m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,bk:false,sc:false,metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,streetClicks:0,streetRisk:0,highestConcert:0};
-            el('game-over').style.display='none';el('scenes').style.display='flex';el('game').style.display='none';window.showScene(1);localStorage.removeItem('okGame');
+            s={m:0,t:2592000,g:false,b:false,d:false,rg:false,rb:false,rd:false,bk:false,sc:false,name:"Рейнджер",band:"",metFufloMusicians:false,metFufloOrg:false,metRealOrg:false,metProducer:false,streetClicks:0,streetRisk:0,highestConcert:0,bandNamed:false};
+            el('postgame').style.display='none';el('game-over').style.display='none';el('scenes').style.display='flex';el('game').style.display='none';showScene(1);localStorage.removeItem('okGame');
         };
         
         const upd=()=>{
             el('m').innerText=Math.floor(s.m);
             const d=Math.floor(s.t/86400),h=Math.floor((s.t%86400)/3600);el('timer').innerText=`ВРЕМЯ: ${d}д ${h}ч`;
-            if(s.m>=500000)s.st='РОК-ЗВЕЗДА 🌟';else if(s.m>=100000)s.st='ХЕДЛАЙНЕР 🎸';else if(s.m>=30000)s.st='ПРОФЕССИОНАЛ 🎤';else if(s.m>=10000)s.st='МУЗЫКАНТ 🎼';else if(s.m>=1000)s.st='УЛИЧНЫЙ 🎧';else s.st='БОМЖ';el('st').innerText=s.st;
-            if(s.m>=30000&&!document.getElementById('goal-text').innerHTML.includes('✅')){document.getElementById('goal-text').innerHTML='✅ Аренда оплачена!<br>🎯 Цель: 500 000₽ - СУПЕР КОНЦЕРТ!';document.getElementById('goal-text').style.borderColor='#0f0';}
+            if(s.m>=500000)s.st='РОК-ЗВЕЗДА 🌟';else if(s.m>=100000)s.st='ХЕДЛАЙНЕР 🎸';else if(s.m>=30000)s.st='ПРОФЕССИОНАЛ 🎤';else if(s.m>=10000)s.st='МУЗЫКАНТ 🎼';else if(s.m>=1000)s.st='УЛИЧНЫЙ 🎧';else s.st='БОМЖ';el('st').innerText=s.name;            if(s.m>=30000&&!document.getElementById('goal-text').innerHTML.includes('✅')){document.getElementById('goal-text').innerHTML='✅ Аренда оплачена!<br>🎯 Цель: 500 000₽ - СУПЕР КОНЦЕРТ!';document.getElementById('goal-text').style.borderColor='#0f0';}
             el('bike-btn').disabled=s.bk&&s.t<1800;el('scooter-btn').disabled=s.sc&&s.t<1800;el('guitar-btn').disabled=s.g||s.m<500;
             if(s.b)el('bass-item').querySelector('button').disabled=true;
             if(s.d)el('drums-item').querySelector('button').disabled=true;
@@ -227,9 +271,8 @@
             upd();
         };
         
-        // ИНИЦИАЛИЗАЦИЯ - СРАЗУ ПОКАЗЫВАЕМ СЦЕНУ 1
-        window.showScene(1);
+        // ИНИЦИАЛИЗАЦИЯ
+        showScene(1);
     </script>
 </body>
 </html>
-
