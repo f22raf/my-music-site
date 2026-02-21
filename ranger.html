@@ -390,7 +390,7 @@
                 div.style.opacity = '0';
                 div.style.transition = 'opacity 0.5s';
                 setTimeout(() => div.remove(), 500);
-            }, 3000);        }
+            }, 6000); // Увеличил до 6 секунд!        }
         
         // ============ РЕЖИМ "ПАРК АТТРАКЦИОНОВ" (ИСПРАВЛЕННЫЙ) ============
         window.startParkMode = () => {
@@ -589,7 +589,7 @@
             s.pgMoney -= cost;            s.pgConstruction.push({
                 type:'attraction', 
                 days:10, 
-                data:{id:id, name:name, visitors:visitors, income:income}
+                {id:id, name:name, visitors:visitors, income:income}
             });
             updateParkStats();
             showAlert(`Строительство "${name}" начато! 10 дней.`);
