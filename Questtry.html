@@ -61,6 +61,20 @@
             {img:"Cards/InShot_20260208_031058054.jpg", номер:10, экз:6}
         ];
 
+        // 🚫 Карты, исключённые из розыгрыша (по запросу)
+        const manuallyExcluded = [
+            // Экземпляр 5/6
+            {img:"Cards/InShot_20260208_022242270.jpg", номер:2, экз:5},
+            {img:"Cards/InShot_20260208_022506814.jpg", номер:3, экз:5},
+            {img:"Cards/InShot_20260208_023708134.jpg", номер:4, экз:5},
+            {img:"Cards/InShot_20260208_025430478.jpg", номер:7, экз:5},
+            // Экземпляр 6/6
+            {img:"Cards/InShot_20260208_021444024.jpg", номер:1, экз:6},
+            {img:"Cards/InShot_20260208_022242270.jpg", номер:2, экз:6},
+            {img:"Cards/InShot_20260208_023708134.jpg", номер:4, экз:6},
+            {img:"Cards/InShot_20260208_024434872.jpg", номер:5, экз:6}
+        ];
+
         // ❓ 12 вопросов
         const questionBank = [
             { q: "Кто в группе играет на бас-гитаре?", a: ["томас"] },
@@ -82,13 +96,20 @@
         }
 
         function normalize(str) {
-            return str.trim().toLowerCase().replace(/ё/g, 'е');
-        }
+            return str.trim().toLowerCase().replace(/ё/g, 'е');        }
 
         function checkAnswer(user, correct) {
             const norm = normalize(user);
             return correct.some(a => norm.includes(normalize(a)));
         }
+
+        // 🔒 Проверка и сброс "зависшего" флага при загрузке
+        window.addEventListener('load', () => {
+            const claiming = localStorage.getItem('quest_claiming');
+            if (claiming === 'true') {
+                localStorage.removeItem('quest_claiming');
+            }
+        });
 
         function go() {
             const p = document.getElementById('pass').value;
@@ -96,7 +117,8 @@
                 isTestMode = true;
                 startQuiz();
             } else if (p === '26082022') {
-                const last = localStorage.getItem('quest_time');                if (last && Date.now() - last < 86400000) {
+                const last = localStorage.getItem('quest_time');
+                if (last && Date.now() - last < 86400000) {
                     alert('⏳ Уже проходил квест! Следующая попытка завтра.');
                     return;
                 }
@@ -117,17 +139,39 @@
         }
 
         function check() {
-            const answers = [1,2,3].map(i => document.getElementById(`a${i}`).value);
-            if (!currentQuestions.every((q, i) => checkAnswer(answers[i], q.a))) {
+            // 🔒 Блокировка повторной отправки (race condition fix)
+            if (localStorage.getItem('quest_claiming') === 'true') {
+                alert('⏳ Карта уже выдаётся!');
+                return;
+            }
+            
+            const answers = [1,2,3].map(i => document.getElementById(`a${i}`).value);            if (!currentQuestions.every((q, i) => checkAnswer(answers[i], q.a))) {
                 alert('❌ Ошибка в ответах! Иди учи лор на главной.');
                 location.reload();
                 return;
             }
 
+            // 🔒 Устанавливаем флаг блокировки
+            localStorage.setItem('quest_claiming', 'true');
+            
             const used = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used') || '[]');
+            
+            // ➕ Добавляем вручную исключённые карты в used
+            manuallyExcluded.forEach(exclCard => {
+                const idx = cards.findIndex(c => 
+                    c.img === exclCard.img && 
+                    c.номер === exclCard.номер && 
+                    c.экз === exclCard.экз
+                );
+                if (idx !== -1 && !used.includes(idx)) {
+                    used.push(idx);
+                }
+            });
+            
             const available = cards.filter((_, i) => !used.includes(i));
             
             if (!isTestMode && available.length === 0) {
+                localStorage.removeItem('quest_claiming');
                 alert('🎉 Все карты разыграны!');
                 location.href = 'index.html';
                 return;
@@ -141,12 +185,16 @@
                 used.push(globalIdx);
                 localStorage.setItem('quest_used', JSON.stringify(used));
                 localStorage.setItem('quest_time', Date.now().toString());
+                localStorage.setItem('quest_last_card', globalIdx.toString());
             }
 
+            // 🔓 Снимаем блокировку
+            localStorage.removeItem('quest_claiming');
+            
             show(card);
         }
-        function show(card) {
-            document.getElementById('content').innerHTML = `
+        
+        function show(card) {            document.getElementById('content').innerHTML = `
                 <div class="card">
                     <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27280%27 height=%27380%27 fill=%27%23222%27/><text x=%2750%27 y=%27200%27 fill=%27%23ff004f%27 font-size=%2724%27>КАРТА</text></svg>'">
                     <div class="card-text">Коллекционная карточка Окей!</div>
