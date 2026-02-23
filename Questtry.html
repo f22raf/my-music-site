@@ -103,12 +103,33 @@
             return correct.some(a => norm.includes(normalize(a)));
         }
 
-        // 🔒 Проверка и сброс "зависшего" флага при загрузке
+        // 🔒 ПРОВЕРКА ПРИ ЗАГРУЗКЕ СТРАНИЦЫ — БЛОКИРОВКА 24 ЧАСА
         window.addEventListener('load', () => {
-            const claiming = localStorage.getItem('quest_claiming');
-            if (claiming === 'true') {
-                localStorage.removeItem('quest_claiming');
+            const lastTime = localStorage.getItem('quest_time');
+            
+            if (lastTime) {
+                const hoursPassed = (Date.now() - parseInt(lastTime)) / 3600000;
+                
+                if (hoursPassed < 24) {
+                    document.getElementById('content').innerHTML = `
+                        <div class="warn" style="text-align:center; padding:30px; border:3px solid #ff004f;">
+                            <h2 style="color:#ff004f; margin-bottom:15px;">⏳ ТЫ УЖЕ ПРОХОДИЛ КВЕСТ!</h2>
+                            <p style="font-size:1.1em; margin:15px 0;">
+                                Следующая попытка через:<br>
+                                <strong style="color:#ffcc00; font-size:1.4em;">${Math.ceil(24 - hoursPassed)} ч.</strong>
+                            </p>
+                            <p style="color:#888; font-size:0.85em; margin-top:20px;">
+                                Последняя попытка:<br>
+                                ${new Date(parseInt(lastTime)).toLocaleString('ru-RU')}
+                            </p>
+                            <a href="index.html" class="btn" style="margin-top:25px; border-color:#4c75a8; background:#4c75a8;">← НА ГЛАВНУЮ</a>
+                        </div>
+                    `;
+                    return;
+                }
             }
+            
+            localStorage.removeItem('quest_claiming');
         });
 
         function go() {
@@ -124,8 +145,7 @@
                 }
                 isTestMode = false;
                 startQuiz();
-            } else {
-                alert('❌ Птеро уже вылетел за тобой!');
+            } else {                alert('❌ Птеро уже вылетел за тобой!');
             }
         }
 
@@ -145,7 +165,8 @@
                 return;
             }
             
-            const answers = [1,2,3].map(i => document.getElementById(`a${i}`).value);            if (!currentQuestions.every((q, i) => checkAnswer(answers[i], q.a))) {
+            const answers = [1,2,3].map(i => document.getElementById(`a${i}`).value);
+            if (!currentQuestions.every((q, i) => checkAnswer(answers[i], q.a))) {
                 alert('❌ Ошибка в ответах! Иди учи лор на главной.');
                 location.reload();
                 return;
@@ -173,8 +194,7 @@
             if (!isTestMode && available.length === 0) {
                 localStorage.removeItem('quest_claiming');
                 alert('🎉 Все карты разыграны!');
-                location.href = 'index.html';
-                return;
+                location.href = 'index.html';                return;
             }
 
             const randIdx = Math.floor(Math.random() * available.length);
@@ -194,7 +214,8 @@
             show(card);
         }
         
-        function show(card) {            document.getElementById('content').innerHTML = `
+        function show(card) {
+            document.getElementById('content').innerHTML = `
                 <div class="card">
                     <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27280%27 height=%27380%27 fill=%27%23222%27/><text x=%2750%27 y=%27200%27 fill=%27%23ff004f%27 font-size=%2724%27>КАРТА</text></svg>'">
                     <div class="card-text">Коллекционная карточка Окей!</div>
