@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Окей Ивент - 4 года!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #e94560;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            color: #ffd700;
+            transform: translateX(-5px);
+        }
+        
+        .event-page {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .event-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .event-title {
+            font-size: 3em;
+            color: #e94560;
+            text-transform: uppercase;
+            margin-bottom: 10px;            text-shadow: 0 0 30px rgba(233, 69, 96, 0.8);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 30px rgba(233, 69, 96, 0.8); }
+            to { text-shadow: 0 0 50px rgba(233, 69, 96, 1), 0 0 70px rgba(233, 69, 96, 0.6); }
+        }
+        
+        .badge-4years {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        
+        .event-image {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .event-image img {
+            max-width: 100%;
+            max-height: 400px;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.4));
+        }
+        
+        .event-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #e94560;
+        }
+        
+        .greeting {
+            font-size: 1.8em;
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .announcement {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }        
+        .highlight {
+            color: #e94560;
+            font-weight: bold;
+        }
+        
+        .info-block {
+            background: rgba(233, 69, 96, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid #e94560;
+        }
+        
+        .info-block h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            text-transform: uppercase;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+        
+        .info-item strong {
+            color: #e94560;
+        }
+        
+        .special-block {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .special-block h3 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }        
+        .rock-n-roll {
+            text-align: center;
+            font-size: 2em;
+            color: #ffd700;
+            margin: 40px 0;
+            animation: rock 2s ease-in-out infinite;
+        }
+        
+        @keyframes rock {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        .countdown {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            border: 2px solid #ffd700;
+        }
+        
+        .countdown h3 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            background: rgba(233, 69, 96, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 100px;
+        }
+        
+        .countdown-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #e94560;
+            display: block;
+        }
+                .countdown-label {
+            font-size: 0.9em;
+            color: #aaa;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .event-title {
+                font-size: 2em;
+            }
+            
+            .greeting {
+                font-size: 1.4em;
+            }
+            
+            .event-content {
+                padding: 20px;
+            }
+            
+            .countdown-timer {
+                gap: 10px;
+            }
+            
+            .countdown-item {
+                min-width: 80px;
+                padding: 15px;
+            }
+            
+            .countdown-value {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← На главную</a>
+    
+    <div class="event-page">
+        <div class="event-header">
+            <h1 class="event-title">🔥 ОКЕЙ ИВЕНТ 🔥</h1>
+            <div class="badge-4years">4 ГОДА!</div>
+        </div>
+        
+        <div class="event-image">
+            <img src="images/okay-event-badge.png" alt="Окей Ивент">
+        </div>
+        
+        <div class="event-content">
+            <p class="greeting">Здарова, Народ! 👊</p>
+                        <p class="announcement">
+                А знаете чё?! <span class="highlight">Супер новость</span> для всех Океевцев!
+            </p>
+            
+            <div class="info-block">
+                <h3>📅 ГЛАВНАЯ ИНФА:</h3>
+                <div class="info-item">
+                    <strong>26 АВГУСТА 2026</strong> — группе Окей исполняется <strong>4 года</strong>!
+                </div>
+                <div class="info-item">
+                    <strong>29 АВГУСТА (СУББОТА)</strong> — Окей Ивент! Потому что суббота — это сила! 🤘
+                </div>
+                <div class="info-item">
+                    <strong>МЕСТО:</strong> ЧЧ Лаунч, Челябинск
+                </div>
+            </div>
+            
+            <div class="info-block">
+                <h3>🎸 КТО БУДЕТ:</h3>
+                <div class="info-item">
+                    <strong>Основной состав:</strong> Раф, Птеро, Томас, Снайпер
+                </div>
+                <div class="info-item">
+                    <strong>Возможно:</strong> экс-участники Окей и другие коллективы!
+                </div>
+            </div>
+            
+            <div class="special-block">
+                <h3>🎁 СПЕЦАКЦИЯ!</h3>
+                <p>Первым гостям — <strong>ФИРМЕННЫЙ ПЛАКАТ</strong> и <strong>СПЕЦКАРТОЧКА</strong>!</p>
+                <p style="margin-top: 10px;">Не опоздай, бро!</p>
+            </div>
+            
+            <div class="countdown">
+                <h3>⏰ ДО ИВЕНТА ОСТАЛОСЬ:</h3>
+                <div class="countdown-timer" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">0</span>
+                        <span class="countdown-label">дней</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">0</span>
+                        <span class="countdown-label">часов</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">0</span>
+                        <span class="countdown-label">минут</span>
+                    </div>
+                </div>
+            </div>            
+            <p class="rock-n-roll">Рок н ролл! 🤘</p>
+        </div>
+    </div>
+    
+    <script>
+        // Таймер обратного отсчёта
+        const eventDate = new Date('August 29, 2026 18:00:00').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 60000); // Обновление каждую минуту
+    </script>
+</body>
+</html>
