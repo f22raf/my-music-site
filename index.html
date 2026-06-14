@@ -228,6 +228,49 @@
             <li>22) Зима</li>
         </ul>
         <p><a href="history.html" style="color: #ffcc00; text-decoration: underline;">Читать историю группы →</a></p>  
+<div style="text-align: center; margin: 40px 0;">
+    <a href="okay-event.html" class="big-event-btn">
+        🎸 ОКЕЙ ИВЕНТ! КОГДА ЖЕ ОН?! 🎸
+    </a>
+</div>
+
+<style>
+.big-event-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #e94560, #ff6b6b);
+    color: #fff;
+    padding: 25px 50px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    border: 3px solid #e94560;
+    box-shadow: 0 10px 40px rgba(233, 69, 96, 0.4);
+    animation: bigBtnPulse 2s infinite;
+}
+
+@keyframes bigBtnPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 10px 40px rgba(233, 69, 96, 0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 15px 50px rgba(233, 69, 96, 0.6); }
+}
+
+.big-event-btn:hover {
+    background: transparent;
+    color: #e94560;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 20px 60px rgba(233, 69, 96, 0.6);
+}
+
+@media (max-width: 768px) {
+    .big-event-btn {
+        font-size: 1.2em;
+        padding: 20px 30px;
+    }
+}
+</style>
         <p><a href="Music.html" style="color: #ffcc00; text-decoration: underline;">Слушать нашу музыку →</a></p>
         <p><a href="news.html" style="color: #ffcc00; text-decoration: underline;">Что нового →</a></p>
         <p><a href="hierarchy.html" style="color: #ffcc00; text-decoration: underline;">📖 Древо Ордена «Окей» →</a></p>
