@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Окей Радар 📡</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  body { margin:0; font-family:Arial,sans-serif; background:#1a1a1a; color:#fff; }
+  #header { padding:12px; text-align:center; background:#222; border-bottom:2px solid #ff8c00; }
+  #header h1 { margin:0; font-size:20px; }
+  #map { height:65vh; }
+  #panel { padding:14px; text-align:center; }
+  button { background:#ff8c00; color:#000; font-weight:bold; border:none;
+           padding:14px 24px; border-radius:8px; font-size:16px; cursor:pointer; }
+  #status { margin-top:10px; font-size:14px; color:#ccc; }
+  .radar-marker { position:relative; }
+  .radar-marker .dot { width:14px; height:14px; background:#ff8c00; border-radius:50%;
+           position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+  .radar-marker .pulse { width:14px; height:14px; border-radius:50%;
+           background:rgba(255,140,0,0.5); position:absolute; top:50%; left:50%;
+           transform:translate(-50%,-50%); animation:pulse 2s infinite; }
+  @keyframes pulse {
+    0%   { width:14px; height:14px; opacity:0.8; }
+    100% { width:90px; height:90px; opacity:0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>📡 ОКЕЙ РАДАР</h1>
+  <a href="index.html" style="color:#ff8c00; font-size:13px;">← на главную</a>
+</div>
+
+<div id="map"></div>
+
+<div id="panel">
+  <button onclick="startRadar()">🤠 ВЫЙТИ НА РАДАР</button>
+  <div id="status">Нажми кнопку и разреши геолокацию</div>
+</div>
+
+<script>
+// Карта, центр — Челябинск, родина Окей!
+var map = L.map('map').setView([55.1644, 61.4368], 11);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+function startRadar() {
+  var status = document.getElementById('status');
+  if (!navigator.geolocation) {
+    status.textContent = '😢 Браузер не поддерживает геолокацию';
+    return;
+  }
+  status.textContent = '📡 Ищем сигнал...';
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    var lat = pos.coords.latitude;
+    var lon = pos.coords.longitude;
+    var acc = Math.round(pos.coords.accuracy);
+    map.setView([lat, lon], 14);
+    var icon = L.divIcon({
+      className: 'radar-marker',
+      html: '<div class="pulse"></div><div class="dot"></div>',
+      iconSize: [14, 14]
+    });
+    L.marker([lat, lon], {icon: icon}).addTo(map)
+      .bindPopup('🤠 Ты на радаре!<br>Точность: ~' + acc + ' м');
+    status.textContent = '✅ Ты на радаре! Точность ~' + acc + ' м';
+  }, function(err) {
+    var msg = err.code === 1 ? 'доступ запрещён' :
+              err.code === 2 ? 'местоположение недоступно' : 'таймаут';
+    status.textContent = '❌ Не получилось: ' + msg;
+  });
+}
+</script>
+
+</body>
+</html>
