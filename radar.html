@@ -10,11 +10,14 @@
   body { margin:0; font-family:Arial,sans-serif; background:#1a1a1a; color:#fff; }
   #header { padding:12px; text-align:center; background:#222; border-bottom:2px solid #ff8c00; }
   #header h1 { margin:0; font-size:20px; }
-  #map { height:65vh; }
-  #panel { padding:14px; text-align:center; }
+  #map { height:60vh; }
+  #panel { padding:12px; text-align:center; }
+  input, select { padding:10px; border-radius:8px; border:1px solid #ff8c00;
+                  background:#222; color:#fff; font-size:15px; margin:4px; }
   button { background:#ff8c00; color:#000; font-weight:bold; border:none;
-           padding:14px 24px; border-radius:8px; font-size:16px; cursor:pointer; }
-  #status { margin-top:10px; font-size:14px; color:#ccc; }
+           padding:14px 24px; border-radius:8px; font-size:16px; cursor:pointer; margin:4px; }
+  #status { margin-top:8px; font-size:14px; color:#ccc; }
+  #count { margin-top:6px; font-size:16px; color:#ff8c00; font-weight:bold; }
   .radar-marker { position:relative; }
   .radar-marker .dot { width:14px; height:14px; background:#ff8c00; border-radius:50%;
            position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
@@ -37,43 +40,94 @@
 <div id="map"></div>
 
 <div id="panel">
-  <button onclick="startRadar()">🤠 ВЫЙТИ НА РАДАР</button>
-  <div id="status">Нажми кнопку и разреши геолокацию</div>
+  <input id="name" placeholder="Твоя кличка" maxlength="20">
+  <select id="emoji">
+    <option>🤠</option><option>🎸</option><option>🐎</option><option>🔥</option><option>🤘</option>
+  </select><br>
+  <button id="startBtn">📡 ВЫЙТИ НА РАДАР</button>
+  <div id="status">Введи кличку и жми кнопку</div>
+  <div id="count"></div>
 </div>
 
-<script>
-// Карта, центр — Челябинск, родина Окей!
-var map = L.map('map').setView([55.1644, 61.4368], 11);
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap'
-}).addTo(map);
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, update, onValue }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-function startRadar() {
-  var status = document.getElementById('status');
-  if (!navigator.geolocation) {
-    status.textContent = '😢 Браузер не поддерживает геолокацию';
-    return;
-  }
-  status.textContent = '📡 Ищем сигнал...';
-  navigator.geolocation.getCurrentPosition(function(pos) {
-    var lat = pos.coords.latitude;
-    var lon = pos.coords.longitude;
-    var acc = Math.round(pos.coords.accuracy);
-    map.setView([lat, lon], 14);
-    var icon = L.divIcon({
-      className: 'radar-marker',
-      html: '<div class="pulse"></div><div class="dot"></div>',
-      iconSize: [14, 14]
-    });
-    L.marker([lat, lon], {icon: icon}).addTo(map)
-      .bindPopup('🤠 Ты на радаре!<br>Точность: ~' + acc + ' м');
-    status.textContent = '✅ Ты на радаре! Точность ~' + acc + ' м';
-  }, function(err) {
-    var msg = err.code === 1 ? 'доступ запрещён' :
-              err.code === 2 ? 'местоположение недоступно' : 'таймаут';
-    status.textContent = '❌ Не получилось: ' + msg;
-  });
+// Конфиг проекта "окей-радар"
+const firebaseConfig = {
+  apiKey: "AIzaSyC5nWgL6xajW67FRSDStuiXu1I9ks4xct0",
+  authDomain: "okey-radar.firebaseapp.com",
+  databaseURL: "https://okey-radar-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "okey-radar",
+  storageBucket: "okey-radar.firebasestorage.app",
+  messagingSenderId: "171490465907",
+  appId: "1:171490465907:web:1bafc2edecb9e56da13206",
+  measurementId: "G-2G4Y1290ML"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Карта, центр — Челябинск
+const map = L.map('map').setView([55.1644, 61.4368], 11);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  { attribution: '© OpenStreetMap' }).addTo(map);
+
+// Личный ID фаната, чтобы маркер не дублировался
+let myId = localStorage.getItem('fanId');
+if (!myId) {
+  myId = 'fan_' + Math.random().toString(36).slice(2, 10);
+  localStorage.setItem('fanId', myId);
 }
+
+const markers = {};
+
+// 🔴 МАГИЯ: слушаем базу в реальном времени
+onValue(ref(db, 'fans'), (snap) => {
+  const data = snap.val() || {};
+  let count = 0;
+  const now = Date.now();
+  for (const id in data) {
+    const f = data[id];
+    if (!f.lat || !f.lng) continue;
+    // скрываем тех, кто не выходил на радар больше суток
+    if (f.updatedAt && now - f.updatedAt > 24*60*60*1000) continue;
+    count++;
+    if (!markers[id]) {
+      const icon = L.divIcon({ className:'radar-marker',
+        html:'<div class="pulse"></div><div class="dot"></div>', iconSize:[14,14] });
+      markers[id] = L.marker([f.lat, f.lng], {icon}).addTo(map)
+        .bindPopup(f.emoji + ' <b>' + f.name + '</b><br>тут свой человек!');
+    } else {
+      markers[id].setLatLng([f.lat, f.lng]);
+    }
+  }
+  document.getElementById('count').textContent = '🤠 На радаре: ' + count;
+});
+
+// Кнопка выхода на радар
+document.getElementById('startBtn').addEventListener('click', () => {
+  const name = document.getElementById('name').value.trim() || 'Анонимный ковбой';
+  const emoji = document.getElementById('emoji').value;
+  const status = document.getElementById('status');
+  status.textContent = '📡 Ищем сигнал...';
+  navigator.geolocation.getCurrentPosition((pos) => {
+    // Округляем до ~1 км — приватность!
+    const lat = Math.round(pos.coords.latitude * 100) / 100;
+    const lng = Math.round(pos.coords.longitude * 100) / 100;
+    map.setView([lat, lng], 13);
+    update(ref(db, 'fans/' + myId), {
+      name, emoji, lat, lng, updatedAt: Date.now()
+    }).then(() => {
+      status.textContent = '✅ Ты на радаре! Другие океевцы тебя видят';
+    }).catch((e) => {
+      status.textContent = '❌ Ошибка записи: ' + e.message;
+    });
+  }, () => {
+    status.textContent = '❌ Не удалось получить геолокацию';
+  });
+});
 </script>
 
 </body>
