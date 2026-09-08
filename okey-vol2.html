@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKEY: Vol.2 | Legends Collection</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+            font-family: 'Nosifer', cursive;
+            background-image: url('https://github.com/f22raf/my-music-site/raw/main/1746449062889.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-size: 1.1em;
+            text-shadow: 1px 1px 0 #000, 2px 2px 0 #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.85);
+            border: 4px solid #8B0000;
+            border-radius: 8px;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 0 30px rgba(255, 0, 79, 0.3), inset 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        .page-title {
+            font-size: 3em;
+            color: #ffcc00;
+            margin: 10px 0;
+            text-shadow: 3px 3px 0 #000, 5px 5px 0 #8B0000, 0 0 20px rgba(255, 204, 0, 0.5);
+            letter-spacing: 3px;
+        }
+
+        .page-subtitle {
+            color: #ff004f;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #ffcc00;
+            margin: 40px 0 20px;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+            border-bottom: 3px solid #8B0000;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* СЕТКА МЕРЧА */
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            justify-items: center;
+            margin: 30px 0;
+        }
+
+        .merch-item {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .merch-item:hover {
+            transform: translateY(-10px);
+        }
+
+        /* ЯЧЕЙКА 27мм (Надгробие) */
+        .badge-frame-27 {
+            width: 220px;
+            height: 220px;
+            background: linear-gradient(145deg, #3a2f2a, #1a0f0a);
+            border: 6px solid #8B0000;
+            border-radius: 50%;
+            padding: 10px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(139, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .badge-frame-27::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border: 2px dashed #ffcc00;
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .badge-frame-27:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 204, 0, 0.6);
+        }
+
+        .badge-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* РАНГОВЫЕ ЗНАЧКИ 58мм */
+        .badge-frame-58 {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(145deg, #3a2f2a, #1a0f0a);
+            border: 8px solid #ffcc00;
+            border-radius: 50%;
+            padding: 12px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 204, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .badge-frame-58::before {
+            content: '';
+            position: absolute;
+            top: -8px; left: -8px; right: -8px; bottom: -8px;
+            border: 3px dashed #ff004f;
+            border-radius: 50%;
+            animation: rotate 25s linear infinite;
+        }
+
+        .badge-frame-58:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), 0 0 50px rgba(255, 0, 79, 0.6);
+        }
+
+        /* КОЛЛЕКЦИОННЫЕ КАРТОЧКИ */
+        .card-frame {
+            width: 280px;
+            height: 400px;
+            background: linear-gradient(145deg, #3a2f2a, #1a0f0a);
+            border: 8px solid #8B0000;
+            border-radius: 15px;
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(139, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .card-frame::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 2px solid #ffcc00;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .card-frame:hover {
+            transform: translateY(-15px) rotateY(5deg);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 204, 0, 0.6);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .merch-name {
+            color: #ffcc00;
+            font-size: 1.1em;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .merch-size {
+            color: #ff004f;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        .card-info {
+            color: #ff004f;
+            font-size: 0.85em;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* КНОПКА НАЗАД */
+        .back-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 40px auto;
+            color: #ffcc00;
+            text-decoration: none;
+            border: 3px solid #8B0000;
+            background: rgba(0, 0, 0, 0.6);
+            font-size: 1.2em;
+            transition: all 0.2s ease;
+            box-shadow: 4px 4px 0 #000;
+        }
+
+        .back-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #000;
+            background: #8B0000;
+            color: #fff;
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #888;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .page-title { font-size: 2em; }
+            .merch-grid { grid-template-columns: 1fr; }
+            .badge-frame-27 { width: 180px; height: 180px; }
+            .badge-frame-58 { width: 230px; height: 230px; }
+            .card-frame { width: 240px; height: 340px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="page-title">OKEY: VOL.2</h1>
+        <div class="page-subtitle">LEGENDS COLLECTION • MERCH DROP</div>
+
+        <!-- ЯЧЕЙКА 37мм -->
+        <h2>🔥 ЯЧЕЙКА OKEY VOL.2 (37мм)</h2>
+        <div class="merch-grid">
+            <div class="merch-item">
+                <div class="badge-frame-37">
+                    <!-- ЗАМЕНИ НА СВОЮ КАРТИНКУ С НАДГРОБИЕМ -->
+                    <img src="images/legends-vol2-tombstone-27mm.jpg" alt="Legends Vol.2 Cell" class="badge-img">
+                </div>
+                <div class="merch-name">LEGENDS VOL.II</div>
+                <div class="merch-size">37мм • Ячейка Okey</div>
+            </div>
+        </div>
+
+        <!-- РАНГОВЫЕ ЗНАЧКИ 58мм -->
+        <h2>🏆 РАНГОВЫЕ ЗНАЧКИ (58мм)</h2>
+        <div class="merch-grid">
+            <div class="merch-item">
+                <div class="badge-frame-58">
+                    <img src="images/marshall-okey-58mm.jpg" alt="Marshall Okey" class="badge-img">
+                </div>
+                <div class="merch-name">MARSHALL OKEY</div>
+                <div class="merch-size">58мм • Ранг</div>
+            </div>
+
+            <div class="merch-item">
+                <div class="badge-frame-58">
+                    <img src="images/okeytozavr-58mm.jpg" alt="Okeytozavr" class="badge-img">
+                </div>
+                <div class="merch-name">OKEYTOZAVR</div>
+                <div class="merch-size">58мм • Ранг</div>
+            </div>
+
+            <div class="merch-item">
+                <div class="badge-frame-58">
+                    <img src="images/archivist-58mm.jpg" alt="Archivist Okey" class="badge-img">
+                </div>
+                <div class="merch-name">ARCHIVIST OKEY</div>
+                <div class="merch-size">58мм • Ранг</div>
+            </div>
+        </div>
+
+        <!-- КОЛЛЕКЦИОННЫЕ КАРТОЧКИ -->
+        <h2>🃏 LEGENDS VOL.2 OKEY - КАРТОЧКИ</h2>
+        <div class="merch-grid">
+            <div class="merch-item">
+                <div class="card-frame">
+                    <img src="images/card-kovboy-raf-evro.jpg" alt="Ковбой Раф Евро" class="card-img">
+                </div>
+                <div class="merch-name">КОВБОЙ РАФ ЕВРО</div>
+                <div class="card-info">
+                    Лидер, Сооснователь<br>
+                    Гитара, Бэк-вокал, Перо<br>
+                    Статус: 16/17
+                </div>
+            </div>
+            <!-- Добавь сюда остальные карточки по аналогии -->
+        </div>
+
+        <a href="index.html" class="back-btn">← НА ГЛАВНУЮ</a>
+
+        <p class="footer">Челябинск • Golden Music Records • OKEY VOL.2 2026</p>
+    </div>
+
+    <!-- СКРИПТ С ЛАЗЕЙКОЙ ДЛЯ ТЕСТА -->
+    <script>
+        function updateCountdown() {
+            // !!! ЛАЗЕЙКА ДЛЯ ТЕСТА !!!
+            // Если открыть страницу как okey-vol2.html?test=true, таймер сразу покажет "РЕЛИЗ СОСТОЯЛСЯ"
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('test') === 'true') {
+                document.querySelector('.container').insertAdjacentHTML('afterbegin', 
+                    '<div style="background:#00ff00; color:#000; padding:10px; font-size:1.2em; margin-bottom:20px;">🛠 РЕЖИМ ТЕСТА: Страница разблокирована!</div>'
+                );
+                return;
+            }
+
+            // !!! ЗАДАЙ ЗДЕСЬ ДАТУ РЕЛИЗА !!!
+            const releaseDate = new Date('October 31, 2026 00:00:00').getTime();
+            
+            const now = new Date().getTime();
+            const distance = releaseDate - now;
+            
+            if (distance < 0) {
+                // Если дата прошла
+                return; 
+            }
+            
+            // Если дата не наступила, можно скрыть контент или показать таймер (по желанию)
+            // Сейчас просто ничего не делаем, страница висит готовая
+        }
+
+        updateCountdown();
+    </script>
+</body>
+</html>
