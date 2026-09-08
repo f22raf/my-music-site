@@ -441,47 +441,59 @@
 
     <!-- СКРИПТ ТАЙМЕРА VOL.2 -->
     <script>
-        function updateVol2Timer() {
-            // !!! ЗАДАЙ ЗДЕСЬ ДАТУ РЕЛИЗА VOL.2 !!! 
-            // Формат: "Месяц День, Год Часы:Минуты:Секунды" (на английском)
-            // Пример: "October 31, 2026 00:00:00"
-            const releaseDate = new Date('October 31, 2026 00:00:00').getTime();
-            
-            const now = new Date().getTime();
-            const distance = releaseDate - now;
-            
+    function updateVol2Timer() {
+        // ЧИТ-КОД: если в URL есть ?unlockvol2=true, сразу открываем кнопку
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('unlockvol2') === 'true') {
             const btn = document.getElementById('vol2-btn');
-            const statusText = document.getElementById('v2-status');
-            
-            if (distance < 0) {
-                // ТАЙМЕР ИСТЕК: ОТКРЫВАЕМ КНОПКУ
-                btn.classList.remove('locked');
-                btn.classList.add('unlocked');
-                btn.href = 'okey-vol2.html'; // Ссылка на новую страницу
-                btn.onclick = null; // Убираем блокировку клика
-                statusText.textContent = '(ОТКРЫТО!)';
-                
-                document.getElementById('v2-days').textContent = '00';
-                document.getElementById('v2-hours').textContent = '00';
-                document.getElementById('v2-mins').textContent = '00';
-                document.getElementById('v2-secs').textContent = '00';
-                return;
-            }
-            
-            // ТАЙМЕР ИДЕТ: СЧИТАЕМ ОСТАТОК
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const secs = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            document.getElementById('v2-days').textContent = String(days).padStart(2, '0');
-            document.getElementById('v2-hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('v2-mins').textContent = String(mins).padStart(2, '0');
-            document.getElementById('v2-secs').textContent = String(secs).padStart(2, '0');
+            btn.classList.remove('locked');
+            btn.classList.add('unlocked');
+            btn.href = 'okey-vol2.html';
+            btn.onclick = null;
+            document.getElementById('v2-status').textContent = '(TEST MODE)';
+            document.getElementById('v2-days').textContent = '00';
+            document.getElementById('v2-hours').textContent = '00';
+            document.getElementById('v2-mins').textContent = '00';
+            document.getElementById('v2-secs').textContent = '00';
+            return;
         }
 
-        setInterval(updateVol2Timer, 1000);
-        updateVol2Timer();
+        // ЗАДАЙ ЗДЕСЬ ДАТУ РЕЛИЗА VOL.2
+        const releaseDate = new Date('October 31, 2026 00:00:00').getTime();
+        
+        const now = new Date().getTime();
+        const distance = releaseDate - now;
+        
+        const btn = document.getElementById('vol2-btn');
+        const statusText = document.getElementById('v2-status');
+        
+        if (distance < 0) {
+            btn.classList.remove('locked');
+            btn.classList.add('unlocked');
+            btn.href = 'okey-vol2.html';
+            btn.onclick = null;
+            statusText.textContent = '(ОТКРЫТО!)';
+            
+            document.getElementById('v2-days').textContent = '00';
+            document.getElementById('v2-hours').textContent = '00';
+            document.getElementById('v2-mins').textContent = '00';
+            document.getElementById('v2-secs').textContent = '00';
+            return;
+        }
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById('v2-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('v2-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('v2-mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('v2-secs').textContent = String(secs).padStart(2, '0');
+    }
+
+    setInterval(updateVol2Timer, 1000);
+    updateVol2Timer();
     </script>
 </body>
 </html>
