@@ -66,7 +66,7 @@
             line-height: 1.6;
             list-style-type: square;
         }
-        
+
         ul li::marker {
             color: #ff004f;
         }
@@ -155,7 +155,7 @@
             font-size: 1.2em;
             animation: pulse-border 2s infinite;
         }
-        
+
         .nav-link.highlight:hover {
             background: #ff004f;
             color: #000;
@@ -194,7 +194,7 @@
         .footer { margin-top: 40px; color: #888; font-style: italic; font-size: 0.9em; }
 
         /* ========================================== */
-        /* ПЛАВАЮЩАЯ КНОПКА-ТАЙМЕР VOL.2 (БЕСЯЧАЯ) */
+        /* ПЛАВАЮЩАЯ КНОПКА-ТАЙМЕР VOL.2 */
         /* ========================================== */
         .vol2-floating-btn {
             position: fixed;
@@ -216,28 +216,70 @@
             overflow: hidden;
         }
 
-        /* Состояние: ЗАБЛОКИРОВАНО */
         .vol2-floating-btn.locked {
             cursor: not-allowed;
             animation: annoying-shake 3s infinite;
         }
-        
+
         .vol2-floating-btn.locked .btn-label { color: #ff004f; }
         .vol2-floating-btn.locked .lock-icon { display: block; }
         .vol2-floating-btn.locked .unlock-icon { display: none; }
 
-        /* Состояние: ОТКРЫТО */
         .vol2-floating-btn.unlocked {
             cursor: pointer;
             animation: epic-glow 1.5s infinite alternate;
             border-color: #00ff00;
         }
-        
+
         .vol2-floating-btn.unlocked .btn-label { color: #00ff00; }
         .vol2-floating-btn.unlocked .lock-icon { display: none; }
         .vol2-floating-btn.unlocked .unlock-icon { display: block; }
         .vol2-floating-btn.unlocked:hover { transform: scale(1.1); }
 
+        /* ========================================== */
+        /* ПЛАВАЮЩАЯ КНОПКА-ТАЙМЕР ВИКТОРИНЫ */
+        /* ========================================== */
+        .quiz-floating-btn {
+            position: fixed;
+            bottom: 180px;
+            right: 30px;
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle, #1a0a2e, #000);
+            border: 4px solid #9b59b6;
+            border-radius: 50%;
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(155, 89, 182, 0.6), 0 10px 30px rgba(0,0,0,0.8);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .quiz-floating-btn.locked {
+            cursor: not-allowed;
+            animation: annoying-shake 3s infinite;
+        }
+
+        .quiz-floating-btn.locked .btn-label { color: #e74c3c; }
+        .quiz-floating-btn.locked .lock-icon { display: block; }
+        .quiz-floating-btn.locked .unlock-icon { display: none; }
+
+        .quiz-floating-btn.unlocked {
+            cursor: pointer;
+            animation: quiz-glow 1.5s infinite alternate;
+            border-color: #2ecc71;
+        }
+
+        .quiz-floating-btn.unlocked .btn-label { color: #2ecc71; }
+        .quiz-floating-btn.unlocked .lock-icon { display: none; }
+        .quiz-floating-btn.unlocked .unlock-icon { display: block; }
+        .quiz-floating-btn.unlocked:hover { transform: scale(1.1); }
+
+        /* Общие элементы кнопок */
         .gear {
             position: absolute;
             border-radius: 50%;
@@ -273,7 +315,7 @@
 
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
-        
+
         @keyframes annoying-shake {
             0%, 90%, 100% { transform: translate(0, 0); }
             92% { transform: translate(-2px, 1px); }
@@ -287,8 +329,14 @@
             to { box-shadow: 0 0 40px rgba(0, 255, 0, 0.8), 0 0 80px rgba(255, 204, 0, 0.8); }
         }
 
+        @keyframes quiz-glow {
+            from { box-shadow: 0 0 20px rgba(46, 204, 113, 0.4), 0 0 40px rgba(155, 89, 182, 0.4); }
+            to { box-shadow: 0 0 40px rgba(46, 204, 113, 0.8), 0 0 80px rgba(155, 89, 182, 0.8); }
+        }
+
         @media (max-width: 600px) {
             .vol2-floating-btn { width: 110px; height: 110px; bottom: 20px; right: 20px; }
+            .quiz-floating-btn { width: 100px; height: 100px; bottom: 140px; right: 20px; }
             .timer-display { font-size: 0.9em; }
             .btn-label { font-size: 0.65em; }
             .group-name { font-size: 2em; }
@@ -297,7 +345,21 @@
 </head>
 <body>
 
-    <!-- ПЛАВАЮЩАЯ КНОПКА-ТАЙМЕР -->
+    <!-- КНОПКА-ТАЙМЕР ВИКТОРИНЫ -->
+    <a id="quiz-btn" class="quiz-floating-btn locked" href="#" onclick="return false;">
+        <div class="gear gear-outer"></div>
+        <div class="gear gear-inner"></div>
+        <div class="lock-icon">🔒</div>
+        <div class="unlock-icon">🔓</div>
+        <div class="btn-content">
+            <div class="timer-display">
+                <span id="quiz-days">00</span>:<span id="quiz-hours">00</span>:<span id="quiz-mins">00</span>:<span id="quiz-secs">00</span>
+            </div>
+            <div class="btn-label">ВИКТОРИНА<br><small id="quiz-status">(ЗАБЛОКИРОВАНО)</small></div>
+        </div>
+    </a>
+
+    <!-- КНОПКА-ТАЙМЕР VOL.2 -->
     <a id="vol2-btn" class="vol2-floating-btn locked" href="#" onclick="return false;">
         <div class="gear gear-outer"></div>
         <div class="gear gear-inner"></div>
@@ -356,7 +418,7 @@
             <li>18) Былые Времена</li><li>19) Степная Трава</li><li>20) Юрский Движ</li>
             <li>21) Шум Района</li><li>22) Зима</li>
         </ul>
-        
+
         <a href="history.html" class="nav-link">📜 Читать историю группы →</a>
         <a href="Music.html" class="nav-link">🎧 Слушать нашу музыку →</a>
         <a href="news.html" class="nav-link">📰 Что нового →</a>
@@ -365,7 +427,7 @@
         <a href="radar.html" class="nav-link highlight">📡 Окей Радар — найди своих</a>
 
         <h2>Выступления</h2>
-        <ul> 
+        <ul>
             <li>1) Дебютный квартирник (Свобода) — 30.09.2022</li>
             <li>2) Саботажный квартирник (Свобода) — 22.10.2022</li>
             <li>3) Хеллоуинский квартирник (Свобода) — 29.10.2022</li>
@@ -375,7 +437,7 @@
             <li>7) Rock Event (Б25 Своб.2к5) - 10.10.2025</li>
             <li>8) Гитарная Мистерия (Гитарник Пятница Вечером) - 28.11.2025</li>
             <li>9) Ozerov Dvizh (Плэй Паб) - 29.11.2025</li>
-            <li>10) Ёлки Панки (Плэй Паб) - 27.12.2025</li>
+            <li>10) лки Панки (Плэй Паб) - 27.12.2025</li>
             <li>11) Ozerov Fest (ЧЧ Лаунч) - 17.01.2026</li>
             <li>12) Рок концерт (Б25 Своб.2к5) - 30.01.2026</li>
             <li>13) Ozerov Dnyuha (ЧЧ Лаунч) - 25.04.2026</li>
@@ -383,8 +445,8 @@
             <li>15) Ozerov Event 5 (ЧЧ Лаунч) - 13.06.2026</li>
             <li>16) 2к17 (ЧЧ Лаунч) - 18.07.2026</li>
             <li>17) Okey Event Гаражник (Jack Jack) - 29.08.2026</li>
-        </ul>  
-        
+        </ul>
+
         <h2>💿 Golden Music Records</h2>
         <p>Официальный лейбл группы Окей • Челябинск</p>
         <img src="Golden_music_records.jpg" alt="Golden Music Records" style="max-width:220px; margin:15px auto; display: block; border: 3px solid #ff004f; box-shadow: 0 5px 15px rgba(0,0,0,0.8);">
@@ -403,7 +465,7 @@
         <img src="InShot_20260208_183559708.jpg" alt="Плакат 4" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
         <img src="InShot_20260208_221136456.jpg" alt="Плакат 5" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
         <img src="InShot_20260211_033545133.jpg" alt="Плакат 6" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
-        
+
         <h3>Спецкарточка (значок)</h3>
         <img src="1758782710052.jpg" alt="Спецкарточка Окей" style="max-width:250px; margin:15px 0; border: 3px solid #ffcc00; box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);">
 
@@ -418,8 +480,8 @@
             <a href="https://vk.ru/club232622132" class="social-btn link2">Видеоархив VK</a>
         </div>
 
-        <h3>🎮 Интерактив</h3>
-        <a href="game.html" class="nav-link">🎮 Кто ты в Движе? (Мини-квест)</a>
+        <h3> Интерактив</h3>
+        <a href="game.html" class="nav-link"> Кто ты в Движе? (Мини-квест)</a>
         <a href="Questtry.html" class="nav-link highlight">🤘 ТОЛЬКО ДЛЯ ТРУШНЫХ ФАНАТОВ ОКЕЙ!</a>
         <a href="/my-music-site/ranger.html" class="nav-link">🎮 Сыграть в игру "Рейнджер Страж"</a>
 
@@ -439,61 +501,112 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/104597184" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
-    <!-- СКРИПТ ТАЙМЕРА VOL.2 -->
+    <!-- СКРИПТЫ ТАЙМЕРОВ С ЛАЗЕЙКАМИ ДЛЯ ТЕСТА -->
     <script>
-    function updateVol2Timer() {
-        // ЧИТ-КОД: если в URL есть ?unlockvol2=true, сразу открываем кнопку
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('unlockvol2') === 'true') {
+        // ========== ТАЙМЕР VOL.2 ==========
+        function updateVol2Timer() {
+            // ЛАЗЕЙКА: ?unlockvol2=true
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('unlockvol2') === 'true') {
+                const btn = document.getElementById('vol2-btn');
+                btn.classList.remove('locked');
+                btn.classList.add('unlocked');
+                btn.href = 'okey-vol2.html';
+                btn.onclick = null;
+                document.getElementById('v2-status').textContent = '(TEST MODE)';
+                document.getElementById('v2-days').textContent = '00';
+                document.getElementById('v2-hours').textContent = '00';
+                document.getElementById('v2-mins').textContent = '00';
+                document.getElementById('v2-secs').textContent = '00';
+                return;
+            }
+
+            // !!! ЗАДАЙ ЗДЕСЬ ДАТУ РЕЛИЗА VOL.2 !!!
+            const releaseDate = new Date('October 31, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = releaseDate - now;
+
             const btn = document.getElementById('vol2-btn');
-            btn.classList.remove('locked');
-            btn.classList.add('unlocked');
-            btn.href = 'okey-vol2.html';
-            btn.onclick = null;
-            document.getElementById('v2-status').textContent = '(TEST MODE)';
-            document.getElementById('v2-days').textContent = '00';
-            document.getElementById('v2-hours').textContent = '00';
-            document.getElementById('v2-mins').textContent = '00';
-            document.getElementById('v2-secs').textContent = '00';
-            return;
+            const statusText = document.getElementById('v2-status');
+
+            if (distance < 0) {
+                btn.classList.remove('locked');
+                btn.classList.add('unlocked');
+                btn.href = 'okey-vol2.html';
+                btn.onclick = null;
+                statusText.textContent = '(ОТКРЫТО!)';
+                document.getElementById('v2-days').textContent = '00';
+                document.getElementById('v2-hours').textContent = '00';
+                document.getElementById('v2-mins').textContent = '00';
+                document.getElementById('v2-secs').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('v2-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('v2-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('v2-mins').textContent = String(mins).padStart(2, '0');
+            document.getElementById('v2-secs').textContent = String(secs).padStart(2, '0');
         }
 
-        // ЗАДАЙ ЗДЕСЬ ДАТУ РЕЛИЗА VOL.2
-        const releaseDate = new Date('October 31, 2026 00:00:00').getTime();
-        
-        const now = new Date().getTime();
-        const distance = releaseDate - now;
-        
-        const btn = document.getElementById('vol2-btn');
-        const statusText = document.getElementById('v2-status');
-        
-        if (distance < 0) {
-            btn.classList.remove('locked');
-            btn.classList.add('unlocked');
-            btn.href = 'okey-vol2.html';
-            btn.onclick = null;
-            statusText.textContent = '(ОТКРЫТО!)';
-            
-            document.getElementById('v2-days').textContent = '00';
-            document.getElementById('v2-hours').textContent = '00';
-            document.getElementById('v2-mins').textContent = '00';
-            document.getElementById('v2-secs').textContent = '00';
-            return;
-        }
-        
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const secs = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        document.getElementById('v2-days').textContent = String(days).padStart(2, '0');
-        document.getElementById('v2-hours').textContent = String(hours).padStart(2, '0');
-        document.getElementById('v2-mins').textContent = String(mins).padStart(2, '0');
-        document.getElementById('v2-secs').textContent = String(secs).padStart(2, '0');
-    }
+        // ========== ТАЙМЕР ВИКТОРИНЫ ==========
+        function updateQuizTimer() {
+            // ЛАЗЕЙКА: ?unlockquiz=true
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('unlockquiz') === 'true') {
+                const btn = document.getElementById('quiz-btn');
+                btn.classList.remove('locked');
+                btn.classList.add('unlocked');
+                btn.href = 'Questtry.html';
+                btn.onclick = null;
+                document.getElementById('quiz-status').textContent = '(TEST MODE)';
+                document.getElementById('quiz-days').textContent = '00';
+                document.getElementById('quiz-hours').textContent = '00';
+                document.getElementById('quiz-mins').textContent = '00';
+                document.getElementById('quiz-secs').textContent = '00';
+                return;
+            }
 
-    setInterval(updateVol2Timer, 1000);
-    updateVol2Timer();
+            // !!! ЗАДАЙ ЗДЕСЬ ДАТУ ОТКРЫТИЯ ВИКТОРИНЫ !!!
+            const quizDate = new Date('November 15, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = quizDate - now;
+
+            const btn = document.getElementById('quiz-btn');
+
+            if (distance < 0) {
+                btn.classList.remove('locked');
+                btn.classList.add('unlocked');
+                btn.href = 'Questtry.html';
+                btn.onclick = null;
+                document.getElementById('quiz-status').textContent = '(ОТКРЫТО!)';
+                document.getElementById('quiz-days').textContent = '00';
+                document.getElementById('quiz-hours').textContent = '00';
+                document.getElementById('quiz-mins').textContent = '00';
+                document.getElementById('quiz-secs').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('quiz-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('quiz-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('quiz-mins').textContent = String(mins).padStart(2, '0');
+            document.getElementById('quiz-secs').textContent = String(secs).padStart(2, '0');
+        }
+
+        // Запускаем оба таймера
+        setInterval(updateVol2Timer, 1000);
+        setInterval(updateQuizTimer, 1000);
+        updateVol2Timer();
+        updateQuizTimer();
     </script>
 </body>
 </html>
