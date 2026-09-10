@@ -73,7 +73,8 @@
             {img:"InShot_20260908_204204488.jpg", номер:10, экз:6, marker:"OK6-0T6D-G1I8"}
         ];
 
-        const availableIndices = [0, 5, 7, 8, 9, 12, 16];
+        // ВСЕ карты доступны для розыгрыша
+        const availableIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 
         const questionBank = [
             { q: "Кто в группе играет на бас-гитаре?", a: ["томас"] },
@@ -167,7 +168,7 @@
 
         function check() {
             if (localStorage.getItem('quest_claiming_v2') === 'true') {
-                alert('⏳ Карта уже выдаётся!');
+                alert(' Карта уже выдаётся!');
                 return;
             }
             
@@ -181,15 +182,6 @@
             localStorage.setItem('quest_claiming_v2', 'true');
             
             let used = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used_v2') || '[]');
-            
-            if (!isTestMode && used.length === 0) {
-                for (let i = 0; i < cards.length; i++) {
-                    if (!availableIndices.includes(i)) {
-                        used.push(i);
-                    }
-                }
-                localStorage.setItem('quest_used_v2', JSON.stringify(used));
-            }
             
             const available = cards.filter((_, i) => !used.includes(i));
             
@@ -219,7 +211,7 @@
         }
         
         function show(card) {
-            const shareText = ` Я выбил карту в викторине!\n\n🃏 Карта №${card.номер}/10\n🔢 Экземпляр №${card.экз}/6\n\n🎯 Маркер: ${card.marker}\n\n📸 СЕЙЧАС СДЕЛАЮ СКРИНШОТ И ПРИКРЕПЛЮ ЕГО!\n\nПроверьте и выдайте физическую карту!`;
+            const shareText = `🎉 Я выбил карту в викторине!\n\n🃏 Карта №${card.номер}/10\n🔢 Экземпляр №${card.экз}/6\n\n🎯 Маркер: ${card.marker}\n\n📸 СЕЙЧАС СДЕЛАЮ СКРИНШОТ И ПРИКРЕПЛЮ ЕГО!\n\nПроверьте и выдайте физическую карту!`;
             const encodedText = encodeURIComponent(shareText);
             const siteUrl = encodeURIComponent('https://f22raf.github.io/my-music-site/');
             
@@ -246,9 +238,8 @@
             `;
         }
 
-        // Сброс всех данных
         function resetQuest() {
-            if (confirm('⚠️ ТОЧНО СБРОСИТЬ ВСЕ ДАННЫЕ? Все карты снова станут доступными для розыгрыша!')) {
+            if (confirm('️ ТОЧНО СБРОСИТЬ ВСЕ ДАННЫЕ? Все карты снова станут доступными для розыгрыша!')) {
                 localStorage.removeItem('quest_used_v2');
                 localStorage.removeItem('quest_time_v2');
                 localStorage.removeItem('quest_claiming_v2');
