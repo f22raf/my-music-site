@@ -33,13 +33,11 @@
         <h2>🎸 КВЕСТ ДЛЯ ФАНБАЗЫ 🎸</h2>
         
         <div id="content">
-            <!-- Поле для игроков -->
             <p class="question">Дата основания группы:</p>
             <input type="password" id="pass" placeholder="ДДММГГГГ" maxlength="8">
             <br>
             <a href="#" class="btn" onclick="go()">ВВОД</a>
 
-            <!-- Поле для админа -->
             <p class="question" style="margin-top:30px; font-size:0.9em; color:#888;">🔐 Вход для админа:</p>
             <input type="password" id="adminPass" placeholder="Пароль админа" maxlength="20">
             <br>
@@ -75,10 +73,8 @@
             {img:"InShot_20260908_204204488.jpg", номер:10, экз:6, marker:"OK6-0T6D-G1I8"}
         ];
 
-        // Карты, доступные для розыгрыша (индексы в массиве cards)
         const availableIndices = [0, 5, 7, 8, 9, 12, 16];
 
-        // Вопросы
         const questionBank = [
             { q: "Кто в группе играет на бас-гитаре?", a: ["томас"] },
             { q: "Где прошёл Окей Ивент Гаражник 29.08.2026?", a: ["Jack Jack", "Джек Джек", "Культуры 69"] },
@@ -108,15 +104,14 @@
             return correct.some(a => norm.includes(normalize(a)));
         }
 
-        // Блокировка 24 часа
         window.addEventListener('load', () => {
-            const lastTime = localStorage.getItem('quest_time');            
+            const lastTime = localStorage.getItem('quest_time_v2');            
             if (lastTime) {
                 const hoursPassed = (Date.now() - parseInt(lastTime)) / 3600000;
                 if (hoursPassed < 24) {
                     document.getElementById('content').innerHTML = `
                         <div class="warn" style="text-align:center; padding:30px; border:3px solid #ff004f;">
-                            <h2 style="color:#ff004f; margin-bottom:15px;"> ТЫ УЖЕ ПРОХОДИЛ КВЕСТ!</h2>
+                            <h2 style="color:#ff004f; margin-bottom:15px;">⏳ ТЫ УЖЕ ПРОХОДИЛ КВЕСТ!</h2>
                             <p style="font-size:1.1em; margin:15px 0;">
                                 Следующая попытка через:<br>
                                 <strong style="color:#ffcc00; font-size:1.4em;">${Math.ceil(24 - hoursPassed)} ч.</strong>
@@ -131,17 +126,16 @@
                     return;
                 }
             }
-            localStorage.removeItem('quest_claiming');
+            localStorage.removeItem('quest_claiming_v2');
         });
 
-        // Вход игрока
         function go() {
             const p = document.getElementById('pass').value;
             if (p === '00000000') {
                 isTestMode = true;
                 startQuiz();
             } else if (p === '26082022') {
-                const last = localStorage.getItem('quest_time');
+                const last = localStorage.getItem('quest_time_v2');
                 if (last && Date.now() - last < 86400000) {
                     alert('⏳ Уже проходил квест! Следующая попытка завтра.');
                     return;
@@ -153,7 +147,6 @@
             }
         }
 
-        // Вход админа
         function adminGo() {
             const p = document.getElementById('adminPass').value;
             if (p === 'admin2026') {
@@ -173,7 +166,7 @@
         }
 
         function check() {
-            if (localStorage.getItem('quest_claiming') === 'true') {
+            if (localStorage.getItem('quest_claiming_v2') === 'true') {
                 alert('⏳ Карта уже выдаётся!');
                 return;
             }
@@ -185,9 +178,9 @@
                 return;
             }
 
-            localStorage.setItem('quest_claiming', 'true');
+            localStorage.setItem('quest_claiming_v2', 'true');
             
-            let used = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used') || '[]');
+            let used = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used_v2') || '[]');
             
             if (!isTestMode && used.length === 0) {
                 for (let i = 0; i < cards.length; i++) {
@@ -195,13 +188,13 @@
                         used.push(i);
                     }
                 }
-                localStorage.setItem('quest_used', JSON.stringify(used));
+                localStorage.setItem('quest_used_v2', JSON.stringify(used));
             }
             
             const available = cards.filter((_, i) => !used.includes(i));
             
             if (!isTestMode && available.length === 0) {
-                localStorage.removeItem('quest_claiming');
+                localStorage.removeItem('quest_claiming_v2');
                 alert('🎉 Все карты разыграны!');
                 location.href = 'index.html';
                 return;
@@ -216,17 +209,17 @@
             );
             if (!isTestMode) {
                 used.push(globalIdx);
-                localStorage.setItem('quest_used', JSON.stringify(used));
-                localStorage.setItem('quest_time', Date.now().toString());
-                localStorage.setItem('quest_last_card', globalIdx.toString());
+                localStorage.setItem('quest_used_v2', JSON.stringify(used));
+                localStorage.setItem('quest_time_v2', Date.now().toString());
+                localStorage.setItem('quest_last_card_v2', globalIdx.toString());
             }
 
-            localStorage.removeItem('quest_claiming');
+            localStorage.removeItem('quest_claiming_v2');
             show(card);
         }
         
         function show(card) {
-            const shareText = `🎉 Я выбил карту в викторине!\n\n🃏 Карта №${card.номер}/10\n Экземпляр №${card.экз}/6\n\n🎯 Маркер: ${card.marker}\n\n📸 СЕЙЧАС СДЕЛАЮ СКРИНШОТ И ПРИКРЕПЛЮ ЕГО!\n\nПроверьте и выдайте физическую карту!`;
+            const shareText = ` Я выбил карту в викторине!\n\n🃏 Карта №${card.номер}/10\n🔢 Экземпляр №${card.экз}/6\n\n🎯 Маркер: ${card.marker}\n\n📸 СЕЙЧАС СДЕЛАЮ СКРИНШОТ И ПРИКРЕПЛЮ ЕГО!\n\nПроверьте и выдайте физическую карту!`;
             const encodedText = encodeURIComponent(shareText);
             const siteUrl = encodeURIComponent('https://f22raf.github.io/my-music-site/');
             
@@ -246,18 +239,29 @@
                     📤 ОТПРАВИТЬ ДЛЯ ПОЛУЧЕНИЯ
                 </a>
                 <div style="color:#888; font-size:0.85em; margin:15px 0; padding:15px; background:rgba(0,0,0,0.3); border:1px solid #444;">
-                     Или сделай скриншот и напиши Ковбою Рафу<br>
+                    💡 Или сделай скриншот и напиши Ковбою Рафу<br>
                     <span style="color:#ff004f;">(Только Челябинск!)</span>
                 </div>
                 <a href="index.html" class="btn" style="border-color:#4c75a8;background:#4c75a8; margin-top:10px;">← НА ГЛАВНУЮ</a>
             `;
         }
 
-        // Админ-панель
+        // Сброс всех данных
+        function resetQuest() {
+            if (confirm('⚠️ ТОЧНО СБРОСИТЬ ВСЕ ДАННЫЕ? Все карты снова станут доступными для розыгрыша!')) {
+                localStorage.removeItem('quest_used_v2');
+                localStorage.removeItem('quest_time_v2');
+                localStorage.removeItem('quest_claiming_v2');
+                localStorage.removeItem('quest_last_card_v2');
+                alert('✅ Сброшено! Теперь все карты снова в розыгрыше.');
+                showAdminPanel();
+            }
+        }
+
         function showAdminPanel() {
-            const used = JSON.parse(localStorage.getItem('quest_used') || '[]');
-            const lastCardIdx = localStorage.getItem('quest_last_card');
-            const lastTime = localStorage.getItem('quest_time');
+            const used = JSON.parse(localStorage.getItem('quest_used_v2') || '[]');
+            const lastCardIdx = localStorage.getItem('quest_last_card_v2');
+            const lastTime = localStorage.getItem('quest_time_v2');
             
             let html = `<h2>🔐 АДМИН-ПАНЕЛЬ</h2>`;
             html += `<p style="color:#ffcc00;">Последняя выпавшая карта: ${lastCardIdx ? `№${cards[lastCardIdx].номер}, Экз.${cards[lastCardIdx].экз}, Маркер: ${cards[lastCardIdx].marker}` : 'Нет'}</p>`;
@@ -273,7 +277,7 @@
                 let status = '';
                 if (isUsed) status = '✅ Выдана';
                 else if (isAvailable) status = '🎲 В розыгрыше';
-                else status = ' Заблокирована';
+                else status = '⏳ Заблокирована';
                 
                 html += `<tr>
                     <td>${card.номер}</td>
@@ -284,6 +288,7 @@
             });
             
             html += `</table>`;
+            html += `<button onclick="resetQuest()" class="btn" style="background:#ff004f; border-color:#ff004f; margin:20px 0;">🔄 СБРОСИТЬ ВСЕ КАРТЫ</button>`;
             html += `<a href="index.html" class="btn" style="border-color:#4c75a8;background:#4c75a8;">← НА ГЛАВНУЮ</a>`;
             
             document.getElementById('content').innerHTML = html;
