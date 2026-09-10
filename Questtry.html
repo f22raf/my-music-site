@@ -49,20 +49,16 @@
         let isTestMode = false;
         let currentQuestions = [];
         
-        // 🃏 20 карт с ПРЕДГЕНЕРИРОВАННЫМИ маркерами
+        // 🃏 16 карт (убраны: 2/5, 2/6, 4/5, 1/6)
         const cards = [
             {img:"InShot_20260908_193350301.jpg", номер:1, экз:5, marker:"OK5-1A7K-M2P9"},
-            {img:"InShot_20260908_194503009.jpg", номер:2, экз:5, marker:"OK5-2B8L-N3Q0"},
             {img:"InShot_20260908_194843167.jpg", номер:3, экз:5, marker:"OK5-3C9M-P4R1"},
-            {img:"InShot_20260908_195216384.jpg", номер:4, экз:5, marker:"OK5-4D0N-Q5S2"},
             {img:"InShot_20260909_180855828.jpg", номер:5, экз:5, marker:"OK5-5E1O-R6T3"},
             {img:"InShot_20260908_195813432.jpg", номер:6, экз:5, marker:"OK5-6F2P-S7U4"},
             {img:"InShot_20260908_200144557.jpg", номер:7, экз:5, marker:"OK5-7G3Q-T8V5"},
             {img:"InShot_20260908_200553587.jpg", номер:8, экз:5, marker:"OK5-8H4R-U9W6"},
             {img:"InShot_20260908_201503065.jpg", номер:9, экз:5, marker:"OK5-9I5S-V0X7"},
             {img:"InShot_20260908_204204488.jpg", номер:10, экз:5, marker:"OK5-0J6T-W1Y8"},
-            {img:"InShot_20260908_193350301.jpg", номер:1, экз:6, marker:"OK6-1K7U-X2Z9"},
-            {img:"InShot_20260908_194503009.jpg", номер:2, экз:6, marker:"OK6-2L8V-Y3A0"},
             {img:"InShot_20260908_194843167.jpg", номер:3, экз:6, marker:"OK6-3M9W-Z4B1"},
             {img:"InShot_20260908_195216384.jpg", номер:4, экз:6, marker:"OK6-4N0X-A5C2"},
             {img:"InShot_20260909_180855828.jpg", номер:5, экз:6, marker:"OK6-5O1Y-B6D3"},
@@ -73,8 +69,8 @@
             {img:"InShot_20260908_204204488.jpg", номер:10, экз:6, marker:"OK6-0T6D-G1I8"}
         ];
 
-        // ВСЕ карты доступны для розыгрыша
-        const availableIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+        // Все 16 карт в розыгрыше
+        const availableIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
         const questionBank = [
             { q: "Кто в группе играет на бас-гитаре?", a: ["томас"] },
@@ -105,6 +101,7 @@
             return correct.some(a => norm.includes(normalize(a)));
         }
 
+        // Блокировка 24 часа
         window.addEventListener('load', () => {
             const lastTime = localStorage.getItem('quest_time_v2');            
             if (lastTime) {
@@ -138,7 +135,7 @@
             } else if (p === '26082022') {
                 const last = localStorage.getItem('quest_time_v2');
                 if (last && Date.now() - last < 86400000) {
-                    alert('⏳ Уже проходил квест! Следующая попытка завтра.');
+                    alert(' Уже проходил квест! Следующая попытка завтра.');
                     return;
                 }
                 isTestMode = false;
@@ -168,7 +165,7 @@
 
         function check() {
             if (localStorage.getItem('quest_claiming_v2') === 'true') {
-                alert(' Карта уже выдаётся!');
+                alert('⏳ Карта уже выдаётся!');
                 return;
             }
             
@@ -220,7 +217,7 @@
                     <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27280%27 height=%27380%27 fill=%27%23222%27/><text x=%2750%27 y=%27200%27 fill=%27%23ff004f%27 font-size=%2724%27>КАРТА</text></svg>'">
                     <div class="card-text">🎸 Коллекционная карточка Окей!</div>
                     <div class="card-text" style="color:#ff004f; font-size:1.1em;">${card.номер}/10, Экз. ${card.экз}/6</div>
-                    <div class="marker">🎯 ${card.marker}</div>
+                    <div class="marker"> ${card.marker}</div>
                 </div>
                 <div class="warn" style="text-align:center; border:3px solid #ffcc00; background:rgba(255,204,0,0.1);">
                     <strong style="color:#ffcc00; font-size:1.2em;">⚡ ВАЖНО!</strong><br>
@@ -239,7 +236,7 @@
         }
 
         function resetQuest() {
-            if (confirm('️ ТОЧНО СБРОСИТЬ ВСЕ ДАННЫЕ? Все карты снова станут доступными для розыгрыша!')) {
+            if (confirm('⚠️ ТОЧНО СБРОСИТЬ ВСЕ ДАННЫЕ? Все карты снова станут доступными для розыгрыша!')) {
                 localStorage.removeItem('quest_used_v2');
                 localStorage.removeItem('quest_time_v2');
                 localStorage.removeItem('quest_claiming_v2');
@@ -257,6 +254,7 @@
             let html = `<h2>🔐 АДМИН-ПАНЕЛЬ</h2>`;
             html += `<p style="color:#ffcc00;">Последняя выпавшая карта: ${lastCardIdx ? `№${cards[lastCardIdx].номер}, Экз.${cards[lastCardIdx].экз}, Маркер: ${cards[lastCardIdx].marker}` : 'Нет'}</p>`;
             html += `<p style="color:#888;">Время: ${lastTime ? new Date(parseInt(lastTime)).toLocaleString('ru-RU') : 'Нет'}</p>`;
+            html += `<p style="color:#ff004f;">Осталось карт в розыгрыше: ${cards.length - used.length} из ${cards.length}</p>`;
             
             html += `<h3 style="color:#ffcc00; margin-top:30px;">📋 ВСЕ КАРТЫ И МАРКЕРЫ:</h3>`;
             html += `<table class="admin-table">
