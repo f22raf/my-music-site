@@ -13,24 +13,37 @@
         .question { color:#fff; margin:15px 0; font-size:1.1em; line-height:1.4; }
         input { background:#111; border:2px solid #ff004f; color:#fff; padding:12px; width:80%; margin:10px auto; font-family:'Nosifer',cursive; font-size:1.1em; text-align:center; display:block; border-radius:0; box-shadow:0 3px 0 #000; }
         input:focus { outline:none; border-color:#ffcc00; }
-        .btn { display:inline-block; padding:10px 20px; margin:10px; color:white; text-decoration:none; border:2px solid #ff0000; background:#ff004f; font-family:'Nosifer',cursive; font-size:1.3em; min-width:140px; transition:transform 0.1s; }
+        .btn { display:inline-block; padding:10px 20px; margin:10px; color:white; text-decoration:none; border:2px solid #ff0000; background:#ff004f; font-family:'Nosifer',cursive; font-size:1.3em; min-width:140px; transition:transform 0.1s; cursor: pointer; }
         .btn:hover { transform:translateX(3px) translateY(3px); box-shadow:3px 3px 0 #000; }
         .card { border:4px double #ffcc00; padding:20px; background:rgba(139,0,0,0.3); margin:25px 0; box-shadow:0 0 15px #ffcc00,0 4px 0 #000; animation:glow 1s infinite alternate; }
         @keyframes glow { from { box-shadow:0 0 10px #ffcc00,0 4px 0 #000; } to { box-shadow:0 0 25px #ffcc00,0 4px 0 #000; } }
         .card-img { width:100%; max-width:280px; border:3px solid #ff004f; margin:0 auto 15px; display:block; box-shadow:0 4px 0 #000; }
         .card-text { color:#ffcc00; margin:5px 0; font-size:1.2em; text-shadow:2px 2px 0 #000; }
+        .marker { color:#ffcc00; font-size:0.9em; margin-top:10px; padding:8px; background:rgba(0,0,0,0.5); border:1px dashed #ff004f; display:inline-block; font-family:monospace; }
         .warn { background:rgba(139,0,0,0.3); border-left:4px solid #ff004f; padding:15px; margin:25px 0; font-size:0.9em; color:#fff; text-align:left; }
+        .admin-table { width:100%; border-collapse:collapse; margin:20px 0; font-size:0.8em; }
+        .admin-table th, .admin-table td { border:1px solid #ff004f; padding:8px; text-align:center; }
+        .admin-table th { background:#ff004f; color:#fff; }
+        .admin-table tr:nth-child(even) { background:rgba(255,0,79,0.1); }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="group-name">Окей</div>
         <h2>🎸 КВЕСТ ДЛЯ ФАНБАЗЫ 🎸</h2>
+        
         <div id="content">
+            <!-- Поле для игроков -->
             <p class="question">Дата основания группы:</p>
             <input type="password" id="pass" placeholder="ДДММГГГГ" maxlength="8">
             <br>
             <a href="#" class="btn" onclick="go()">ВВОД</a>
+
+            <!-- Поле для админа -->
+            <p class="question" style="margin-top:30px; font-size:0.9em; color:#888;">🔐 Вход для админа:</p>
+            <input type="password" id="adminPass" placeholder="Пароль админа" maxlength="20">
+            <br>
+            <a href="#" class="btn" style="background:#444; border-color:#666; font-size:1em; padding:8px 15px;" onclick="adminGo()">АДМИН</a>
         </div>
     </div>
 
@@ -38,35 +51,34 @@
         let isTestMode = false;
         let currentQuestions = [];
         
-        // 🃏 20 карт (10 уникальных × 2 экз.) — коллекции №5 и №6
+        // 🃏 20 карт с ПРЕДГЕНЕРИРОВАННЫМИ маркерами
         const cards = [
-            {img:"InShot_20260908_193350301.jpg", номер:1, экз:5},
-            {img:"InShot_20260908_194503009.jpg", номер:2, экз:5},
-            {img:"InShot_20260908_194843167.jpg", номер:3, экз:5},
-            {img:"InShot_20260908_195216384.jpg", номер:4, экз:5},
-            {img:"InShot_20260909_180855828.jpg", номер:5, экз:5},
-            {img:"InShot_20260908_195813432.jpg", номер:6, экз:5},
-            {img:"InShot_20260908_200144557.jpg", номер:7, экз:5},
-            {img:"InShot_20260908_200553587.jpg", номер:8, экз:5},
-            {img:"InShot_20260908_201503065.jpg", номер:9, экз:5},
-            {img:"InShot_20260908_204204488.jpg", номер:10, экз:5},
-            {img:"InShot_20260908_193350301.jpg", номер:1, экз:6},
-            {img:"InShot_20260908_194503009.jpg", номер:2, экз:6},
-            {img:"InShot_20260908_194843167.jpg", номер:3, экз:6},
-            {img:"InShot_20260908_195216384.jpg", номер:4, экз:6},
-            {img:"InShot_20260909_180855828.jpg", номер:5, экз:6},
-            {img:"InShot_20260908_195813432.jpg", номер:6, экз:6},
-            {img:"InShot_20260908_200144557.jpg", номер:7, экз:6},
-            {img:"InShot_20260908_200553587.jpg", номер:8, экз:6},
-            {img:"InShot_20260908_201503065.jpg", номер:9, экз:6},
-            {img:"InShot_20260908_204204488.jpg", номер:10, экз:6}
+            {img:"InShot_20260908_193350301.jpg", номер:1, экз:5, marker:"OK5-1A7K-M2P9"},
+            {img:"InShot_20260908_194503009.jpg", номер:2, экз:5, marker:"OK5-2B8L-N3Q0"},
+            {img:"InShot_20260908_194843167.jpg", номер:3, экз:5, marker:"OK5-3C9M-P4R1"},
+            {img:"InShot_20260908_195216384.jpg", номер:4, экз:5, marker:"OK5-4D0N-Q5S2"},
+            {img:"InShot_20260909_180855828.jpg", номер:5, экз:5, marker:"OK5-5E1O-R6T3"},
+            {img:"InShot_20260908_195813432.jpg", номер:6, экз:5, marker:"OK5-6F2P-S7U4"},
+            {img:"InShot_20260908_200144557.jpg", номер:7, экз:5, marker:"OK5-7G3Q-T8V5"},
+            {img:"InShot_20260908_200553587.jpg", номер:8, экз:5, marker:"OK5-8H4R-U9W6"},
+            {img:"InShot_20260908_201503065.jpg", номер:9, экз:5, marker:"OK5-9I5S-V0X7"},
+            {img:"InShot_20260908_204204488.jpg", номер:10, экз:5, marker:"OK5-0J6T-W1Y8"},
+            {img:"InShot_20260908_193350301.jpg", номер:1, экз:6, marker:"OK6-1K7U-X2Z9"},
+            {img:"InShot_20260908_194503009.jpg", номер:2, экз:6, marker:"OK6-2L8V-Y3A0"},
+            {img:"InShot_20260908_194843167.jpg", номер:3, экз:6, marker:"OK6-3M9W-Z4B1"},
+            {img:"InShot_20260908_195216384.jpg", номер:4, экз:6, marker:"OK6-4N0X-A5C2"},
+            {img:"InShot_20260909_180855828.jpg", номер:5, экз:6, marker:"OK6-5O1Y-B6D3"},
+            {img:"InShot_20260908_195813432.jpg", номер:6, экз:6, marker:"OK6-6P2Z-C7E4"},
+            {img:"InShot_20260908_200144557.jpg", номер:7, экз:6, marker:"OK6-7Q3A-D8F5"},
+            {img:"InShot_20260908_200553587.jpg", номер:8, экз:6, marker:"OK6-8R4B-E9G6"},
+            {img:"InShot_20260908_201503065.jpg", номер:9, экз:6, marker:"OK6-9S5C-F0H7"},
+            {img:"InShot_20260908_204204488.jpg", номер:10, экз:6, marker:"OK6-0T6D-G1I8"}
         ];
 
-        // ✅ Карты, доступные для розыгрыша (индексы в массиве cards)
-        // 1/5, 6/5, 8/5, 9/5, 10/5, 3/6, 7/6
+        // Карты, доступные для розыгрыша (индексы в массиве cards)
         const availableIndices = [0, 5, 7, 8, 9, 12, 16];
 
-        // ❓ 13 вопросов
+        // Вопросы
         const questionBank = [
             { q: "Кто в группе играет на бас-гитаре?", a: ["томас"] },
             { q: "Где прошёл Окей Ивент Гаражник 29.08.2026?", a: ["Jack Jack", "Джек Джек", "Культуры 69"] },
@@ -96,16 +108,15 @@
             return correct.some(a => norm.includes(normalize(a)));
         }
 
-        // 🔒 ПРОВЕРКА ПРИ ЗАГРУЗКЕ СТРАНИЦЫ — БЛОКИРОВКА 24 ЧАСА
+        // Блокировка 24 часа
         window.addEventListener('load', () => {
             const lastTime = localStorage.getItem('quest_time');            
             if (lastTime) {
                 const hoursPassed = (Date.now() - parseInt(lastTime)) / 3600000;
-                
                 if (hoursPassed < 24) {
                     document.getElementById('content').innerHTML = `
                         <div class="warn" style="text-align:center; padding:30px; border:3px solid #ff004f;">
-                            <h2 style="color:#ff004f; margin-bottom:15px;">⏳ ТЫ УЖЕ ПРОХОДИЛ КВЕСТ!</h2>
+                            <h2 style="color:#ff004f; margin-bottom:15px;"> ТЫ УЖЕ ПРОХОДИЛ КВЕСТ!</h2>
                             <p style="font-size:1.1em; margin:15px 0;">
                                 Следующая попытка через:<br>
                                 <strong style="color:#ffcc00; font-size:1.4em;">${Math.ceil(24 - hoursPassed)} ч.</strong>
@@ -120,10 +131,10 @@
                     return;
                 }
             }
-            
             localStorage.removeItem('quest_claiming');
         });
 
+        // Вход игрока
         function go() {
             const p = document.getElementById('pass').value;
             if (p === '00000000') {
@@ -142,16 +153,26 @@
             }
         }
 
+        // Вход админа
+        function adminGo() {
+            const p = document.getElementById('adminPass').value;
+            if (p === 'admin2026') {
+                showAdminPanel();
+            } else {
+                alert('❌ Неверный пароль админа!');
+            }
+        }
+
         function startQuiz() {
             currentQuestions = getRandomQuestions();
             let html = currentQuestions.map((q, i) => 
                 `<p class="question">${i+1}. ${q.q}</p><input type="text" id="a${i+1}" placeholder="...">`
             ).join('');
-            html += `<br><a href="#" class="btn" onclick="check()">ОТВЕТИТЬ</a>`;            document.getElementById('content').innerHTML = html;
+            html += `<br><a href="#" class="btn" onclick="check()">ОТВЕТИТЬ</a>`;
+            document.getElementById('content').innerHTML = html;
         }
 
         function check() {
-            // 🔒 Блокировка повторной отправки (race condition fix)
             if (localStorage.getItem('quest_claiming') === 'true') {
                 alert('⏳ Карта уже выдаётся!');
                 return;
@@ -164,14 +185,11 @@
                 return;
             }
 
-            // 🔒 Устанавливаем флаг блокировки
             localStorage.setItem('quest_claiming', 'true');
             
-            // 🔥 Инициализация: если quest_used пустой, добавляем ВСЕ карты кроме availableIndices
             let used = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used') || '[]');
             
             if (!isTestMode && used.length === 0) {
-                // Добавляем все индексы КРОМЕ доступных
                 for (let i = 0; i < cards.length; i++) {
                     if (!availableIndices.includes(i)) {
                         used.push(i);
@@ -203,26 +221,72 @@
                 localStorage.setItem('quest_last_card', globalIdx.toString());
             }
 
-            // 🔓 Снимаем блокировку
             localStorage.removeItem('quest_claiming');
-            
             show(card);
         }
         
         function show(card) {
+            const shareText = `🎉 Я выбил карту в викторине!\n\n🃏 Карта №${card.номер}/10\n Экземпляр №${card.экз}/6\n\n🎯 Маркер: ${card.marker}\n\n📸 СЕЙЧАС СДЕЛАЮ СКРИНШОТ И ПРИКРЕПЛЮ ЕГО!\n\nПроверьте и выдайте физическую карту!`;
+            const encodedText = encodeURIComponent(shareText);
+            const siteUrl = encodeURIComponent('https://f22raf.github.io/my-music-site/');
+            
             document.getElementById('content').innerHTML = `
                 <div class="card">
                     <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27280%27 height=%27380%27 fill=%27%23222%27/><text x=%2750%27 y=%27200%27 fill=%27%23ff004f%27 font-size=%2724%27>КАРТА</text></svg>'">
-                    <div class="card-text">Коллекционная карточка Окей!</div>
+                    <div class="card-text">🎸 Коллекционная карточка Окей!</div>
                     <div class="card-text" style="color:#ff004f; font-size:1.1em;">${card.номер}/10, Экз. ${card.экз}/6</div>
+                    <div class="marker">🎯 ${card.marker}</div>
                 </div>
-                <div class="warn">
-                    <strong>⚠️ СКРИНШОТ!</strong><br>
-                    Пиши Ковбою Рафу за физической картой.<br>
-                    (Только Челябинск!)
+                <div class="warn" style="text-align:center; border:3px solid #ffcc00; background:rgba(255,204,0,0.1);">
+                    <strong style="color:#ffcc00; font-size:1.2em;">⚡ ВАЖНО!</strong><br>
+                    Нажми кнопку ниже, чтобы отправить результат в Фан Базу.<br>
+                    <span style="color:#ff004f;">Сделай скриншот этой страницы и прикрепи к сообщению!</span>
                 </div>
-                <a href="index.html" class="btn" style="border-color:#4c75a8;background:#4c75a8;">← НА ГЛАВНУЮ</a>
+                <a href="https://t.me/share/url?url=${siteUrl}&text=${encodedText}" target="_blank" class="btn" style="background:#0088cc; border-color:#0088cc; font-size:1.4em; padding:15px 30px; margin:20px 0;">
+                    📤 ОТПРАВИТЬ ДЛЯ ПОЛУЧЕНИЯ
+                </a>
+                <div style="color:#888; font-size:0.85em; margin:15px 0; padding:15px; background:rgba(0,0,0,0.3); border:1px solid #444;">
+                     Или сделай скриншот и напиши Ковбою Рафу<br>
+                    <span style="color:#ff004f;">(Только Челябинск!)</span>
+                </div>
+                <a href="index.html" class="btn" style="border-color:#4c75a8;background:#4c75a8; margin-top:10px;">← НА ГЛАВНУЮ</a>
             `;
+        }
+
+        // Админ-панель
+        function showAdminPanel() {
+            const used = JSON.parse(localStorage.getItem('quest_used') || '[]');
+            const lastCardIdx = localStorage.getItem('quest_last_card');
+            const lastTime = localStorage.getItem('quest_time');
+            
+            let html = `<h2>🔐 АДМИН-ПАНЕЛЬ</h2>`;
+            html += `<p style="color:#ffcc00;">Последняя выпавшая карта: ${lastCardIdx ? `№${cards[lastCardIdx].номер}, Экз.${cards[lastCardIdx].экз}, Маркер: ${cards[lastCardIdx].marker}` : 'Нет'}</p>`;
+            html += `<p style="color:#888;">Время: ${lastTime ? new Date(parseInt(lastTime)).toLocaleString('ru-RU') : 'Нет'}</p>`;
+            
+            html += `<h3 style="color:#ffcc00; margin-top:30px;">📋 ВСЕ КАРТЫ И МАРКЕРЫ:</h3>`;
+            html += `<table class="admin-table">
+                <tr><th>№ Карты</th><th>Экз.</th><th>Маркер</th><th>Статус</th></tr>`;
+            
+            cards.forEach((card, idx) => {
+                const isUsed = used.includes(idx);
+                const isAvailable = availableIndices.includes(idx);
+                let status = '';
+                if (isUsed) status = '✅ Выдана';
+                else if (isAvailable) status = '🎲 В розыгрыше';
+                else status = ' Заблокирована';
+                
+                html += `<tr>
+                    <td>${card.номер}</td>
+                    <td>${card.экз}</td>
+                    <td style="font-family:monospace; color:#ffcc00;">${card.marker}</td>
+                    <td>${status}</td>
+                </tr>`;
+            });
+            
+            html += `</table>`;
+            html += `<a href="index.html" class="btn" style="border-color:#4c75a8;background:#4c75a8;">← НА ГЛАВНУЮ</a>`;
+            
+            document.getElementById('content').innerHTML = html;
         }
     </script>
 </body>
