@@ -30,7 +30,7 @@
 <body>
     <div class="container">
         <div class="group-name">Окей</div>
-        <h2> КВЕСТ ДЛЯ ФАНБАЗЫ </h2>
+        <h2>🎸 КВЕСТ ДЛЯ ФАНБАЗЫ 🎸</h2>
         
         <div id="content">
             <p class="question">Дата основания группы:</p>
@@ -49,14 +49,13 @@
         let isTestMode = false;
         let currentQuestions = [];
         
-        //  13 карт (УБРАНЫ: 2/5, 4/5, 9/5, 1/6, 2/6, 10/5, 7/6)
+        // 🃏 12 карт (УБРАНЫ: 2/5, 4/5, 8/5, 9/5, 1/6, 2/6, 10/5, 7/6)
         const cards = [
             {img:"InShot_20260908_193350301.jpg", номер:1, экз:5, marker:"OK5-1A7K-M2P9"},
             {img:"InShot_20260908_194843167.jpg", номер:3, экз:5, marker:"OK5-3C9M-P4R1"},
             {img:"InShot_20260909_180855828.jpg", номер:5, экз:5, marker:"OK5-5E1O-R6T3"},
             {img:"InShot_20260908_195813432.jpg", номер:6, экз:5, marker:"OK5-6F2P-S7U4"},
             {img:"InShot_20260908_200144557.jpg", номер:7, экз:5, marker:"OK5-7G3Q-T8V5"},
-            {img:"InShot_20260908_200553587.jpg", номер:8, экз:5, marker:"OK5-8H4R-U9W6"},
             {img:"InShot_20260908_194843167.jpg", номер:3, экз:6, marker:"OK6-3M9W-Z4B1"},
             {img:"InShot_20260908_195216384.jpg", номер:4, экз:6, marker:"OK6-4N0X-A5C2"},
             {img:"InShot_20260909_180855828.jpg", номер:5, экз:6, marker:"OK6-5O1Y-B6D3"},
@@ -65,9 +64,6 @@
             {img:"InShot_20260908_201503065.jpg", номер:9, экз:6, marker:"OK6-9S5C-F0H7"},
             {img:"InShot_20260908_204204488.jpg", номер:10, экз:6, marker:"OK6-0T6D-G1I8"}
         ];
-
-        // Все 13 карт в розыгрыше
-        const availableIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
         const questionBank = [
             { q: "Кто в группе играет на бас-гитаре?", a: ["томас"] },
@@ -100,7 +96,7 @@
 
         // Блокировка 24 часа
         window.addEventListener('load', () => {
-            const lastTime = localStorage.getItem('quest_time_v3');            
+            const lastTime = localStorage.getItem('quest_time_v4');            
             if (lastTime) {
                 const hoursPassed = (Date.now() - parseInt(lastTime)) / 3600000;
                 if (hoursPassed < 24) {
@@ -121,7 +117,7 @@
                     return;
                 }
             }
-            localStorage.removeItem('quest_claiming_v3');
+            localStorage.removeItem('quest_claiming_v4');
         });
 
         function go() {
@@ -130,7 +126,7 @@
                 isTestMode = true;
                 startQuiz();
             } else if (p === '26082022') {
-                const last = localStorage.getItem('quest_time_v3');
+                const last = localStorage.getItem('quest_time_v4');
                 if (last && Date.now() - last < 86400000) {
                     alert(' Уже проходил квест! Следующая попытка завтра.');
                     return;
@@ -161,46 +157,44 @@
         }
 
         function check() {
-            if (localStorage.getItem('quest_claiming_v3') === 'true') {
+            if (localStorage.getItem('quest_claiming_v4') === 'true') {
                 alert('⏳ Карта уже выдаётся!');
                 return;
             }
             
             const answers = [1,2,3].map(i => document.getElementById(`a${i}`).value);
             if (!currentQuestions.every((q, i) => checkAnswer(answers[i], q.a))) {
-                alert('❌ Ошибка в ответах! Иди учи лор на главной.');
+                alert(' Ошибка в ответах! Иди учи лор на главной.');
                 location.reload();
                 return;
             }
 
-            localStorage.setItem('quest_claiming_v3', 'true');
+            localStorage.setItem('quest_claiming_v4', 'true');
             
-            let used = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used_v3') || '[]');
+            // 🔥 ИСПРАВЛЕНИЕ: Используем МАРКЕРЫ вместо индексов!
+            let usedMarkers = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used_markers_v4') || '[]');
             
-            const available = cards.filter((_, i) => !used.includes(i));
+            // Фильтруем по маркеру (не по индексу!)
+            const available = cards.filter(c => !usedMarkers.includes(c.marker));
             
             if (!isTestMode && available.length === 0) {
-                localStorage.removeItem('quest_claiming_v3');
-                alert(' Все карты разыграны!');
+                localStorage.removeItem('quest_claiming_v4');
+                alert('🎉 Все карты разыграны!');
                 location.href = 'index.html';
                 return;
             }
 
             const randIdx = Math.floor(Math.random() * available.length);
             const card = available[randIdx];
-            const globalIdx = cards.findIndex(c => 
-                c.img === card.img && 
-                c.номер === card.номер && 
-                c.экз === card.экз
-            );
+            
             if (!isTestMode) {
-                used.push(globalIdx);
-                localStorage.setItem('quest_used_v3', JSON.stringify(used));
-                localStorage.setItem('quest_time_v3', Date.now().toString());
-                localStorage.setItem('quest_last_card_v3', globalIdx.toString());
+                usedMarkers.push(card.marker); // Сохраняем МАРКЕР
+                localStorage.setItem('quest_used_markers_v4', JSON.stringify(usedMarkers));
+                localStorage.setItem('quest_time_v4', Date.now().toString());
+                localStorage.setItem('quest_last_marker_v4', card.marker);
             }
 
-            localStorage.removeItem('quest_claiming_v3');
+            localStorage.removeItem('quest_claiming_v4');
             show(card);
         }
         
@@ -212,7 +206,7 @@
             document.getElementById('content').innerHTML = `
                 <div class="card">
                     <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27280%27 height=%27380%27 fill=%27%23222%27/><text x=%2750%27 y=%27200%27 fill=%27%23ff004f%27 font-size=%2724%27>КАРТА</text></svg>'">
-                    <div class="card-text"> Коллекционная карточка Окей!</div>
+                    <div class="card-text">🎸 Коллекционная карточка Окей!</div>
                     <div class="card-text" style="color:#ff004f; font-size:1.1em;">${card.номер}/10, Экз. ${card.экз}/6</div>
                     <div class="marker">🎯 ${card.marker}</div>
                 </div>
@@ -233,21 +227,24 @@
         }
 
         function showAdminPanel() {
-            const used = JSON.parse(localStorage.getItem('quest_used_v3') || '[]');
-            const lastCardIdx = localStorage.getItem('quest_last_card_v3');
-            const lastTime = localStorage.getItem('quest_time_v3');
+            const usedMarkers = JSON.parse(localStorage.getItem('quest_used_markers_v4') || '[]');
+            const lastMarker = localStorage.getItem('quest_last_marker_v4');
+            const lastTime = localStorage.getItem('quest_time_v4');
             
-            let html = `<h2> АДМИН-ПАНЕЛЬ</h2>`;
-            html += `<p style="color:#ffcc00;">Последняя выпавшая карта: ${lastCardIdx ? `№${cards[lastCardIdx].номер}, Экз.${cards[lastCardIdx].экз}, Маркер: ${cards[lastCardIdx].marker}` : 'Нет'}</p>`;
+            let html = `<h2>🔐 АДМИН-ПАНЕЛЬ</h2>`;
+            
+            // Находим последнюю карту по маркеру
+            const lastCard = lastMarker ? cards.find(c => c.marker === lastMarker) : null;
+            html += `<p style="color:#ffcc00;">Последняя выпавшая карта: ${lastCard ? `№${lastCard.номер}, Экз.${lastCard.экз}, Маркер: ${lastCard.marker}` : 'Нет'}</p>`;
             html += `<p style="color:#888;">Время: ${lastTime ? new Date(parseInt(lastTime)).toLocaleString('ru-RU') : 'Нет'}</p>`;
-            html += `<p style="color:#ff004f;">Осталось карт в розыгрыше: ${cards.length - used.length} из ${cards.length}</p>`;
+            html += `<p style="color:#ff004f;">Осталось карт в розыгрыше: ${cards.length - usedMarkers.length} из ${cards.length}</p>`;
             
             html += `<h3 style="color:#ffcc00; margin-top:30px;">📋 ВСЕ КАРТЫ И МАРКЕРЫ:</h3>`;
             html += `<table class="admin-table">
                 <tr><th>№ Карты</th><th>Экз.</th><th>Маркер</th><th>Статус</th></tr>`;
             
-            cards.forEach((card, idx) => {
-                const isUsed = used.includes(idx);
+            cards.forEach(card => {
+                const isUsed = usedMarkers.includes(card.marker); // Проверяем по МАРКЕРУ
                 let status = isUsed ? '✅ Выдана' : '🎲 В розыгрыше';
                 
                 html += `<tr>
