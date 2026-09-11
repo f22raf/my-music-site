@@ -30,7 +30,7 @@
 <body>
     <div class="container">
         <div class="group-name">Окей</div>
-        <h2>🎸 КВЕСТ ДЛЯ ФАНБАЗЫ 🎸</h2>
+        <h2> КВЕСТ ДЛЯ ФАНБАЗЫ </h2>
         
         <div id="content">
             <p class="question">Дата основания группы:</p>
@@ -49,7 +49,7 @@
         let isTestMode = false;
         let currentQuestions = [];
         
-        //  14 карт (УБРАНЫ: 2/5, 4/5, 1/6, 2/6, 10/5, 7/6)
+        //  13 карт (УБРАНЫ: 2/5, 4/5, 9/5, 1/6, 2/6, 10/5, 7/6)
         const cards = [
             {img:"InShot_20260908_193350301.jpg", номер:1, экз:5, marker:"OK5-1A7K-M2P9"},
             {img:"InShot_20260908_194843167.jpg", номер:3, экз:5, marker:"OK5-3C9M-P4R1"},
@@ -57,7 +57,6 @@
             {img:"InShot_20260908_195813432.jpg", номер:6, экз:5, marker:"OK5-6F2P-S7U4"},
             {img:"InShot_20260908_200144557.jpg", номер:7, экз:5, marker:"OK5-7G3Q-T8V5"},
             {img:"InShot_20260908_200553587.jpg", номер:8, экз:5, marker:"OK5-8H4R-U9W6"},
-            {img:"InShot_20260908_201503065.jpg", номер:9, экз:5, marker:"OK5-9I5S-V0X7"},
             {img:"InShot_20260908_194843167.jpg", номер:3, экз:6, marker:"OK6-3M9W-Z4B1"},
             {img:"InShot_20260908_195216384.jpg", номер:4, экз:6, marker:"OK6-4N0X-A5C2"},
             {img:"InShot_20260909_180855828.jpg", номер:5, экз:6, marker:"OK6-5O1Y-B6D3"},
@@ -67,8 +66,8 @@
             {img:"InShot_20260908_204204488.jpg", номер:10, экз:6, marker:"OK6-0T6D-G1I8"}
         ];
 
-        // Все 14 карт в розыгрыше
-        const availableIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+        // Все 13 карт в розыгрыше
+        const availableIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
         const questionBank = [
             { q: "Кто в группе играет на бас-гитаре?", a: ["томас"] },
@@ -163,7 +162,7 @@
 
         function check() {
             if (localStorage.getItem('quest_claiming_v3') === 'true') {
-                alert(' Карта уже выдаётся!');
+                alert('⏳ Карта уже выдаётся!');
                 return;
             }
             
@@ -182,7 +181,7 @@
             
             if (!isTestMode && available.length === 0) {
                 localStorage.removeItem('quest_claiming_v3');
-                alert('🎉 Все карты разыграны!');
+                alert(' Все карты разыграны!');
                 location.href = 'index.html';
                 return;
             }
@@ -206,7 +205,7 @@
         }
         
         function show(card) {
-            const shareText = `🎉 Я выбил карту в викторине!\n\n Карта №${card.номер}/10\n🔢 Экземпляр №${card.экз}/6\n\n🎯 Маркер: ${card.marker}\n\n📸 СЕЙЧАС СДЕЛАЮ СКРИНШОТ И ПРИКРЕПЛЮ ЕГО!\n\nПроверьте и выдайте физическую карту!`;
+            const shareText = `🎉 Я выбил карту в викторине!\n\n🃏 Карта №${card.номер}/10\n🔢 Экземпляр №${card.экз}/6\n\n Маркер: ${card.marker}\n\n СЕЙЧАС СДЕЛАЮ СКРИНШОТ И ПРИКРЕПЛЮ ЕГО!\n\nПроверьте и выдайте физическую карту!`;
             const encodedText = encodeURIComponent(shareText);
             const siteUrl = encodeURIComponent('https://f22raf.github.io/my-music-site/');
             
@@ -215,7 +214,7 @@
                     <img src="${card.img}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27280%27 height=%27380%27 fill=%27%23222%27/><text x=%2750%27 y=%27200%27 fill=%27%23ff004f%27 font-size=%2724%27>КАРТА</text></svg>'">
                     <div class="card-text"> Коллекционная карточка Окей!</div>
                     <div class="card-text" style="color:#ff004f; font-size:1.1em;">${card.номер}/10, Экз. ${card.экз}/6</div>
-                    <div class="marker"> ${card.marker}</div>
+                    <div class="marker">🎯 ${card.marker}</div>
                 </div>
                 <div class="warn" style="text-align:center; border:3px solid #ffcc00; background:rgba(255,204,0,0.1);">
                     <strong style="color:#ffcc00; font-size:1.2em;">⚡ ВАЖНО!</strong><br>
@@ -233,28 +232,17 @@
             `;
         }
 
-        function resetQuest() {
-            if (confirm('⚠️ ТОЧНО СБРОСИТЬ ВСЕ ДАННЫЕ? Все карты снова станут доступными для розыгрыша!')) {
-                localStorage.removeItem('quest_used_v3');
-                localStorage.removeItem('quest_time_v3');
-                localStorage.removeItem('quest_claiming_v3');
-                localStorage.removeItem('quest_last_card_v3');
-                alert('✅ Сброшено! Теперь все карты снова в розыгрыше.');
-                showAdminPanel();
-            }
-        }
-
         function showAdminPanel() {
             const used = JSON.parse(localStorage.getItem('quest_used_v3') || '[]');
             const lastCardIdx = localStorage.getItem('quest_last_card_v3');
             const lastTime = localStorage.getItem('quest_time_v3');
             
-            let html = `<h2>🔐 АДМИН-ПАНЕЛЬ</h2>`;
+            let html = `<h2> АДМИН-ПАНЕЛЬ</h2>`;
             html += `<p style="color:#ffcc00;">Последняя выпавшая карта: ${lastCardIdx ? `№${cards[lastCardIdx].номер}, Экз.${cards[lastCardIdx].экз}, Маркер: ${cards[lastCardIdx].marker}` : 'Нет'}</p>`;
             html += `<p style="color:#888;">Время: ${lastTime ? new Date(parseInt(lastTime)).toLocaleString('ru-RU') : 'Нет'}</p>`;
             html += `<p style="color:#ff004f;">Осталось карт в розыгрыше: ${cards.length - used.length} из ${cards.length}</p>`;
             
-            html += `<h3 style="color:#ffcc00; margin-top:30px;"> ВСЕ КАРТЫ И МАРКЕРЫ:</h3>`;
+            html += `<h3 style="color:#ffcc00; margin-top:30px;">📋 ВСЕ КАРТЫ И МАРКЕРЫ:</h3>`;
             html += `<table class="admin-table">
                 <tr><th>№ Карты</th><th>Экз.</th><th>Маркер</th><th>Статус</th></tr>`;
             
@@ -271,7 +259,6 @@
             });
             
             html += `</table>`;
-            html += `<button onclick="resetQuest()" class="btn" style="background:#ff004f; border-color:#ff004f; margin:20px 0;">🔄 СБРОСИТЬ ВСЕ КАРТЫ</button>`;
             html += `<a href="index.html" class="btn" style="border-color:#4c75a8;background:#4c75a8;">← НА ГЛАВНУЮ</a>`;
             
             document.getElementById('content').innerHTML = html;
