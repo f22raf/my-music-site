@@ -49,9 +49,10 @@
         let isTestMode = false;
         let currentQuestions = [];
         
-        // 🃏 12 карт (УБРАНЫ: 2/5, 4/5, 8/5, 9/5, 1/6, 2/6, 10/5, 7/6)
+        // 🃏 Карты (оставил одну для примера, добавь свои)
         const cards = [
             {img:"InShot_20260908_200144557.jpg", номер:7, экз:5, marker:"OK5-7G3Q-T8V5"}
+            // Добавь сюда остальные карты, если они есть
         ];
 
         const questionBank = [
@@ -120,6 +121,17 @@
                     alert(' Уже проходил квест! Следующая попытка завтра.');
                     return;
                 }
+                
+                // 🔥 ПРОВЕРКА: Остались ли вообще карты?
+                const usedMarkers = JSON.parse(localStorage.getItem('quest_used_markers_v4') || '[]');
+                const available = cards.filter(c => !usedMarkers.includes(c.marker));
+                
+                if (available.length === 0) {
+                    isTestMode = false;
+                    showSoldOut(); // Показываем экран "Всё кончилось"
+                    return;
+                }
+                
                 isTestMode = false;
                 startQuiz();
             } else {
@@ -160,16 +172,13 @@
 
             localStorage.setItem('quest_claiming_v4', 'true');
             
-            // 🔥 ИСПРАВЛЕНИЕ: Используем МАРКЕРЫ вместо индексов!
             let usedMarkers = isTestMode ? [] : JSON.parse(localStorage.getItem('quest_used_markers_v4') || '[]');
-            
-            // Фильтруем по маркеру (не по индексу!)
             const available = cards.filter(c => !usedMarkers.includes(c.marker));
             
+            // 🔥 ЕСЛИ КАРТЫ КОНЧИЛИСЬ ПРЯМО ВО ВРЕМЯ ПРОВЕРКИ
             if (!isTestMode && available.length === 0) {
                 localStorage.removeItem('quest_claiming_v4');
-                alert('🎉 Все карты разыграны!');
-                location.href = 'index.html';
+                showSoldOut(); // Показываем экран "Всё кончилось" вместо алерта
                 return;
             }
 
@@ -177,7 +186,7 @@
             const card = available[randIdx];
             
             if (!isTestMode) {
-                usedMarkers.push(card.marker); // Сохраняем МАРКЕР
+                usedMarkers.push(card.marker);
                 localStorage.setItem('quest_used_markers_v4', JSON.stringify(usedMarkers));
                 localStorage.setItem('quest_time_v4', Date.now().toString());
                 localStorage.setItem('quest_last_marker_v4', card.marker);
@@ -187,6 +196,28 @@
             show(card);
         }
         
+        // 🔥 НОВАЯ ФУНКЦИЯ: Экран "Карты закончились"
+        function showSoldOut() {
+            // ЗАМЕНИ 'ТВОЯ_КАРТИНКА_ЗАГЛУШКА.jpg' на ссылку на твою картинку!
+            const imageUrl = "ТВОЯ_КАРТИНКА_ЗАГЛУШКА.jpg"; 
+            
+            document.getElementById('content').innerHTML = `
+                <div class="card" style="border-color: #ff004f; animation: none; background: rgba(0,0,0,0.85);">
+                    <img src="${imageUrl}" class="card-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 width=%27280%27 height=%27380%27><rect width=%27280%27 height=%27380%27 fill=%27%23111%27/><text x=%2750%25%27 y=%2745%25%27 fill=%27%23ff004f%27 font-size=%2728%27 font-family=%27Nosifer%27 text-anchor=%27middle%27>КАРТЫ</text><text x=%2750%25%27 y=%2765%25%27 fill=%27%23ff004f%27 font-size=%2728%27 font-family=%27Nosifer%27 text-anchor=%27middle%27>КОНЧИЛИСЬ</text></svg>'">
+                    <div class="card-text" style="color:#ff004f; font-size:1.6em; margin-top:20px; text-shadow: 2px 2px 0 #000;">🚫 ВИКТОРИНА ЗАВЕРШЕНА!</div>
+                    <div class="card-text" style="color:#fff; font-size:1.1em; line-height:1.5; margin-top:15px;">
+                        Все коллекционные карты разобраны!<br>
+                        5-й и 6-й экземпляры уже нашли своих владельцев.
+                    </div>
+                    <div class="marker" style="color:#ffcc00; border-color:#ffcc00; margin-top:25px; font-size: 1em; background: rgba(255,0,79,0.2);">
+                        Следи за анонсами в Фан-Базе!<br>
+                        Возможно, мы перезапустим квест позже.
+                    </div>
+                </div>
+                <a href="index.html" class="btn" style="border-color:#4c75a8; background:#4c75a8; margin-top:25px;">← НА ГЛАВНУЮ</a>
+            `;
+        }
+
         function show(card) {
             const shareText = `🎉 Я выбил карту в викторине!\n\n🃏 Карта №${card.номер}/10\n🔢 Экземпляр №${card.экз}/6\n\n Маркер: ${card.marker}\n\n СЕЙЧАС СДЕЛАЮ СКРИНШОТ И ПРИКРЕПЛЮ ЕГО!\n\nПроверьте и выдайте физическую карту!`;
             const encodedText = encodeURIComponent(shareText);
@@ -222,7 +253,6 @@
             
             let html = `<h2>🔐 АДМИН-ПАНЕЛЬ</h2>`;
             
-            // Находим последнюю карту по маркеру
             const lastCard = lastMarker ? cards.find(c => c.marker === lastMarker) : null;
             html += `<p style="color:#ffcc00;">Последняя выпавшая карта: ${lastCard ? `№${lastCard.номер}, Экз.${lastCard.экз}, Маркер: ${lastCard.marker}` : 'Нет'}</p>`;
             html += `<p style="color:#888;">Время: ${lastTime ? new Date(parseInt(lastTime)).toLocaleString('ru-RU') : 'Нет'}</p>`;
@@ -233,7 +263,7 @@
                 <tr><th>№ Карты</th><th>Экз.</th><th>Маркер</th><th>Статус</th></tr>`;
             
             cards.forEach(card => {
-                const isUsed = usedMarkers.includes(card.marker); // Проверяем по МАРКЕРУ
+                const isUsed = usedMarkers.includes(card.marker);
                 let status = isUsed ? '✅ Выдана' : '🎲 В розыгрыше';
                 
                 html += `<tr>
