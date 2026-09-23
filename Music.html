@@ -206,54 +206,59 @@
   <a href="index.html" class="back-link">← На главную</a>
 
   <script>
-    let currentAudio = null;
-    let currentDisc = null;
+  let currentAudio = null;
+  let currentDisc = null;
 
-    function playTrack(recordEl, audioFile, playerId) {
-      const disc = recordEl.querySelector('.disc');
-      const player = document.getElementById(playerId);
+  function playTrack(recordEl, audioFile, playerId) {
+    const disc = recordEl.querySelector('.disc');
+    const player = document.getElementById(playerId);
 
-      // Остановить предыдущий трек и диск
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
-      }
-      if (currentDisc) {
-        currentDisc.classList.remove('playing');
-      }
-
-      // Очистить все плееры
-      document.querySelectorAll('.player').forEach(p => {
-        p.classList.remove('active');
-        p.innerHTML = '';
-      });
-
-      // Запустить вращение диска СРАЗУ
-      disc.classList.add('playing');
-      currentDisc = disc;
-
-      // Создать и включить аудио
-      const audio = document.createElement('audio');
-      audio.controls = true;
-      audio.src = audioFile;
-      audio.volume = 0.9;
-      player.appendChild(audio);
-      player.classList.add('active');
-
-      // Воспроизвести (если можно)
-      audio.play().catch(e => {
-        // Если блокировка — просто показываем плеер
-      });
-
-      currentAudio = audio;
-
-      // Остановить диск, когда трек закончится
-      audio.onended = () => {
-        disc.classList.remove('playing');
-        currentDisc = null;
-        currentAudio = null;
-      };
+    // Остановить предыдущий трек и диск
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio = null;
     }
-  </script>
+    if (currentDisc) {
+      currentDisc.classList.remove('playing');
+    }
+
+    // Очистить все плееры
+    document.querySelectorAll('.player').forEach(p => {
+      p.classList.remove('active');
+      p.innerHTML = '';
+    });
+
+    // Создать и включить аудио
+    const audio = document.createElement('audio');
+    audio.controls = true;
+    audio.src = audioFile;
+    audio.volume = 0.9;
+    player.appendChild(audio);
+    player.classList.add('active');
+
+    currentDisc = disc;
+    currentAudio = audio;
+
+    //  КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: привязка вращения к реальным событиям аудио
+    audio.addEventListener('play', () => {
+      disc.classList.add('playing');
+    });
+
+    audio.addEventListener('pause', () => {
+      disc.classList.remove('playing');
+    });
+
+    audio.addEventListener('ended', () => {
+      disc.classList.remove('playing');
+      currentDisc = null;
+      currentAudio = null;
+    });
+
+    // Попытаться запустить (если браузер разрешит автоплей)
+    audio.play().catch(e => {
+      // Если блокировка — диск не закрутится, пока юзер сам не нажмёт play
+    });
+  }
+</script>
 </body>
 </html>
