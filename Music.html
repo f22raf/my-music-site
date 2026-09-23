@@ -24,6 +24,26 @@
       font-size: 2.4em;
     }
 
+    .section-header {
+      color: #ffcc00;
+      text-shadow: 0 0 8px rgba(255,204,0,0.5);
+      margin-top: 60px;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      border-top: 2px solid #333;
+      padding-top: 40px;
+    }
+
+    .section-desc {
+      color: #ccc;
+      font-family: Arial, sans-serif;
+      font-size: 0.9em;
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+      line-height: 1.6;
+      text-align: center;
+    }
+
     .record {
       display: inline-block;
       margin: 20px 10px;
@@ -120,6 +140,9 @@
 
   <h1>Golden Music Records</h1>
 
+  <!-- СЕКЦИЯ Окей -->
+  <h2 class="section-header" style="border-top: none; padding-top: 0;">Окей</h2>
+
   <div class="record" onclick="playTrack(this, 'Jurassic.mp3', 'player1')">
     <div class="disc" id="disc1">
       <img src="IMG_20250924_044956_384.jpg" alt="Юрский Движ">
@@ -151,6 +174,34 @@
     <div class="label">Рейнджер Страж</div>
   </div>
   <div class="player" id="player4"></div>
+
+  <!-- СЕКЦИЯ Ковбой Раф Евро -->
+  <h2 class="section-header">Ковбой Раф Евро</h2>
+  <p class="section-desc">Сооснователь, гитарист и бессменный лидер Окей, Ковбой Раф Евро, параллельно работает над сольным альбомом. Это как песни "доОкеевского" периода, так и новые композиции, которые не вошли в Окей по ряду причин.</p>
+
+  <div class="record" onclick="playTrack(this, 'MotoGP.mp3', 'player5')">
+    <div class="disc" id="disc5">
+      <img src="moto_gp_cover.jpg" alt="Moto GP">
+    </div>
+    <div class="label">Moto GP</div>
+  </div>
+  <div class="player" id="player5"></div>
+
+  <div class="record" onclick="playTrack(this, 'Buhay.mp3', 'player6')">
+    <div class="disc" id="disc6">
+      <img src="buhay_kuri_cover.jpg" alt="Бухай! Кури!">
+    </div>
+    <div class="label">Бухай! Кури!</div>
+  </div>
+  <div class="player" id="player6"></div>
+
+  <div class="record" onclick="playTrack(this, 'StreetFight.mp3', 'player7')">
+    <div class="disc" id="disc7">
+      <img src="street_fight_cover.jpg" alt="Уличная Драка">
+    </div>
+    <div class="label">Уличная Драка</div>
+  </div>
+  <div class="player" id="player7"></div>
 
   <a href="index.html" class="back-link">← На главную</a>
 
