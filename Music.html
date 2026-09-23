@@ -90,6 +90,11 @@
       animation: spinFast 1.8s linear infinite;
     }
 
+    /* 🔥 МАГИЯ ЗАМОРОЗКИ: ставит анимацию на паузу, сохраняя точный угол поворота */
+    .disc.paused {
+      animation-play-state: paused;
+    }
+
     @keyframes spinFast {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -206,59 +211,60 @@
   <a href="index.html" class="back-link">← На главную</a>
 
   <script>
-  let currentAudio = null;
-  let currentDisc = null;
+    let currentAudio = null;
+    let currentDisc = null;
 
-  function playTrack(recordEl, audioFile, playerId) {
-    const disc = recordEl.querySelector('.disc');
-    const player = document.getElementById(playerId);
+    function playTrack(recordEl, audioFile, playerId) {
+      const disc = recordEl.querySelector('.disc');
+      const player = document.getElementById(playerId);
 
-    // Остановить предыдущий трек и диск
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio = null;
+      // 1. Сбрасываем ВСЕ диски (убираем и вращение, и заморозку)
+      document.querySelectorAll('.disc').forEach(d => {
+        d.classList.remove('playing', 'paused');
+      });
+
+      // 2. Очистить все плееры
+      document.querySelectorAll('.player').forEach(p => {
+        p.classList.remove('active');
+        p.innerHTML = '';
+      });
+
+      // 3. Если что-то играло — глушим
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+      }
+
+      // 4. Создаём новый плеер
+      const audio = document.createElement('audio');
+      audio.controls = true;
+      audio.src = audioFile;
+      audio.volume = 0.9;
+      player.appendChild(audio);
+      player.classList.add('active');
+
+      currentDisc = disc;
+      currentAudio = audio;
+
+      // 5. Привязываем вращение к реальным событиям аудио
+      audio.addEventListener('play', () => {
+        disc.classList.add('playing');
+        disc.classList.remove('paused'); // Снимаем заморозку, диск продолжает крутиться
+      });
+
+      audio.addEventListener('pause', () => {
+        disc.classList.add('paused'); // 🔥 Замораживаем диск на текущем кадре!
+      });
+
+      audio.addEventListener('ended', () => {
+        disc.classList.remove('playing', 'paused');
+        currentDisc = null;
+        currentAudio = null;
+      });
+
+      // Пытаемся запустить
+      audio.play().catch(e => {});
     }
-    if (currentDisc) {
-      currentDisc.classList.remove('playing');
-    }
-
-    // Очистить все плееры
-    document.querySelectorAll('.player').forEach(p => {
-      p.classList.remove('active');
-      p.innerHTML = '';
-    });
-
-    // Создать и включить аудио
-    const audio = document.createElement('audio');
-    audio.controls = true;
-    audio.src = audioFile;
-    audio.volume = 0.9;
-    player.appendChild(audio);
-    player.classList.add('active');
-
-    currentDisc = disc;
-    currentAudio = audio;
-
-    //  КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: привязка вращения к реальным событиям аудио
-    audio.addEventListener('play', () => {
-      disc.classList.add('playing');
-    });
-
-    audio.addEventListener('pause', () => {
-      disc.classList.remove('playing');
-    });
-
-    audio.addEventListener('ended', () => {
-      disc.classList.remove('playing');
-      currentDisc = null;
-      currentAudio = null;
-    });
-
-    // Попытаться запустить (если браузер разрешит автоплей)
-    audio.play().catch(e => {
-      // Если блокировка — диск не закрутится, пока юзер сам не нажмёт play
-    });
-  }
-</script>
+  </script>
 </body>
 </html>
