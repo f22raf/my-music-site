@@ -71,7 +71,6 @@
             color: #ff004f;
         }
 
-        /* Рамки для фото */
         .rock-frame, .ex-member-frame {
             position: relative;
             display: inline-block;
@@ -127,7 +126,6 @@
             box-sizing: border-box;
         }
 
-        /* ЕДИНЫЙ СТИЛЬ ДЛЯ ВСЕХ КНОПОК-ССЫЛОК */
         .nav-link {
             display: block;
             padding: 15px 20px;
@@ -192,6 +190,108 @@
         .link3:hover { background: #0088cc; color: #fff; }
 
         .footer { margin-top: 40px; color: #888; font-style: italic; font-size: 0.9em; }
+
+        /* ========================================== */
+        /* СТИЛИ ДЛЯ КАТАЛОГА АРТЕФАКТОВ */
+        /* ========================================== */
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        .merch-card {
+            background: #111;
+            border: 2px solid #8B0000;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .merch-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff004f;
+            box-shadow: 0 0 15px rgba(255, 0, 79, 0.3);
+        }
+
+        .merch-card.premium {
+            border-color: #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.15);
+        }
+
+        .merch-img {
+            width: 100%;
+            height: 180px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .merch-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .merch-title {
+            color: #ffcc00;
+            font-size: 1.1em;
+            text-align: center;
+            margin: 15px 10px 10px 10px;
+            text-shadow: 0 0 5px rgba(255, 204, 0, 0.4);
+            font-family: 'Nosifer', cursive;
+        }
+
+        .merch-info {
+            padding: 0 15px 15px 15px;
+            color: #ccc;
+            font-family: Arial, sans-serif;
+            font-size: 0.85em;
+            line-height: 1.5;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .merch-info p {
+            margin: 5px 0;
+            border-bottom: 1px solid #222;
+            padding-bottom: 5px;
+        }
+
+        .merch-bonus {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 204, 0, 0.1);
+            border: 1px solid #ffcc00;
+            border-radius: 4px;
+            color: #ffcc00;
+            font-weight: bold;
+            text-align: center;
+            font-size: 0.85em;
+        }
+
+        .merch-bonus.rare {
+            background: rgba(255, 204, 0, 0.2);
+            border-color: #ffcc00;
+            color: #fff;
+            text-shadow: 0 0 5px #ffcc00;
+        }
+
+        .section-desc {
+            color: #ccc;
+            font-family: Arial, sans-serif;
+            font-size: 0.9em;
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+            line-height: 1.5;
+            text-align: center;
+        }
 
         /* ========================================== */
         /* ПЛАВАЮЩАЯ КНОПКА-ТАЙМЕР VOL.2 */
@@ -279,7 +379,6 @@
         .quiz-floating-btn.unlocked .unlock-icon { display: block; }
         .quiz-floating-btn.unlocked:hover { transform: scale(1.1); }
 
-        /* Общие элементы кнопок */
         .gear {
             position: absolute;
             border-radius: 50%;
@@ -458,16 +557,149 @@
           — За активность
         </p>
 
-        <h3>Плакаты</h3>
-        <img src="InShot_20260208_184107946.jpg" alt="Плакат 1" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
-        <img src="InShot_20260208_184000111.jpg" alt="Плакат 2" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
-        <img src="InShot_20260208_184206498.jpg" alt="Плакат 3" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
-        <img src="InShot_20260208_183559708.jpg" alt="Плакат 4" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
-        <img src="InShot_20260208_221136456.jpg" alt="Плакат 5" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
-        <img src="InShot_20260211_033545133.jpg" alt="Плакат 6" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
+        <!-- ========================================== -->
+        <!-- ВСТРОЕННЫЙ КАТАЛОГ АРТЕФАКТОВ И МЕРЧА -->
+        <!-- ========================================== -->
+        <h2>📜 Каталог Артефактов Окея</h2>
+        <p class="section-desc">Официальные документы, реликвии и коллекционные карты. Основа системы рангов и эволюции мерча.</p>
 
-        <h3>Спецкарточка (значок)</h3>
-        <img src="1758782710052.jpg" alt="Спецкарточка Окей" style="max-width:250px; margin:15px 0; border: 3px solid #ffcc00; box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);">
+        <h3>Печатная продукция</h3>
+        <div class="merch-grid">
+            <div class="merch-card">
+                <div class="merch-img"><img src="ranger_card_placeholder.jpg" alt="Спецкарточка"></div>
+                <h3 class="merch-title">Спецкарточка "Рейнджер Страж"</h3>
+                <div class="merch-info">
+                    <p><strong>Ранг:</strong> Временный Рейнджер Страж</p>
+                    <p><strong>Стоимость:</strong> Бесплатно (на выступлениях)</p>
+                    <div class="merch-bonus">🎁 Бонус: Даёт стартовый ранг даже без вступления в фан-базу</div>
+                </div>
+            </div>
+
+            <div class="merch-card premium">
+                <div class="merch-img"><img src="poster_placeholder.jpg" alt="Плакаты Окей"></div>
+                <h3 class="merch-title">Плакаты (Серия из 6 видов)</h3>
+                <div class="merch-info">
+                    <p><strong>Ранг:</strong> Суперплакатоносец</p>
+                    <p><strong>Стоимость:</strong> Бесплатно (для Океевцев)</p>
+                    <p style="font-size: 0.8em; color: #888;">Виды: Юрский Движ, Корпус Смерти Крига, Душа Ковбоя, Изумрудный Город, Степная Трава, Калифорнийская Тропа.</p>
+                    <div class="merch-bonus">⚠️ Тираж исчерпан! Сейчас выдаётся апгрейд: 58мм Ядро. В будущем — Ранговое Ядро Суперплакатоносца.</div>
+                </div>
+            </div>
+
+            <div class="merch-card premium">
+                <div class="merch-img"><img src="book_placeholder.jpg" alt="Мини книга"></div>
+                <h3 class="merch-title">Мини-книга "Хроники Супер Панка!"</h3>
+                <div class="merch-info">
+                    <p><strong>Ранг:</strong> Архивариус</p>
+                    <p><strong>Стоимость:</strong> Не продаётся (Тираж: 6 шт.)</p>
+                    <div class="merch-bonus rare">🏆 Бонус: Даёт ранг Архивариус + карта "Legends Okey" (Экз. 1)</div>
+                </div>
+            </div>
+
+            <div class="merch-card premium">
+                <div class="merch-img"><img src="passport_placeholder.jpg" alt="Паспорт"></div>
+                <h3 class="merch-title">Паспорт Окейтозавра</h3>
+                <div class="merch-info">
+                    <p><strong>Ранг:</strong> Окейтозавр</p>
+                    <p><strong>Стоимость:</strong> Не продаётся (Тираж: 6 шт.)</p>
+                    <div class="merch-bonus rare">🏆 Бонус: Высший ранг эволюции + карта "Legends Okey" (Экз. 1)</div>
+                </div>
+            </div>
+
+            <div class="merch-card">
+                <div class="merch-img"><img src="cards_gen1_placeholder.jpg" alt="Legends Okey"></div>
+                <h3 class="merch-title">Карты "Legends Okey" (Gen 1)</h3>
+                <div class="merch-info">
+                    <p><strong>Состав:</strong> 60 карт (10 дизайнов по 6 экз.)</p>
+                    <p><strong>Статус:</strong> Даёт приставку "Ультра" при сборе коллекции</p>
+                    <div class="merch-bonus">🎲 Экз. 1 - за ранг. Экз. 2-4 - бонус к значкам. Экз. 5-6 - Викторина.</div>
+                </div>
+            </div>
+
+            <div class="merch-card">
+                <div class="merch-img"><img src="cards_gen2_placeholder.jpg" alt="Legends Vol.2"></div>
+                <h3 class="merch-title">Карты "Legends Vol.2 Okey" (Gen 2)</h3>
+                <div class="merch-info">
+                    <p><strong>Состав:</strong> 60 карт (10 дизайнов по 6 экз.)</p>
+                    <p><strong>Статус:</strong> Даёт приставку "Ультра" при сборе коллекции</p>
+                    <div class="merch-bonus">🎲 Экз. 1 - за ранг (Маршалл). Экз. 2-4 - бонус. Экз. 5-6 - Викторина.</div>
+                </div>
+            </div>
+
+            <div class="merch-card">
+                <div class="merch-img"><img src="business_card_placeholder.jpg" alt="Визитка"></div>
+                <h3 class="merch-title">Визитка Окея</h3>
+                <div class="merch-info">
+                    <p><strong>Ранг:</strong> Бонусный предмет</p>
+                    <p><strong>Стоимость:</strong> Бесплатно (бонус к заказу)</p>
+                    <div class="merch-bonus">🃏 Бонус: Стильный артефакт в общем стиле для коллекции</div>
+                </div>
+            </div>
+        </div>
+
+        <h3>📌 Значки и Ячейки</h3>
+        <div class="merch-grid">
+            <div class="merch-card">
+                <div class="merch-img"><img src="mech_cell_placeholder.jpg" alt="Мехо Ячейка"></div>
+                <h3 class="merch-title">Механическая Ячейка</h3>
+                <div class="merch-info">
+                    <p><strong>Размер:</strong> 37мм (Коричневый)</p>
+                    <p><strong>Стоимость:</strong> 100₽</p>
+                    <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Okey" (Экз. 2, 3 или 4)</div>
+                </div>
+            </div>
+
+            <div class="merch-card">
+                <div class="merch-img"><img src="energy_cell_placeholder.jpg" alt="Энерго Ячейка"></div>
+                <h3 class="merch-title">Энергетическая Ячейка</h3>
+                <div class="merch-info">
+                    <p><strong>Размер:</strong> 37мм (Синий)</p>
+                    <p><strong>Стоимость:</strong> 100₽</p>
+                    <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Okey" (Экз. 2, 3 или 4)</div>
+                </div>
+            </div>
+
+            <div class="merch-card">
+                <div class="merch-img"><img src="mech_core_placeholder.jpg" alt="Мехо Ядро"></div>
+                <h3 class="merch-title">Механическое Ядро</h3>
+                <div class="merch-info">
+                    <p><strong>Размер:</strong> 58мм (Коричневый)</p>
+                    <p><strong>Стоимость:</strong> 150₽</p>
+                    <div class="merch-bonus">🎁 Бонус: 2 рандомные карты "Legends Okey" (Экз. 2, 3 или 4). Также выдаётся как апгрейд Суперплакатоносцам.</div>
+                </div>
+            </div>
+
+            <div class="merch-card">
+                <div class="merch-img"><img src="energy_core_placeholder.jpg" alt="Энерго Ядро"></div>
+                <h3 class="merch-title">Энергетическое Ядро</h3>
+                <div class="merch-info">
+                    <p><strong>Размер:</strong> 58мм (Синий)</p>
+                    <p><strong>Стоимость:</strong> 150₽</p>
+                    <div class="merch-bonus">🎁 Бонус: 2 рандомные карты "Legends Okey" (Экз. 2, 3 или 4). Также выдаётся как апгрейд Суперплакатоносцам.</div>
+                </div>
+            </div>
+
+            <div class="merch-card premium">
+                <div class="merch-img"><img src="rubeg4_placeholder.jpg" alt="Рубеж-4"></div>
+                <h3 class="merch-title">Спецзначок "Рубеж-4"</h3>
+                <div class="merch-info">
+                    <p><strong>Размер:</strong> 37мм (Спец. дизайн)</p>
+                    <p><strong>Стоимость:</strong> Бесплатно (на ивенте "4 года")</p>
+                    <div class="merch-bonus rare">🏆 Бонус: Памятный артефакт ограниченного тиража. Статус "Ветеран Ивента".</div>
+                </div>
+            </div>
+
+            <div class="merch-card">
+                <div class="merch-img"><img src="archive_cell_placeholder.jpg" alt="Архивная Ячейка"></div>
+                <h3 class="merch-title">Архивная Ячейка</h3>
+                <div class="merch-info">
+                    <p><strong>Размер:</strong> 37мм (Серый)</p>
+                    <p><strong>Стоимость:</strong> 100₽</p>
+                    <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Vol.2 Okey" (Экз. 2, 3 или 4)</div>
+                </div>
+            </div>
+        </div>
+        <!-- КОНЕЦ КАТАЛОГА АРТЕФАКТОВ -->
 
         <a href="badges.html" class="nav-link highlight" style="margin-top: 30px;">🛒 Купить Мерч Окей!!!</a>
 
@@ -480,7 +712,7 @@
             <a href="https://vk.ru/club232622132" class="social-btn link2">Видеоархив VK</a>
         </div>
 
-        <h3> Интерактив</h3>
+        <h3>Интерактив</h3>
         <a href="game.html" class="nav-link"> Кто ты в Движе? (Мини-квест)</a>
         <a href="Questtry.html" class="nav-link highlight">🤘 ТОЛЬКО ДЛЯ ТРУШНЫХ ФАНАТОВ ОКЕЙ!</a>
         <a href="/my-music-site/ranger.html" class="nav-link">🎮 Сыграть в игру "Рейнджер Страж"</a>
@@ -505,7 +737,6 @@
     <script>
         // ========== ТАЙМЕР VOL.2 ==========
         function updateVol2Timer() {
-            // ЛАЗЕЙКА: ?unlockvol2=true
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('unlockvol2') === 'true') {
                 const btn = document.getElementById('vol2-btn');
@@ -521,7 +752,6 @@
                 return;
             }
 
-            // !!! ЗАДАЙ ЗДЕСЬ ДАТУ РЕЛИЗА VOL.2 !!!
             const releaseDate = new Date('October 31, 2026 00:00:00').getTime();
             const now = new Date().getTime();
             const distance = releaseDate - now;
@@ -555,7 +785,6 @@
 
         // ========== ТАЙМЕР ВИКТОРИНЫ ==========
         function updateQuizTimer() {
-            // ЛАЗЕЙКА: ?unlockquiz=true
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('unlockquiz') === 'true') {
                 const btn = document.getElementById('quiz-btn');
@@ -571,7 +800,6 @@
                 return;
             }
 
-            // !!! ЗАДАЙ ЗДЕСЬ ДАТУ ОТКРЫТИЯ ВИКТОРИНЫ !!!
             const quizDate = new Date('September 10, 2026 12:00:00').getTime();
             const now = new Date().getTime();
             const distance = quizDate - now;
@@ -602,7 +830,6 @@
             document.getElementById('quiz-secs').textContent = String(secs).padStart(2, '0');
         }
 
-        // Запускаем оба таймера
         setInterval(updateVol2Timer, 1000);
         setInterval(updateQuizTimer, 1000);
         updateVol2Timer();
