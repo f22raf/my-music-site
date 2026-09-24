@@ -1,254 +1,606 @@
-<!-- Раздел: Каталог Артефактов Окея -->
-<section class="artifacts-catalog" style="margin-top: 60px; padding: 20px;">
-  
-  <!-- БЛОК 1: ПЕЧАТНАЯ ПРОДУКЦИЯ -->
-  <h2 class="section-header" style="border-top: none; padding-top: 0;">📜 Печатная продукция</h2>
-  <p class="section-desc">Официальные документы, реликвии и коллекционные карты. Основа системы рангов.</p>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Окей • Группа</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
 
-  <div class="merch-grid">
-    
-    <!-- 1. Спецкарточка -->
-    <div class="merch-card">
-      <div class="merch-img"><img src="ranger_card_placeholder.jpg" alt="Спецкарточка"></div>
-      <h3 class="merch-title">Спецкарточка "Рейнджер Страж"</h3>
-      <div class="merch-info">
-        <p><strong>Ранг:</strong> Временный Рейнджер Страж</p>
-        <p><strong>Стоимость:</strong> Бесплатно (на выступлениях)</p>
-        <div class="merch-bonus">🎁 Бонус: Даёт стартовый ранг даже без вступления в фан-базу</div>
-      </div>
+        body {
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+            font-family: 'Nosifer', cursive;
+            background-image: url('https://github.com/f22raf/my-music-site/raw/main/1746449062889.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-size: 1.1em;
+            text-shadow: 1px 1px 0 #000, 2px 2px 0 #333;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 20px auto;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.75);
+            border: 4px solid #8B0000;
+            border-radius: 8px;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 0 30px rgba(255, 0, 79, 0.3), inset 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        .group-name {
+            font-size: 2.8em;
+            font-weight: 900;
+            color: #ff004f;
+            margin: 10px 0;
+            text-shadow: 3px 3px 0 #000, 5px 5px 0 #8B0000;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #ffcc00;
+            margin: 30px 0 15px;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #8B0000;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        h3 {
+            color: #ffcc00;
+            margin: 25px 0 15px;
+            font-size: 1.5em;
+        }
+
+        ul {
+            text-align: left;
+            padding-left: 30px;
+            margin: 12px 0 20px;
+            line-height: 1.6;
+            list-style-type: square;
+        }
+
+        ul li::marker {
+            color: #ff004f;
+        }
+
+        .rock-frame, .ex-member-frame {
+            position: relative;
+            display: inline-block;
+            margin: 15px 0;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .rock-frame img, .ex-member-frame img {
+            width: 100%;
+            display: block;
+            border: 6px solid #8B0000;
+            box-shadow: 0 6px 0 #000, 0 10px 20px rgba(0,0,0,0.8);
+            filter: contrast(1.1);
+        }
+
+        .rock-frame::after {
+            content: "ОКЕЙ • ЧЕЛЯБИНСК";
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background: #000;
+            color: #ffcc00;
+            font-family: 'Nosifer', cursive;
+            font-size: 0.9em;
+            padding: 6px 0;
+            letter-spacing: 1px;
+            border: 2px solid #ff004f;
+            box-sizing: border-box;
+        }
+
+        .ex-member-frame img {
+            border-color: #444;
+            filter: grayscale(0.8) contrast(1.1);
+        }
+
+        .ex-member-frame::after {
+            content: "БЫЛ В ОКЕЙ";
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background: #111;
+            color: #888;
+            font-family: 'Nosifer', cursive;
+            font-size: 0.85em;
+            padding: 6px 0;
+            letter-spacing: 1px;
+            border: 2px solid #555;
+            box-sizing: border-box;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 20px;
+            margin: 15px auto;
+            max-width: 400px;
+            color: #ffcc00;
+            text-decoration: none;
+            border: 3px solid #8B0000;
+            background: rgba(0, 0, 0, 0.6);
+            font-size: 1.1em;
+            transition: all 0.2s ease;
+            box-shadow: 4px 4px 0 #000;
+        }
+
+        .nav-link:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #000;
+            background: #8B0000;
+            color: #fff;
+        }
+
+        .nav-link.highlight {
+            border-color: #ff004f;
+            color: #ff004f;
+            font-size: 1.2em;
+            animation: pulse-border 2s infinite;
+        }
+
+        .nav-link.highlight:hover {
+            background: #ff004f;
+            color: #000;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { box-shadow: 4px 4px 0 #000, 0 0 10px rgba(255, 0, 79, 0.5); }
+            50% { box-shadow: 4px 4px 0 #000, 0 0 25px rgba(255, 0, 79, 0.8); }
+        }
+
+        .social-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-btn {
+            padding: 10px 15px;
+            color: #fff;
+            text-decoration: none;
+            border: 2px solid;
+            font-size: 1em;
+            transition: transform 0.1s;
+            background: rgba(0,0,0,0.5);
+        }
+        .social-btn:hover { transform: translate(2px, 2px); }
+        .link1 { border-color: #ff0000; color: #ff0000; }
+        .link1:hover { background: #ff0000; color: #fff; }
+        .link2 { border-color: #4c75a8; color: #4c75a8; }
+        .link2:hover { background: #4c75a8; color: #fff; }
+        .link3 { border-color: #0088cc; color: #0088cc; }
+        .link3:hover { background: #0088cc; color: #fff; }
+
+        .footer { margin-top: 40px; color: #888; font-style: italic; font-size: 0.9em; }
+
+        /* ========================================== */
+        /* ПЛАВАЮЩАЯ КНОПКА-ТАЙМЕР VOL.2 */
+        /* ========================================== */
+        .vol2-floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, #2a0a0a, #000);
+            border: 4px solid #ffcc00;
+            border-radius: 50%;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(255, 0, 79, 0.6), 0 10px 30px rgba(0,0,0,0.8);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .vol2-floating-btn.locked {
+            cursor: not-allowed;
+            animation: annoying-shake 3s infinite;
+        }
+
+        .vol2-floating-btn.locked .btn-label { color: #ff004f; }
+        .vol2-floating-btn.locked .lock-icon { display: block; }
+        .vol2-floating-btn.locked .unlock-icon { display: none; }
+
+        .vol2-floating-btn.unlocked {
+            cursor: pointer;
+            animation: epic-glow 1.5s infinite alternate;
+            border-color: #00ff00;
+        }
+
+        .vol2-floating-btn.unlocked .btn-label { color: #00ff00; }
+        .vol2-floating-btn.unlocked .lock-icon { display: none; }
+        .vol2-floating-btn.unlocked .unlock-icon { display: block; }
+        .vol2-floating-btn.unlocked:hover { transform: scale(1.1); }
+
+        /* ========================================== */
+        /* ПЛАВАЮЩАЯ КНОПКА-ТАЙМЕР ВИКТОРИНЫ */
+        /* ========================================== */
+        .quiz-floating-btn {
+            position: fixed;
+            bottom: 180px;
+            right: 30px;
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle, #1a0a2e, #000);
+            border: 4px solid #9b59b6;
+            border-radius: 50%;
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(155, 89, 182, 0.6), 0 10px 30px rgba(0,0,0,0.8);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .quiz-floating-btn.locked {
+            cursor: not-allowed;
+            animation: annoying-shake 3s infinite;
+        }
+
+        .quiz-floating-btn.locked .btn-label { color: #e74c3c; }
+        .quiz-floating-btn.locked .lock-icon { display: block; }
+        .quiz-floating-btn.locked .unlock-icon { display: none; }
+
+        .quiz-floating-btn.unlocked {
+            cursor: pointer;
+            animation: quiz-glow 1.5s infinite alternate;
+            border-color: #2ecc71;
+        }
+
+        .quiz-floating-btn.unlocked .btn-label { color: #2ecc71; }
+        .quiz-floating-btn.unlocked .lock-icon { display: none; }
+        .quiz-floating-btn.unlocked .unlock-icon { display: block; }
+        .quiz-floating-btn.unlocked:hover { transform: scale(1.1); }
+
+        .gear {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px dashed rgba(255, 204, 0, 0.4);
+        }
+        .gear-outer { width: 100%; height: 100%; animation: spin 8s linear infinite; }
+        .gear-inner { width: 70%; height: 70%; animation: spin-reverse 5s linear infinite; border-style: dotted; }
+
+        .btn-content { z-index: 2; text-align: center; }
+        .timer-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 5px #ff004f;
+        }
+        .btn-label {
+            font-size: 0.75em;
+            line-height: 1.1;
+            transition: color 0.3s;
+        }
+        .btn-label small { font-size: 0.8em; opacity: 0.8; }
+
+        .lock-icon, .unlock-icon {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 1.2em;
+            z-index: 3;
+        }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+
+        @keyframes annoying-shake {
+            0%, 90%, 100% { transform: translate(0, 0); }
+            92% { transform: translate(-2px, 1px); }
+            94% { transform: translate(2px, -1px); }
+            96% { transform: translate(-1px, -2px); }
+            98% { transform: translate(1px, 2px); }
+        }
+
+        @keyframes epic-glow {
+            from { box-shadow: 0 0 20px rgba(0, 255, 0, 0.4), 0 0 40px rgba(255, 204, 0, 0.4); }
+            to { box-shadow: 0 0 40px rgba(0, 255, 0, 0.8), 0 0 80px rgba(255, 204, 0, 0.8); }
+        }
+
+        @keyframes quiz-glow {
+            from { box-shadow: 0 0 20px rgba(46, 204, 113, 0.4), 0 0 40px rgba(155, 89, 182, 0.4); }
+            to { box-shadow: 0 0 40px rgba(46, 204, 113, 0.8), 0 0 80px rgba(155, 89, 182, 0.8); }
+        }
+
+        @media (max-width: 600px) {
+            .vol2-floating-btn { width: 110px; height: 110px; bottom: 20px; right: 20px; }
+            .quiz-floating-btn { width: 100px; height: 100px; bottom: 140px; right: 20px; }
+            .timer-display { font-size: 0.9em; }
+            .btn-label { font-size: 0.65em; }
+            .group-name { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- КНОПКА-ТАЙМЕР ВИКТОРИНЫ -->
+    <a id="quiz-btn" class="quiz-floating-btn locked" href="#" onclick="return false;">
+        <div class="gear gear-outer"></div>
+        <div class="gear gear-inner"></div>
+        <div class="lock-icon">🔒</div>
+        <div class="unlock-icon">🔓</div>
+        <div class="btn-content">
+            <div class="timer-display">
+                <span id="quiz-days">00</span>:<span id="quiz-hours">00</span>:<span id="quiz-mins">00</span>:<span id="quiz-secs">00</span>
+            </div>
+            <div class="btn-label">ВИКТОРИНА<br><small id="quiz-status">(ЗАБЛОКИРОВАНО)</small></div>
+        </div>
+    </a>
+
+    <!-- КНОПКА-ТАЙМЕР VOL.2 -->
+    <a id="vol2-btn" class="vol2-floating-btn locked" href="#" onclick="return false;">
+        <div class="gear gear-outer"></div>
+        <div class="gear gear-inner"></div>
+        <div class="lock-icon">🔒</div>
+        <div class="unlock-icon">🔓</div>
+        <div class="btn-content">
+            <div class="timer-display">
+                <span id="v2-days">00</span>:<span id="v2-hours">00</span>:<span id="v2-mins">00</span>:<span id="v2-secs">00</span>
+            </div>
+            <div class="btn-label">OKEY: VOL.2<br><small id="v2-status">(ЗАБЛОКИРОВАНО)</small></div>
+        </div>
+    </a>
+
+    <div class="container">
+        <div class="group-name">ОКЕЙ</div>
+        <img src="InShot_20260622_215518754.jpg" alt="Логотип Окей" style="max-width:250px; margin: 10px auto 20px; display: block; border: 3px solid #ff004f; box-shadow: 0 5px 15px rgba(0,0,0,0.8);">
+        <p>Вас приветствует группа!</p>
+        <p><strong>Дата основания:</strong> 26.08.2022</p>
+
+        <h2>Состав</h2>
+        <ul><li>1) Ковбой Раф Евро</li></ul>
+        <div class="rock-frame"><img src="IMG_20250927_070220_306.jpg" alt="Ковбой Раф Евро"></div>
+
+        <ul><li>2) Томас</li></ul>
+        <div class="rock-frame"><img src="IMG_20260202_160608_256.jpg" alt="Томас"></div>
+
+        <ul><li>3) Снайпер</li></ul>
+        <div class="rock-frame"><img src="IMG_20260202_171104_449.jpg" alt="Снайпер"></div>
+
+        <ul><li>4) Вино Мечтателя</li></ul>
+        <div class="rock-frame"><img src="Zy_DSO_kLBaPRDlksTIRjBNpSwXuhz6v0EtB05zmR457vcioQAU0oeybmmV08wbX3co-5qfpggeWqxYX05r4vvYY.jpg" alt="Вино Мечтателя"></div>
+
+        <h2>Экс-участники</h2>
+        <ul><li>5) Ротгар</li></ul>
+        <div class="ex-member-frame"><img src="IMG_20250927_073107_439.jpg" alt="Ротгар"></div>
+
+        <ul><li>6) Белый Джинн</li></ul>
+        <div class="ex-member-frame"><img src="IMG_20250927_072655_508.jpg" alt="Белый Джинн"></div>
+
+        <ul><li>7) Лёха Панк</li></ul>
+        <div class="ex-member-frame"><img src="IMG_20250927_073619_673.jpg" alt="Лёха Панк"></div>
+
+        <ul><li>8) Хельга</li></ul>
+        <div class="ex-member-frame"><img src="IMG_20250927_070216_519.jpg" alt="Хельга"></div>
+
+        <ul><li>9) Птеро</li></ul>
+        <div class="ex-member-frame"><img src="IMG_20250927_070215_936.jpg" alt="Птеро"></div>
+
+        <h2>Дискография</h2>
+        <ul>
+            <li>1) Кантри Панк Рок</li><li>2) Про Кота</li><li>3) Попутчик</li><li>4) Параллельный Мир</li>
+            <li>5) Трубная Плантация</li><li>6) Молитва</li><li>7) Ковбойская</li><li>8) Рейнджер Страж</li>
+            <li>9) Изумрудный Город</li><li>10) Душа Ковбоя</li><li>11) Уберегай Меня (Шаман!)</li>
+            <li>12) Любовь к Искусству</li><li>13) Корпус Смерти Крига</li><li>14) Хиповская Жизнь</li>
+            <li>15) Хорошее Похмелье</li><li>16) Усталый Рокер</li><li>17) Простой Человек</li>
+            <li>18) Былые Времена</li><li>19) Степная Трава</li><li>20) Юрский Движ</li>
+            <li>21) Шум Района</li><li>22) Зима</li>
+        </ul>
+
+        <a href="history.html" class="nav-link">📜 Читать историю группы →</a>
+        <a href="Music.html" class="nav-link">🎧 Слушать нашу музыку →</a>
+        <a href="news.html" class="nav-link">📰 Что нового →</a>
+        <a href="hierarchy.html" class="nav-link">📖 Древо Ордена «Окей» →</a>
+        <a href="diy-okey.html" class="nav-link">🎨 DIY Okey →</a>
+        <!-- НОВАЯ КНОПКА НА ОТДЕЛЬНУЮ СТРАНИЦУ АРТЕФАКТОВ -->
+        <a href="artifacts.html" class="nav-link highlight">📜 Каталог Артефактов и Мерч →</a>
+        <a href="radar.html" class="nav-link highlight">📡 Окей Радар — найди своих</a>
+
+        <h2>Выступления</h2>
+        <ul>
+            <li>1) Дебютный квартирник (Свобода) — 30.09.2022</li>
+            <li>2) Саботажный квартирник (Свобода) — 22.10.2022</li>
+            <li>3) Хеллоуинский квартирник (Свобода) — 29.10.2022</li>
+            <li>4) Гитарник (Крафтовая кофейня) — 16.12.2022</li>
+            <li>5) Сесс.восс.квартирник (Свобода) — 07.10.2023</li>
+            <li>6) Covёr Event (Джексонс бар) — 06.09.2025</li>
+            <li>7) Rock Event (Б25 Своб.2к5) - 10.10.2025</li>
+            <li>8) Гитарная Мистерия (Гитарник Пятница Вечером) - 28.11.2025</li>
+            <li>9) Ozerov Dvizh (Плэй Паб) - 29.11.2025</li>
+            <li>10) Ёлки Панки (Плэй Паб) - 27.12.2025</li>
+            <li>11) Ozerov Fest (ЧЧ Лаунч) - 17.01.2026</li>
+            <li>12) Рок концерт (Б25 Своб.2к5) - 30.01.2026</li>
+            <li>13) Ozerov Dnyuha (ЧЧ Лаунч) - 25.04.2026</li>
+            <li>14) Ozerov Event 4 (ЧЧ Лаунч) - 16.05.2026</li>
+            <li>15) Ozerov Event 5 (ЧЧ Лаунч) - 13.06.2026</li>
+            <li>16) 2к17 (ЧЧ Лаунч) - 18.07.2026</li>
+            <li>17) Okey Event Гаражник (Jack Jack) - 29.08.2026</li>
+        </ul>
+
+        <h2>💿 Golden Music Records</h2>
+        <p>Официальный лейбл группы Окей • Челябинск</p>
+        <img src="Golden_music_records.jpg" alt="Golden Music Records" style="max-width:220px; margin:15px auto; display: block; border: 3px solid #ff004f; box-shadow: 0 5px 15px rgba(0,0,0,0.8);">
+
+        <h2>🔥 СПЕЦАКЦИЯ!</h2>
+        <p style="font-size: 1.2em; line-height: 1.5;">
+          Приди на следующее выступление Окей и получи <strong style="color:#ffcc00">Плакат / Спецкарточку</strong>!!!<br>
+          — За фан-базу<br>
+          — За активность
+        </p>
+
+        <h3>Плакаты</h3>
+        <img src="InShot_20260208_184107946.jpg" alt="Плакат 1" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
+        <img src="InShot_20260208_184000111.jpg" alt="Плакат 2" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
+        <img src="InShot_20260208_184206498.jpg" alt="Плакат 3" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
+        <img src="InShot_20260208_183559708.jpg" alt="Плакат 4" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
+        <img src="InShot_20260208_221136456.jpg" alt="Плакат 5" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
+        <img src="InShot_20260211_033545133.jpg" alt="Плакат 6" style="max-width:100%; margin:10px 0; border: 2px solid #8B0000;">
+
+        <h3>Спецкарточка (значок)</h3>
+        <img src="1758782710052.jpg" alt="Спецкарточка Окей" style="max-width:250px; margin:15px 0; border: 3px solid #ffcc00; box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);">
+
+        <a href="badges.html" class="nav-link highlight" style="margin-top: 30px;">🛒 Купить Мерч Окей!!!</a>
+
+        <h3>Мы в сети</h3>
+        <div class="social-grid">
+            <a href="https://youtu.be/8sITa2elk6A?si=aNOavWjX5BTsGIlM" class="social-btn link1">КР€ (YouTube)</a>
+            <a href="https://m.vk.com/its_o_kay" class="social-btn link2">its o'kay (VK)</a>
+            <a href="https://t.me/+kjrCj3bWk7hiYmUy" class="social-btn link3">Фан База (TG)</a>
+            <a href="https://t.me/iitssokeyyy" class="social-btn link3">Телеграм канал</a>
+            <a href="https://vk.ru/club232622132" class="social-btn link2">Видеоархив VK</a>
+        </div>
+
+        <h3> Интерактив</h3>
+        <a href="game.html" class="nav-link"> Кто ты в Движе? (Мини-квест)</a>
+        <a href="Questtry.html" class="nav-link highlight">🤘 ТОЛЬКО ДЛЯ ТРУШНЫХ ФАНАТОВ ОКЕЙ!</a>
+        <a href="/my-music-site/ranger.html" class="nav-link">🎮 Сыграть в игру "Рейнджер Страж"</a>
+
+        <p class="footer">Челябинск • Golden Music Records • 2022-2026</p>
     </div>
 
-    <!-- 2. Плакаты -->
-    <div class="merch-card premium">
-      <div class="merch-img"><img src="poster_placeholder.jpg" alt="Плакаты Окей"></div>
-      <h3 class="merch-title">Плакаты (Серия из 6 видов)</h3>
-      <div class="merch-info">
-        <p><strong>Ранг:</strong> Суперплакатоносец</p>
-        <p><strong>Стоимость:</strong> Бесплатно (для Океевцев)</p>
-        <p style="font-size: 0.8em; color: #888;">Виды: Юрский Движ, Корпус Смерти Крига, Душа Ковбоя, Изумрудный Город, Степная Трава, Калифорнийская Тропа.</p>
-        <div class="merch-bonus">⚠️ Тираж исчерпан! Сейчас выдаётся апгрейд: 58мм Ядро. В будущем — Ранговое Ядро Суперплакатоносца.</div>
-      </div>
-    </div>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104597184', 'ym');
+        ym(104597184, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/104597184" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 
-    <!-- 3. Мини книга -->
-    <div class="merch-card premium">
-      <div class="merch-img"><img src="book_placeholder.jpg" alt="Мини книга"></div>
-      <h3 class="merch-title">Мини-книга "Окей - Хроники Супер Панка!"</h3>
-      <div class="merch-info">
-        <p><strong>Ранг:</strong> Архивариус</p>
-        <p><strong>Стоимость:</strong> Не продаётся (Тираж: 6 шт.)</p>
-        <div class="merch-bonus rare"> Бонус: Даёт ранг Архивариус + карта "Legends Okey" (Экз. 1)</div>
-      </div>
-    </div>
+    <!-- СКРИПТЫ ТАЙМЕРОВ С ЛАЗЕЙКАМИ ДЛЯ ТЕСТА -->
+    <script>
+        // ========== ТАЙМЕР VOL.2 ==========
+        function updateVol2Timer() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('unlockvol2') === 'true') {
+                const btn = document.getElementById('vol2-btn');
+                btn.classList.remove('locked');
+                btn.classList.add('unlocked');
+                btn.href = 'okey-vol2.html';
+                btn.onclick = null;
+                document.getElementById('v2-status').textContent = '(TEST MODE)';
+                document.getElementById('v2-days').textContent = '00';
+                document.getElementById('v2-hours').textContent = '00';
+                document.getElementById('v2-mins').textContent = '00';
+                document.getElementById('v2-secs').textContent = '00';
+                return;
+            }
 
-    <!-- 4. Паспорт -->
-    <div class="merch-card premium">
-      <div class="merch-img"><img src="passport_placeholder.jpg" alt="Паспорт"></div>
-      <h3 class="merch-title">Паспорт Окейтозавра</h3>
-      <div class="merch-info">
-        <p><strong>Ранг:</strong> Окейтозавр</p>
-        <p><strong>Стоимость:</strong> Не продаётся (Тираж: 6 шт.)</p>
-        <div class="merch-bonus rare">🏆 Бонус: Высший ранг эволюции + карта "Legends Okey" (Экз. 1)</div>
-      </div>
-    </div>
+            const releaseDate = new Date('October 31, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = releaseDate - now;
 
-    <!-- 5. Коллекционные карты Gen 1 -->
-    <div class="merch-card">
-      <div class="merch-img"><img src="cards_gen1_placeholder.jpg" alt="Legends Okey"></div>
-      <h3 class="merch-title">Карты "Legends Okey" (Поколение 1)</h3>
-      <div class="merch-info">
-        <p><strong>Состав:</strong> 60 карт (10 дизайнов по 6 экз.)</p>
-        <p><strong>Статус:</strong> Даёт приставку "Ультра" при сборе коллекции</p>
-        <div class="merch-bonus">🎲 Экз. 1 - за ранг. Экз. 2-4 - бонус к значкам. Экз. 5-6 - Викторина.</div>
-      </div>
-    </div>
+            const btn = document.getElementById('vol2-btn');
+            const statusText = document.getElementById('v2-status');
 
-    <!-- 6. Коллекционные карты Gen 2 -->
-    <div class="merch-card">
-      <div class="merch-img"><img src="cards_gen2_placeholder.jpg" alt="Legends Vol.2"></div>
-      <h3 class="merch-title">Карты "Legends Vol.2 Okey" (Поколение 2)</h3>
-      <div class="merch-info">
-        <p><strong>Состав:</strong> 60 карт (10 дизайнов по 6 экз.)</p>
-        <p><strong>Статус:</strong> Даёт приставку "Ультра" при сборе коллекции</p>
-        <div class="merch-bonus">🎲 Экз. 1 - за ранг (Маршалл). Экз. 2-4 - бонус. Экз. 5-6 - Викторина.</div>
-      </div>
-    </div>
+            if (distance < 0) {
+                btn.classList.remove('locked');
+                btn.classList.add('unlocked');
+                btn.href = 'okey-vol2.html';
+                btn.onclick = null;
+                statusText.textContent = '(ОТКРЫТО!)';
+                document.getElementById('v2-days').textContent = '00';
+                document.getElementById('v2-hours').textContent = '00';
+                document.getElementById('v2-mins').textContent = '00';
+                document.getElementById('v2-secs').textContent = '00';
+                return;
+            }
 
-    <!-- 7. Визитка -->
-    <div class="merch-card">
-      <div class="merch-img"><img src="business_card_placeholder.jpg" alt="Визитка"></div>
-      <h3 class="merch-title">Визитка Окея</h3>
-      <div class="merch-info">
-        <p><strong>Ранг:</strong> Бонусный предмет</p>
-        <p><strong>Стоимость:</strong> Бесплатно (по желанию, если имеются в наличии)</p>
-        <div class="merch-bonus">🃏 Бонус: Стильный артефакт в общем стиле для коллекции</div>
-      </div>
-    </div>
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((distance % (1000 * 60)) / 1000);
 
-  </div>
+            document.getElementById('v2-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('v2-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('v2-mins').textContent = String(mins).padStart(2, '0');
+            document.getElementById('v2-secs').textContent = String(secs).padStart(2, '0');
+        }
 
-  <!-- БЛОК 2: ЗНАЧКИ -->
-  <h2 class="section-header">📌 Значки и Ячейки</h2>
-  <p class="section-desc">Эволюция мерча от базовых ячеек до архивных реликвий. Основной источник коллекционных карт.</p>
+        // ========== ТАЙМЕР ВИКТОРИНЫ ==========
+        function updateQuizTimer() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('unlockquiz') === 'true') {
+                const btn = document.getElementById('quiz-btn');
+                btn.classList.remove('locked');
+                btn.classList.add('unlocked');
+                btn.href = 'Questtry.html';
+                btn.onclick = null;
+                document.getElementById('quiz-status').textContent = '(TEST MODE)';
+                document.getElementById('quiz-days').textContent = '00';
+                document.getElementById('quiz-hours').textContent = '00';
+                document.getElementById('quiz-mins').textContent = '00';
+                document.getElementById('quiz-secs').textContent = '00';
+                return;
+            }
 
-  <div class="merch-grid">
-    
-    <!-- 1. Мехо Яч -->
-    <div class="merch-card">
-      <div class="merch-img"><img src="mech_cell_placeholder.jpg" alt="Мехо Ячейка"></div>
-      <h3 class="merch-title">Механическая Ячейка</h3>
-      <div class="merch-info">
-        <p><strong>Размер:</strong> 37мм (Коричневый)</p>
-        <p><strong>Стоимость:</strong> 100₽</p>
-        <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Okey" (Экз. 2, 3 или 4)</div>
-      </div>
-    </div>
+            const quizDate = new Date('September 10, 2026 12:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = quizDate - now;
 
-    <!-- 2. Энерго Яч -->
-    <div class="merch-card">
-      <div class="merch-img"><img src="energy_cell_placeholder.jpg" alt="Энерго Ячейка"></div>
-      <h3 class="merch-title">Энергетическая Ячейка</h3>
-      <div class="merch-info">
-        <p><strong>Размер:</strong> 37мм (Синий)</p>
-        <p><strong>Стоимость:</strong> 100₽</p>
-        <div class="merch-bonus"> Бонус: 1 рандомная карта "Legends Okey" (Экз. 2, 3 или 4)</div>
-      </div>
-    </div>
+            const btn = document.getElementById('quiz-btn');
 
-    <!-- 3. Мехо Ядро -->
-    <div class="merch-card">
-      <div class="merch-img"><img src="mech_core_placeholder.jpg" alt="Мехо Ядро"></div>
-      <h3 class="merch-title">Механическое Ядро</h3>
-      <div class="merch-info">
-        <p><strong>Размер:</strong> 58мм (Коричневый)</p>
-        <p><strong>Стоимость:</strong> 150₽</p>
-        <div class="merch-bonus">🎁 Бонус: 2 рандомные карты "Legends Okey" (Экз. 2, 3 или 4). Также выдаётся как апгрейд Суперплакатоносцам.</div>
-      </div>
-    </div>
+            if (distance < 0) {
+                btn.classList.remove('locked');
+                btn.classList.add('unlocked');
+                btn.href = 'Questtry.html';
+                btn.onclick = null;
+                document.getElementById('quiz-status').textContent = '(ОТКРЫТО!)';
+                document.getElementById('quiz-days').textContent = '00';
+                document.getElementById('quiz-hours').textContent = '00';
+                document.getElementById('quiz-mins').textContent = '00';
+                document.getElementById('quiz-secs').textContent = '00';
+                return;
+            }
 
-    <!-- 4. Энерго Ядро -->
-    <div class="merch-card">
-      <div class="merch-img"><img src="energy_core_placeholder.jpg" alt="Энерго Ядро"></div>
-      <h3 class="merch-title">Энергетическое Ядро</h3>
-      <div class="merch-info">
-        <p><strong>Размер:</strong> 58мм (Синий)</p>
-        <p><strong>Стоимость:</strong> 150₽</p>
-        <div class="merch-bonus">🎁 Бонус: 2 рандомные карты "Legends Okey" (Экз. 2, 3 или 4). Также выдаётся как апгрейд Суперплакатоносцам.</div>
-      </div>
-    </div>
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((distance % (1000 * 60)) / 1000);
 
-    <!-- 5. Рубеж-4 -->
-    <div class="merch-card premium">
-      <div class="merch-img"><img src="rubeg4_placeholder.jpg" alt="Рубеж-4"></div>
-      <h3 class="merch-title">Спецзначок "Рубеж-4"</h3>
-      <div class="merch-info">
-        <p><strong>Размер:</strong> 37мм (Спец. дизайн)</p>
-        <p><strong>Стоимость:</strong> Бесплатно (на ивенте "4 года")</p>
-        <div class="merch-bonus rare">🏆 Бонус: Памятный артефакт ограниченного тиража. Статус "Ветеран Ивента".</div>
-      </div>
-    </div>
+            document.getElementById('quiz-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('quiz-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('quiz-mins').textContent = String(mins).padStart(2, '0');
+            document.getElementById('quiz-secs').textContent = String(secs).padStart(2, '0');
+        }
 
-    <!-- 6. Архивная Яч -->
-    <div class="merch-card">
-      <div class="merch-img"><img src="archive_cell_placeholder.jpg" alt="Архивная Ячейка"></div>
-      <h3 class="merch-title">Архивная Ячейка</h3>
-      <div class="merch-info">
-        <p><strong>Размер:</strong> 37мм (Серый)</p>
-        <p><strong>Стоимость:</strong> 100₽</p>
-        <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Vol.2 Okey" (Экз. 2, 3 или 4)</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<style>
-  /* Стили для сетки и карточек (можно добавить к твоим существующим стилям) */
-  .merch-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-
-  .merch-card {
-    background: #111;
-    border: 2px solid #333;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .merch-card:hover {
-    transform: translateY(-5px);
-    border-color: #ffcc00;
-  }
-
-  .merch-card.premium {
-    border-color: #ffcc00;
-    box-shadow: 0 0 15px rgba(255, 204, 0, 0.15);
-  }
-
-  .merch-img {
-    width: 100%;
-    height: 200px;
-    background: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .merch-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .merch-title {
-    color: #ffcc00;
-    font-size: 1.2em;
-    text-align: center;
-    margin: 15px 10px 10px 10px;
-    text-shadow: 0 0 5px rgba(255, 204, 0, 0.4);
-    font-family: 'Nosifer', cursive; /* Если хочешь, чтобы заголовки были в общем стиле сайта */
-  }
-
-  .merch-info {
-    padding: 0 20px 20px 20px;
-    color: #ccc;
-    font-family: Arial, sans-serif;
-    font-size: 0.9em;
-    line-height: 1.5;
-    flex-grow: 1;
-  }
-
-  .merch-info p {
-    margin: 5px 0;
-    border-bottom: 1px solid #222;
-    padding-bottom: 5px;
-  }
-
-  .merch-bonus {
-    margin-top: 15px;
-    padding: 10px;
-    background: rgba(255, 204, 0, 0.1);
-    border: 1px solid #ffcc00;
-    border-radius: 4px;
-    color: #ffcc00;
-    font-weight: bold;
-    text-align: center;
-    font-size: 0.85em;
-  }
-
-  .merch-bonus.rare {
-    background: rgba(255, 204, 0, 0.2);
-    border-color: #ffcc00;
-    color: #fff;
-    text-shadow: 0 0 5px #ffcc00;
-  }
-</style>
+        setInterval(updateVol2Timer, 1000);
+        setInterval(updateQuizTimer, 1000);
+        updateVol2Timer();
+        updateQuizTimer();
+    </script>
+</body>
+</html>
