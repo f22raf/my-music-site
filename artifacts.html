@@ -24,7 +24,7 @@
         }
 
         .container {
-            max-width: 950px; /* Чуть шире для красивой сетки карточек */
+            max-width: 950px;
             margin: 20px auto;
             padding: 30px;
             background: rgba(0, 0, 0, 0.85);
@@ -118,20 +118,25 @@
             box-shadow: 0 0 15px rgba(255, 204, 0, 0.15);
         }
 
+        /* ИСПРАВЛЕНИЕ РАМКИ: */
         .merch-img {
             width: 100%;
-            height: 180px;
+            height: 250px; /* Чуть выше для вертикальных карт и постеров */
             background: #1a1a1a;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            padding: 15px; /* Внутренний отступ, чтобы картинка не прилипала к краям */
+            box-sizing: border-box;
         }
 
         .merch-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* ГЛАВНЫЙ ФИКС: картинка вписывается целиком, не обрезается! */
+            display: block;
+            border-radius: 4px;
         }
 
         .merch-title {
@@ -179,22 +184,51 @@
             text-shadow: 0 0 5px #ffcc00;
         }
 
+        /* ========================================== */
+        /* МИНИ-ГАЛЕРЕЯ ДЛЯ КОЛЛЕКЦИОННЫХ КАРТ */
+        /* ========================================== */
+        .cards-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .cards-showcase img {
+            width: 100%;
+            aspect-ratio: 5/7; /* Пропорции стандартной покерной/коллекционной карты */
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #444;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .cards-showcase img:hover {
+            transform: scale(1.15);
+            border-color: #ffcc00;
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+
         @media (max-width: 600px) {
             .page-title { font-size: 1.6em; }
             .merch-grid { grid-template-columns: 1fr; }
+            .cards-showcase { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1 class="page-title"> Каталог Артефактов Окея</h1>
+        <h1 class="page-title">Каталог Артефактов Окея</h1>
         <p class="section-desc">Официальные документы, реликвии и коллекционные карты. Основа системы рангов и эволюции мерча.</p>
 
         <h2>Печатная продукция</h2>
         <div class="merch-grid">
+            <!-- Спецкарточка теперь будет стоять ИДЕАЛЬНО по центру благодаря object-fit: contain -->
             <div class="merch-card">
-                <div class="merch-img"><img src="1758782710052.jpg" alt="Спецкарточка"></div>
+                <div class="merch-img"><img src="1758782710052.jpg" alt="Спецкарточка Рейнджер Страж"></div>
                 <h3 class="merch-title">Спецкарточка "Рейнджер Страж"</h3>
                 <div class="merch-info">
                     <p><strong>Ранг:</strong> Временный Рейнджер Страж</p>
@@ -203,69 +237,64 @@
                 </div>
             </div>
 
+            <!-- 6 Плакатов (сетка сама их красиво расставит) -->
             <div class="merch-card premium">
-                <div class="merch-img"><img src="InShot_20260208_184107946.jpg" alt="Плакаты Окей"></div>
-                <h3 class="merch-title">Плакат "Юрский Движ" (Серия из 6 видов)</h3>
+                <div class="merch-img"><img src="InShot_20260208_184107946.jpg" alt="Плакат Юрский Движ"></div>
+                <h3 class="merch-title">Плакат "Юрский Движ"</h3>
                 <div class="merch-info">
                     <p><strong>Ранг:</strong> Суперплакатоносец</p>
                     <p><strong>Стоимость:</strong> Бесплатно (для Океевцев)</p>
-                    <p style="font-size: 0.8em; color: #888;">Виды: Юрский Движ, Корпус Смерти Крига, Душа Ковбоя, Изумрудный Город, Степная Трава, Калифорнийская Тропа.</p>
-                    <div class="merch-bonus">⚠️ Тираж исчерпан! Сейчас выдаётся апгрейд: 58мм Ядро. В будущем — Ранговое Ядро Суперплакатоносца.</div>
+                    <div class="merch-bonus">⚠️ Тираж исчерпан! Апгрейд: 58мм Ядро.</div>
                 </div>
             </div>
 
             <div class="merch-card premium">
-                <div class="merch-img"><img src="InShot_20260208_184000111.jpg" alt="Плакаты Окей"></div>
-                <h3 class="merch-title">Плакат "Корпус Смерти Крига" (Серия из 6 видов)</h3>
+                <div class="merch-img"><img src="InShot_20260208_184000111.jpg" alt="Плакат Корпус Смерти Крига"></div>
+                <h3 class="merch-title">Плакат "Корпус Смерти Крига"</h3>
                 <div class="merch-info">
                     <p><strong>Ранг:</strong> Суперплакатоносец</p>
                     <p><strong>Стоимость:</strong> Бесплатно (для Океевцев)</p>
-                    <p style="font-size: 0.8em; color: #888;">Виды: Юрский Движ, Корпус Смерти Крига, Душа Ковбоя, Изумрудный Город, Степная Трава, Калифорнийская Тропа.</p>
-                    <div class="merch-bonus">⚠️ Тираж исчерпан! Сейчас выдаётся апгрейд: 58мм Ядро. В будущем — Ранговое Ядро Суперплакатоносца.</div>
+                    <div class="merch-bonus">⚠️ Тираж исчерпан! Апгрейд: 58мм Ядро.</div>
                 </div>
             </div>
 
             <div class="merch-card premium">
-                <div class="merch-img"><img src="InShot_20260208_184206498.jpg" alt="Плакаты Окей"></div>
-                <h3 class="merch-title">Плакат "Душа Ковбоя" (Серия из 6 видов)</h3>
+                <div class="merch-img"><img src="InShot_20260208_184206498.jpg" alt="Плакат Душа Ковбоя"></div>
+                <h3 class="merch-title">Плакат "Душа Ковбоя"</h3>
                 <div class="merch-info">
                     <p><strong>Ранг:</strong> Суперплакатоносец</p>
                     <p><strong>Стоимость:</strong> Бесплатно (для Океевцев)</p>
-                    <p style="font-size: 0.8em; color: #888;">Виды: Юрский Движ, Корпус Смерти Крига, Душа Ковбоя, Изумрудный Город, Степная Трава, Калифорнийская Тропа.</p>
-                    <div class="merch-bonus">⚠️ Тираж исчерпан! Сейчас выдаётся апгрейд: 58мм Ядро. В будущем — Ранговое Ядро Суперплакатоносца.</div>
+                    <div class="merch-bonus">⚠️ Тираж исчерпан! Апгрейд: 58мм Ядро.</div>
                 </div>
             </div>
 
             <div class="merch-card premium">
-                <div class="merch-img"><img src="InShot_20260208_183559708.jpg" alt="Плакаты Окей"></div>
-                <h3 class="merch-title">Плакат "Изумрудный Город" (Серия из 6 видов)</h3>
+                <div class="merch-img"><img src="InShot_20260208_183559708.jpg" alt="Плакат Изумрудный Город"></div>
+                <h3 class="merch-title">Плакат "Изумрудный Город"</h3>
                 <div class="merch-info">
                     <p><strong>Ранг:</strong> Суперплакатоносец</p>
                     <p><strong>Стоимость:</strong> Бесплатно (для Океевцев)</p>
-                    <p style="font-size: 0.8em; color: #888;">Виды: Юрский Движ, Корпус Смерти Крига, Душа Ковбоя, Изумрудный Город, Степная Трава, Калифорнийская Тропа.</p>
-                    <div class="merch-bonus">⚠️ Тираж исчерпан! Сейчас выдаётся апгрейд: 58мм Ядро. В будущем — Ранговое Ядро Суперплакатоносца.</div>
+                    <div class="merch-bonus">⚠️ Тираж исчерпан! Апгрейд: 58мм Ядро.</div>
                 </div>
             </div>
 
             <div class="merch-card premium">
-                <div class="merch-img"><img src="InShot_20260208_221136456.jpg" alt="Плакаты Окей"></div>
-                <h3 class="merch-title">Плакат "Степная Трава" (Серия из 6 видов)</h3>
+                <div class="merch-img"><img src="InShot_20260208_221136456.jpg" alt="Плакат Степная Трава"></div>
+                <h3 class="merch-title">Плакат "Степная Трава"</h3>
                 <div class="merch-info">
                     <p><strong>Ранг:</strong> Суперплакатоносец</p>
                     <p><strong>Стоимость:</strong> Бесплатно (для Океевцев)</p>
-                    <p style="font-size: 0.8em; color: #888;">Виды: Юрский Движ, Корпус Смерти Крига, Душа Ковбоя, Изумрудный Город, Степная Трава, Калифорнийская Тропа.</p>
-                    <div class="merch-bonus">⚠️ Тираж исчерпан! Сейчас выдаётся апгрейд: 58мм Ядро. В будущем — Ранговое Ядро Суперплакатоносца.</div>
+                    <div class="merch-bonus">⚠️ Тираж исчерпан! Апгрейд: 58мм Ядро.</div>
                 </div>
             </div>
 
             <div class="merch-card premium">
-                <div class="merch-img"><img src="InShot_20260211_033545133.jpg" alt="Плакаты Окей"></div>
-                <h3 class="merch-title">Плакат "Калифорнийская Тропа" (Серия из 6 видов)</h3>
+                <div class="merch-img"><img src="InShot_20260211_033545133.jpg" alt="Плакат Калифорнийская Тропа"></div>
+                <h3 class="merch-title">Плакат "Калифорнийская Тропа"</h3>
                 <div class="merch-info">
                     <p><strong>Ранг:</strong> Суперплакатоносец</p>
                     <p><strong>Стоимость:</strong> Бесплатно (для Океевцев)</p>
-                    <p style="font-size: 0.8em; color: #888;">Виды: Юрский Движ, Корпус Смерти Крига, Душа Ковбоя, Изумрудный Город, Степная Трава, Калифорнийская Тропа.</p>
-                    <div class="merch-bonus">⚠️ Тираж исчерпан! Сейчас выдаётся апгрейд: 58мм Ядро. В будущем — Ранговое Ядро Суперплакатоносца.</div>
+                    <div class="merch-bonus">⚠️ Тираж исчерпан! Апгрейд: 58мм Ядро.</div>
                 </div>
             </div>
             
@@ -275,7 +304,7 @@
                 <div class="merch-info">
                     <p><strong>Ранг:</strong> Архивариус</p>
                     <p><strong>Стоимость:</strong> Не продаётся (Тираж: 6 шт.)</p>
-                    <div class="merch-bonus rare">🏆 Бонус: Даёт ранг Архивариус + карта "Legends Okey" (Экз. 1)</div>
+                    <div class="merch-bonus rare">🏆 Бонус: Ранг Архивариус + карта "Legends Okey" (Экз. 1)</div>
                 </div>
             </div>
 
@@ -285,27 +314,60 @@
                 <div class="merch-info">
                     <p><strong>Ранг:</strong> Окейтозавр</p>
                     <p><strong>Стоимость:</strong> Не продаётся (Тираж: 6 шт.)</p>
-                    <div class="merch-bonus rare"> Бонус: Высший ранг эволюции + карта "Legends Okey" (Экз. 1)</div>
+                    <div class="merch-bonus rare">🏆 Бонус: Высший ранг эволюции + карта "Legends Okey" (Экз. 1)</div>
+                </div>
+            </div>
+
+            <!-- КАРТОЧКИ С МИНИ-ГАЛЕРЕЕЙ -->
+            <div class="merch-card">
+                <div class="merch-img"><img src="cards_gen1_placeholder.jpg" alt="Legends Okey Обложка"></div>
+                <h3 class="merch-title">Карты "Legends Okey"</h3>
+                <div class="merch-info">
+                    <p><strong>Состав:</strong> 10 уникальных дизайнов (по 6 экз.)</p>
+                    <p><strong>Статус:</strong> Даёт приставку "Ультра" при сборе коллекции</p>
+                    
+                    <!-- Мини-галерея для 10 карт -->
+                    <div class="cards-showcase">
+                        <!-- Замени src на реальные пути к 10 картам первого выпуска -->
+                        <img src="card_g1_1.jpg" alt="Карта 1">
+                        <img src="card_g1_2.jpg" alt="Карта 2">
+                        <img src="card_g1_3.jpg" alt="Карта 3">
+                        <img src="card_g1_4.jpg" alt="Карта 4">
+                        <img src="card_g1_5.jpg" alt="Карта 5">
+                        <img src="card_g1_6.jpg" alt="Карта 6">
+                        <img src="card_g1_7.jpg" alt="Карта 7">
+                        <img src="card_g1_8.jpg" alt="Карта 8">
+                        <img src="card_g1_9.jpg" alt="Карта 9">
+                        <img src="card_g1_10.jpg" alt="Карта 10">
+                    </div>
+
+                    <div class="merch-bonus" style="margin-top: 15px;">🎲 Экз. 1 - за ранг. Экз. 2-4 - бонус к значкам. Экз. 5-6 - Викторина.</div>
                 </div>
             </div>
 
             <div class="merch-card">
-                <div class="merch-img"><img src="cards_gen1_placeholder.jpg" alt="Legends Okey"></div>
-                <h3 class="merch-title">Карты "Legends Okey" </h3>
+                <div class="merch-img"><img src="cards_gen2_placeholder.jpg" alt="Legends Vol.2 Обложка"></div>
+                <h3 class="merch-title">Карты "Legends Vol.2 Okey"</h3>
                 <div class="merch-info">
-                    <p><strong>Состав:</strong> 60 карт (10 дизайнов по 6 экз.)</p>
+                    <p><strong>Состав:</strong> 10 уникальных дизайнов (по 6 экз.)</p>
                     <p><strong>Статус:</strong> Даёт приставку "Ультра" при сборе коллекции</p>
-                    <div class="merch-bonus">🎲 Экз. 1 - за ранг. Экз. 2-4 - бонус к значкам. Экз. 5-6 - Викторина.</div>
-                </div>
-            </div>
+                    
+                    <!-- Мини-галерея для 10 карт второго выпуска -->
+                    <div class="cards-showcase">
+                        <!-- Замени src на реальные пути к 10 картам второго выпуска -->
+                        <img src="card_g2_1.jpg" alt="Карта 1">
+                        <img src="card_g2_2.jpg" alt="Карта 2">
+                        <img src="card_g2_3.jpg" alt="Карта 3">
+                        <img src="card_g2_4.jpg" alt="Карта 4">
+                        <img src="card_g2_5.jpg" alt="Карта 5">
+                        <img src="card_g2_6.jpg" alt="Карта 6">
+                        <img src="card_g2_7.jpg" alt="Карта 7">
+                        <img src="card_g2_8.jpg" alt="Карта 8">
+                        <img src="card_g2_9.jpg" alt="Карта 9">
+                        <img src="card_g2_10.jpg" alt="Карта 10">
+                    </div>
 
-            <div class="merch-card">
-                <div class="merch-img"><img src="cards_gen2_placeholder.jpg" alt="Legends Vol.2"></div>
-                <h3 class="merch-title">Карты "Legends Vol.2 Okey" </h3>
-                <div class="merch-info">
-                    <p><strong>Состав:</strong> 60 карт (10 дизайнов по 6 экз.)</p>
-                    <p><strong>Статус:</strong> Даёт приставку "Ультра" при сборе коллекции</p>
-                    <div class="merch-bonus">🎲 Экз. 1 - за ранг (Маршалл). Экз. 2-4 - бонус. Экз. 5-6 - Викторина.</div>
+                    <div class="merch-bonus" style="margin-top: 15px;">🎲 Экз. 1 - за ранг (Маршалл). Экз. 2-4 - бонус. Экз. 5-6 - Викторина.</div>
                 </div>
             </div>
 
@@ -338,7 +400,7 @@
                 <div class="merch-info">
                     <p><strong>Размер:</strong> 37мм (Синий)</p>
                     <p><strong>Стоимость:</strong> 100₽</p>
-                    <div class="merch-bonus"> Бонус: 1 рандомная карта "Legends Okey" (Экз. 2, 3 или 4)</div>
+                    <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Okey" (Экз. 2, 3 или 4)</div>
                 </div>
             </div>
 
@@ -348,7 +410,7 @@
                 <div class="merch-info">
                     <p><strong>Размер:</strong> 58мм (Коричневый)</p>
                     <p><strong>Стоимость:</strong> 150₽</p>
-                    <div class="merch-bonus">🎁 Бонус: 2 рандомные карты "Legends Okey" (Экз. 2, 3 или 4). Также выдаётся как апгрейд Суперплакатоносцам.</div>
+                    <div class="merch-bonus">🎁 Бонус: 2 рандомные карты "Legends Okey". Апгрейд Суперплакатоносцам.</div>
                 </div>
             </div>
 
@@ -358,7 +420,7 @@
                 <div class="merch-info">
                     <p><strong>Размер:</strong> 58мм (Синий)</p>
                     <p><strong>Стоимость:</strong> 150₽</p>
-                    <div class="merch-bonus">🎁 Бонус: 2 рандомные карты "Legends Okey" (Экз. 2, 3 или 4). Также выдаётся как апгрейд Суперплакатоносцам.</div>
+                    <div class="merch-bonus">🎁 Бонус: 2 рандомные карты "Legends Okey". Апгрейд Суперплакатоносцам.</div>
                 </div>
             </div>
 
@@ -383,34 +445,38 @@
             </div>
         </div>
 
-        <div class="merch-card">
+        <!-- ИСПРАВЛЕНИЕ: Эти карточки теперь внутри merch-grid, чтобы не ломать верстку -->
+        <h2>🏆 Ранговые Ядра</h2>
+        <div class="merch-grid">
+            <div class="merch-card">
                 <div class="merch-img"><img src="IMG_20260907_045321_539.jpg" alt="Маршалл"></div>
-                <h3 class="merch-title">Ранговое Ядро</h3>
+                <h3 class="merch-title">Ранговое Ядро "Маршалл"</h3>
                 <div class="merch-info">
-                    <p><strong>Размер:</strong> 58мм </p>
-                    <p><strong>Стоимость:</strong> наградной</p>
-                    <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Vol.2 Okey" (Экз. 1). Также выдаётся как апгрейд Суперплакатоносцам.</div>
-                </div>
-        </div>
-
-        <div class="merch-card">
-                <div class="merch-img"><img src="1788730267767.png" alt="Архивариус"></div>
-                <h3 class="merch-title">Ранговое Ядро</h3>
-                <div class="merch-info">
-                    <p><strong>Размер:</strong> 58мм </p>
-                    <p><strong>Стоимость:</strong> наградной</p>
-                    <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Okey" (Экз. 1). Также выдаётся как апгрейд Суперплакатоносцам.</div>
+                    <p><strong>Размер:</strong> 58мм</p>
+                    <p><strong>Стоимость:</strong> Наградной</p>
+                    <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Vol.2 Okey" (Экз. 1)</div>
                 </div>
             </div>
 
-        <div class="merch-card">
-                <div class="merch-img"><img src="1788739050476.png" alt="Окейтозавр"></div>
-                <h3 class="merch-title">Ранговое Ядро Ядро</h3>
+            <div class="merch-card">
+                <div class="merch-img"><img src="1788730267767.png" alt="Архивариус"></div>
+                <h3 class="merch-title">Ранговое Ядро "Архивариус"</h3>
                 <div class="merch-info">
-                    <p><strong>Размер:</strong> 58мм </p>
-                    <p><strong>Стоимость:</strong> наградной</p>
-                    <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Okey" (Экз. 1). Также выдаётся как апгрейд Суперплакатоносцам.</div>
+                    <p><strong>Размер:</strong> 58мм</p>
+                    <p><strong>Стоимость:</strong> Наградной</p>
+                    <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Okey" (Экз. 1)</div>
                 </div>
+            </div>
+
+            <div class="merch-card">
+                <div class="merch-img"><img src="1788739050476.png" alt="Окейтозавр"></div>
+                <h3 class="merch-title">Ранговое Ядро "Окейтозавр"</h3>
+                <div class="merch-info">
+                    <p><strong>Размер:</strong> 58мм</p>
+                    <p><strong>Стоимость:</strong> Наградной</p>
+                    <div class="merch-bonus">🎁 Бонус: 1 рандомная карта "Legends Okey" (Экз. 1)</div>
+                </div>
+            </div>
         </div>
 
         <a href="index.html" class="nav-link">← Вернуться на главную</a>
